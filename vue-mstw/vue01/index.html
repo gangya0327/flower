@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="./style.css">
+
+    <div id="vue-app">
+        <p>{{greet('afternoon')}}</p>
+        <h2>{{name}}</h2>
+        <a v-bind:href="baidu">百度一下</a>
+        <input type="text" v-bind:value="name">
+        <p v-html='websiste'></p>
+        <button @click.once="age++">+1</button>
+        <button v-on:click="ageAdd">+1</button>
+        <button v-on:click="ageAdd(10)">+10</button>
+        <button v-on:dblclick="ageAdd">+1</button>
+        <p>我的年龄是{{age}}</p>
+        <button v-on:click='age--'>-1</button>
+        <button v-on:click='ageSub'>-1</button>
+        <button v-on:click='ageSub(10)'>-10</button>
+        <button v-on:dblclick='ageSub'>-1</button>
+
+        <div id="canvas" v-on:mousemove='updateXY'>
+            {{x}}, {{y}} - <span v-on:mousemove='stopmoving'>stop moving</span>
+        </div>
+        <a v-on:click.prevent='alert()' href="http://www.baidu.com">baidu.com</a>
+
+        <p>键盘事件</p>
+        <label for="name">姓名</label>
+        <input type="text" v-on:keyup='logName' id='name' ref='inputname'>
+        <input type="text" v-on:keyup.enter='logName' id='name' v-model='inputname'>
+        <input type="text" v-on:keyup.alt.enter='logName' id='name'>
+        <span>{{inputname}}</span>
+    </div>
+    <script src="./app.js"></script>
+</body>
+
+</html>

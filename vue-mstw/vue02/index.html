@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="./style.css">
+
+    <div id="vue-app">
+        <h2>计算属性</h2>
+        <button @click='a++'>Add to A</button>
+        <button @click='b++'>Add to B</button>
+        <p>A - {{a}}</p>
+        <p>B - {{b}}</p>
+        <p>Age + A = {{addToA}}</p>
+        <p>Age + B = {{addToB}}</p>
+
+        <h2>动态CSS</h2>
+        <div @click='changeColor= !changeColor'
+            v-bind:class='{changeColor: changeColor}'>
+            <span>peter</span>
+        </div>
+        <button @click='changeColor = !changeColor'>change
+            color</button>
+        <button @click='changeLength = !changeLength'>change
+            length</button>
+        <div v-bind:class='compClasses'>
+            <span>Raver</span>
+        </div>
+
+        <h2>v-if</h2>
+        <button @click='error =! error'>Toggle Error</button>
+        <button @click='success =! success'>Toggle Success</button>
+        <p v-if='error'>404 error</p>
+        <p v-else-if='success'>200 success</p>
+        <p v-show='error'>404 error</p>
+        <p v-show='success'>200 success</p>
+
+        <h2>v-for</h2>
+        {{chracters[0]}}
+        {{chracters[1]}}
+        {{chracters[2]}}
+
+        <ul>
+            <li v-for='key in chracters'>{{key}}</li>
+        </ul>
+        <ul>
+            <li v-for='(user,index) in users'>
+                {{user.name}} - {{user.age}}
+            </li>
+        </ul>
+        <template v-for='(user,index) in users'>
+            {{user.name}} - {{user.age}}
+        </template>
+
+    </div>
+    <script src="./app.js"></script>
+</body>
+
+</html>
