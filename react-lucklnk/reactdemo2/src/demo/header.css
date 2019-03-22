@@ -8,3 +8,8 @@
 .header img {
     width: 100px;
 }
+
+.checkboxList {
+    border: 1px solid #d9d9d9;
+    display: inline-block;
+}

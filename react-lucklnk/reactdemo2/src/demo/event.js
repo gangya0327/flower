@@ -1,4 +1,6 @@
+/*eslint-disable*/
 import React, { Component } from 'react'
+import CheckboxList from './testCheckAll/CheckboxList'
 
 export default class EventComponent extends Component {
     constructor(props) {
@@ -34,15 +36,16 @@ export default class EventComponent extends Component {
     }
     checkAll(e) {
         console.log(e.target.checked)
-        if (e.target.checked) {
-            let list = this.state.list
-            if (list.length > 0) {
-                list.forEach(function (v, i) {
-                    v.checked = true
-                })
-            }
-            this.setState({ list: list }, () => { console.log(this.state.list) })
+        let list = this.state.list
+        if (list.length > 0) {
+            list.forEach(function (v, i) {
+                v.checked = e.target.checked
+            })
         }
+        this.setState({ list: list }, () => { console.log(this.state.list) })
+    }
+    changeList(e) {
+        console.log(e)
     }
     submitClick() {
         console.log(22)
@@ -59,16 +62,21 @@ export default class EventComponent extends Component {
                             return (
                                 <li key={index}>
                                     <label>
-                                        {item.checked?'1':'0'}
                                         <input type="checkbox"
-                                            // checked={item.checked ? 'checked' : ''}
-                                            onClick={(e) => { this.checkClick(e, index) }} />{item.title}</label>
+                                            checked={item.checked ? 'checked' : ''}
+                                            onChange={(e) => { this.checkClick(e, index) }} />{item.title}</label>
                                 </li>
                             )
                         })
                     }
                 </ul>
                 <button onClick={this.submitClick.bind(this)}>提交</button>
+                <button onClick={this.props.sendValue.bind(this, 'hello')}>向父组件传值</button>
+                <div>
+                    <div className="checkboxList">
+                        <CheckboxList></CheckboxList>
+                    </div>
+                </div>
             </div>
         )
     }
