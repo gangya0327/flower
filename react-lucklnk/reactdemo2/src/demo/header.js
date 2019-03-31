@@ -21,7 +21,7 @@ export default class HeaderComponent extends Component {
         return (
             <div className='header'>
                 <img src={require('../assets/header.jpg')} alt="" />
-                <h3>Header {this.props.title}</h3>
+                <span>Header {this.props.title}</span>
                 <p>我叫{this.state.name}</p>
                 <button onClick={this.changeName.bind(this)}>改变我的名字</button>
             </div>
