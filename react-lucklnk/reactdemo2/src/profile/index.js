@@ -11,7 +11,6 @@ export default class PrifileIndex extends Component {
   replactPage(path) {
     this.props.history.replace(path)
   }
-
   logout() {
     localStorage.removeItem('nickname')
     localStorage.removeItem('isLogin')

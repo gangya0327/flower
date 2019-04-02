@@ -36,6 +36,8 @@ class App extends Component {
                 <button type='button' onClick={this.goPage.bind(this, '/profile')}>个人资料</button>
                 &nbsp;
                 <button type='button' onClick={this.goPage.bind(this, '/login')}>会员登录</button>
+                <hr/>
+                <button type='button' onClick={this.goPage.bind(this, '/hoc')}>高阶组件</button>
             </div>
         );
     }
