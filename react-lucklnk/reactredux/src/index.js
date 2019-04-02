@@ -6,11 +6,36 @@ import * as serviceWorker from './serviceWorker';
 import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 
-function counterReducer(state = { amount: 0 }, action){
-    
+
+//2. 商品装车
+function counterReducer(state = { amount: 0 }, action) {
+    console.log(action);
+    switch (action.type) {
+        case "inc":
+            return { amount: action.amount }
+            break;
+        case "dec":
+            return { amount: action.amount }
+            break;
+        default:
+            return false
+    }
 }
 
-ReactDOM.render(<IndexComponent />, document.getElementById('root'));
+//3. 存入仓库
+let store = createStore(counterReducer)
+class Index extends React.Component {
+    render() {
+        return (
+            //将仓库的值分配到所有页面
+            <Provider store={store}>
+                <IndexComponent />
+            </Provider>
+        )
+    }
+}
+
+ReactDOM.render(< Index />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

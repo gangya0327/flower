@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
 import Counter from './counter'
+import { connect } from 'react-redux'
 
-export default class IndexComponent extends Component {
+class IndexComponent extends Component {
     constructor() {
         super()
         this.iAmount = 1
     }
     decBtn() {
         this.iAmount--
-        console.log(this.iAmount)
+        this.props.dispatch({ type: "dec", amount: this.iAmount })
     }
     incBtn() {
         this.iAmount++
+        //1. 选购商品
         this.props.dispatch({ type: "inc", amount: this.iAmount })
     }
     render() {
@@ -25,3 +27,9 @@ export default class IndexComponent extends Component {
         )
     }
 }
+//将组件与redux连接
+export default connect((state) => {
+    return {
+        state: state
+    }
+})(IndexComponent)
