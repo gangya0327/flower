@@ -53,8 +53,7 @@ export default class EventComponent extends Component {
   render() {
     return (
       <div>
-        组件
-                <h3>全选与反选</h3>
+        <h3>全选与反选</h3>
         <label>全选: <input type="checkbox" onClick={this.checkAll.bind(this)} /></label>
         <ul>
           {
