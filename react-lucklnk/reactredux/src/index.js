@@ -13,12 +13,10 @@ function counterReducer(state = { amount: 0 }, action) {
     switch (action.type) {
         case "inc":
             return { amount: action.amount }
-            break;
         case "dec":
             return { amount: action.amount }
-            break;
         default:
-            return false
+            return state
     }
 }
 

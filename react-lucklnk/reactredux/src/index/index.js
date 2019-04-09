@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 class IndexComponent extends Component {
     constructor() {
         super()
-        this.iAmount = 1
+        this.state = {}
+        this.iAmount = 0
     }
     decBtn() {
         this.iAmount--
@@ -20,7 +21,7 @@ class IndexComponent extends Component {
         return (
             <div>
                 <Counter></Counter>
-                计数器：0&nbsp;
+                计数器：{this.props.state.amount}&nbsp;
                 <button onClick={this.decBtn.bind(this)}>-</button>&nbsp;
                 <button onClick={this.incBtn.bind(this)}>+</button>
             </div>
