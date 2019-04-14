@@ -1,9 +1,11 @@
+<!-- 模版 html结构 -->
 <template>
   <div id="app">
     Hello vue!{{title}}
   </div>
 </template>
 
+<!-- 行为 处理逻辑 -->
 <script>
 export default {
   name: "App",
@@ -15,5 +17,6 @@ export default {
 };
 </script>
 
+<!-- 样式 css -->
 <style>
 </style>
