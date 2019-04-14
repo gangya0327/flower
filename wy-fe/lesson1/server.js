@@ -2,6 +2,7 @@ const http = require('http')
 const fs = require('fs')
 const querystring = require('querystring')
 const url = require('url')
+const compressing = require('compressing')
 
 //读取文件内的文件
 var readDir = fs.readdirSync('./mycom')
@@ -23,10 +24,52 @@ http.createServer(function (request, response) {
         case '/':
             fs.readFile('./template.html', function (err, data) {
                 var _data = data.toString().replace("{{list}}", _word)
-                response.end(data)
+                response.end(_data)
             })
-        case '/a':
-            response.end('aaa')
+            break;
+        case '/download':
+            var post = ''
+            var dirname = './download'
+            var length = 0
+            var nowdd = 0
+            //获取数据
+            request.on('data', function (chunk) {
+                post += chunk
+            })
+            request.on('end', function () {
+                post = querystring.parse(post)
+                //创建文件夹
+                fs.mkdir(dirname, function () {
+                    for (var item in post) {
+                        length++
+                        (function (name) {
+                            fs.readFile('./mycom/' + name + 'vue', function (err, data) {
+                                fs.writeFile(dirname + '/' + name + '.vue', data, function () {
+                                    nowdd++
+                                    //等全部写入，则压缩
+                                    if (nowdd == length) {
+                                        var zipname = 'download.zip'
+                                        compressing.zip.compressDir(dirname, './' + zipname)
+                                            .then(function () {
+                                                //压缩完成后，返回给使用者
+                                                fs.readFile('./' + zipname, function (err, data) {
+                                                    response.writeHead(200, {
+                                                        'Content-Type': 'application/x-zip-compressed'
+                                                    })
+                                                    response.end(data)
+                                                })
+                                            })
+                                    }
+                                })
+                            })
+                        })(item)
+
+                    }
+                })
+            })
+
+
+            break;
         case '/b':
             break;
 
