@@ -18,32 +18,17 @@
                 color: #000;
             }
         </style>
+        <h1 id="xin">hello guys</h1>
     </template>
 
+    <script src="./component.js"></script>
+
     <script>
-        //1. 获取对象
-        var indexDoc = document
-        //currentScript 获取正在执行js代码的script标签对象
-        //currentDocument 以document对象返回节点的ownerDocument
-        var currentDoc = indexDoc.currentScript.ownerDocument
 
-        var temp = currentDoc.getElementById('wy-xin')
-
-        //2. 注册元素
-        var xinProto = Object.create(HTMLElement.prototype)
-
-        //3. 显示组件
-        xinProto.createCallback = function () {
-            //创建shadowDOM
-            var root = this.createShadowRoot()
-            root.appendChild(indexDoc.importNode(temp.content, true))
-            root.getElementById('xin').innerHTML = this.getAttribute(
-                'message')
-        }
-
-        var xin = indexDoc.registerElement('wy-xin', {
-            prototype: xinProto
+        WC.registerComponent("wy-xin", document, function (root) {
+            root.getElementById('xin').innerHTML = this.getAttribute('message')
         })
+
     </script>
 </body>
 
