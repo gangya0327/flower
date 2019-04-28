@@ -1,7 +1,8 @@
 import React, {
     Component
 } from 'react'
-export default class counterComponent extends Component {
+import { connect } from 'react-redux'
+class counterComponent extends Component {
     constructor() {
         super()
         this.state = {
@@ -10,7 +11,12 @@ export default class counterComponent extends Component {
     }
     render() {
         return (
-            <div>123</div>
+            <div>子组件计数器：{this.props.state.amount}</div>
         )
     }
 }
+export default connect((state) => {
+    return {
+        state: state
+    }
+})(counterComponent)
