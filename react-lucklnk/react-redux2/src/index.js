@@ -5,12 +5,11 @@ import './index.css';
 import RouterIndex from './home/index'
 import * as serviceWorker from './serviceWorker';
 
-import { createStore, combineReducers } from 'redux';
+import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 //2 商品装车
 function counterReducer(state = { amount: 0 }, action) {
-    console.log(action);
     switch (action.type) {
         case "inc":
             return { amount: action.amount }
