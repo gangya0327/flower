@@ -1,6 +1,7 @@
 import React, {
     Component
 } from 'react'
+import axios from 'axios'
 export default class profileComponent extends Component {
     constructor() {
         super()
@@ -28,17 +29,52 @@ export default class profileComponent extends Component {
                 })
         }
     }
+    axiosUploadHead() {
+        let uploadFile = this.refs.uploadHead
+        if (uploadFile.files[0]) {
+            const data = new FormData()
+            data.append('headfile', uploadFile.files[0])
+            var config = {
+                onUploadProcess: function (progressEvent) {
+                    var percentCompleted = Math.round(progressEvent.loaded * 100 / progressEvent.total)
+                }
+            }
+            axios({
+                url: 'http://vueshop.glbuys.com/api/user/myinfo/formdatahead?token=1ec949a15fb709370f',
+                method: "POST",
+                data: data
+            })
+                .then(response => {
+                    let res = response.data
+                    if (res.code === 200) {
+                        this.setState({
+                            head: "//vueshop.glbuys.com/userfiles/head/" + res.data.msbox
+                        })
+                    }
+                })
+        }
+    }
 
     render() {
         return (
             <div style={{ "padding": "20px" }}>
                 个人资料 <br />
-                头像上传：<div style={{ "height": "100px", "width": "100px", "position": "relative" }}>
+                头像fetch上传：<div style={{ "height": "100px", "width": "100px", "position": "relative" }}>
                     <img src={this.state.head} alt="" />
                     <input type="file" name="" id="uploadHead" ref="uploadHead"
                         style={{ "opacity": 0, "width": "100%", "height": "100%", "position": "absolute", "top": 0, "left": 0 }}
                         onChange={this.uploadHead.bind(this)}
                     />
+                </div>
+                头像axios上传：<div style={{ "height": "100px", "width": "100px", "position": "relative" }}>
+                    <img src={this.state.head} alt="" />
+                    <input type="file" name="" id="uploadHead" ref="uploadHead"
+                        style={{ "opacity": 0, "width": "100%", "height": "100%", "position": "absolute", "top": 0, "left": 0 }}
+                        onChange={this.axiosUploadHead.bind(this)}
+                    />
+                    <div style={{ border: "1px solid #ccc", width: "200px", height: "15px" }}>
+                        <div style={{ background: "lightblue", width: "75px", height: "15px" }}></div>
+                    </div>
                 </div>
             </div>
         )
