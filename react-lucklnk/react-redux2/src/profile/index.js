@@ -6,7 +6,8 @@ export default class profileComponent extends Component {
     constructor() {
         super()
         this.state = {
-            head: "//vueshop.glbuys.com/userfiles/head/976380905.jpg"
+            head: "//vueshop.glbuys.com/userfiles/head/976380905.jpg",
+            progress: 0
         }
     }
     goBack() {
@@ -34,15 +35,22 @@ export default class profileComponent extends Component {
         if (uploadFile.files[0]) {
             const data = new FormData()
             data.append('headfile', uploadFile.files[0])
-            var config = {
-                onUploadProcess: function (progressEvent) {
-                    var percentCompleted = Math.round(progressEvent.loaded * 100 / progressEvent.total)
-                }
-            }
+            // var config = {
+            //     onUploadProcess: function (progressEvent) {
+            //         var percentCompleted = Math.round(progressEvent.loaded * 100 / progressEvent.total)
+            //     }
+            // }
             axios({
                 url: 'http://vueshop.glbuys.com/api/user/myinfo/formdatahead?token=1ec949a15fb709370f',
                 method: "POST",
-                data: data
+                data: data,
+                onUploadProgress: (progressEvent) => {
+                    var percentCompleted = Math.round(progressEvent.loaded * 100 / progressEvent.total)
+                    console.log(percentCompleted)
+                    this.setState({
+                        progress: percentCompleted
+                    })
+                }
             })
                 .then(response => {
                     let res = response.data
@@ -73,7 +81,7 @@ export default class profileComponent extends Component {
                         onChange={this.axiosUploadHead.bind(this)}
                     />
                     <div style={{ border: "1px solid #ccc", width: "200px", height: "15px" }}>
-                        <div style={{ background: "lightblue", width: "75px", height: "15px" }}></div>
+                        <div style={{ background: "lightblue", width: this.state.progress * 2, height: "15px" }}></div>
                     </div>
                 </div>
             </div>

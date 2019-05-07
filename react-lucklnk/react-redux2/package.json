@@ -32,5 +32,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "proxy": {
+    "/proxyyy": {
+      "target": "http://vueshop.glbuys.com",
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/proxyyy": ""
+      }
+    }
   }
 }
