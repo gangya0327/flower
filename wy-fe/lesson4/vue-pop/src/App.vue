@@ -1,24 +1,24 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <Pop/>
+    <Pop1>确认弹框</Pop1>
   </div>
 </template>
 
 <script>
-import Pop from './components/pop'
+import Pop1 from "./components/pop1";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Pop
+    Pop1
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
