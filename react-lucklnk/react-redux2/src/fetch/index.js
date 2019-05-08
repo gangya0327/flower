@@ -15,7 +15,7 @@ export default class fetchComponent extends Component {
         this.getGoods()
     }
     getGoods() {
-        fetch('http://vueshop.glbuys.com/api/home/index/recom?token=1ec949a15fb709370f')
+        fetch('/proxyyy/api/home/index/recom?token=1ec949a15fb709370f')
             .then(response => {
                 console.log(response);
                 return response.json()

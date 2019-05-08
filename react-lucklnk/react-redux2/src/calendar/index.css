@@ -1,0 +1,37 @@
+/* 年月 */
+.rmc-nav-bar {
+    display: flex;
+    justify-content: space-around;
+}
+
+/* 星期 */
+.rmc-nav-bar .item {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.rmc-week-day {
+    display: flex;
+    justify-content: space-around;
+}
+
+/* 日 */
+.rmc-days .row {
+    display: flex;
+    flex-direction: row;
+}
+
+.rmc-days .item {
+    width: 20%;
+    text-align: center;
+}
+
+.rmc-days .row .item:first-child,
+.rmc-days .row .item:last-child {
+    color: red;
+}
+
+.rmc-days .day {
+    display: flex;
+    flex-direction: column;
+}
