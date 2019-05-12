@@ -1,6 +1,13 @@
 <template>
-  <div class="cover">
-    <div class="pop-content">
+  <div
+    class="cover"
+    ref="cover"
+  >
+    <div
+      class="pop-content"
+      ref="slot"
+      :style="{left: popx,top: popy}"
+    >
       <div class="pop-title">
         <span>x</span>
       </div>
@@ -19,9 +26,16 @@
 export default {
   name: "Pop1",
   data: function() {
-    return {};
+    return { popx: 0, popy: 0 };
   },
-  mounted: function() {},
+  mounted: function() {
+    var leftMargin = this.$refs.slot.clientWidth / 2;
+    var topMargin = this.$refs.slot.clientHeight / 2;
+    var lf = this.$refs.cover.clientWidth / 2;
+    var tp = this.$refs.cover.clientHeight / 2;
+    this.popy = tp - topMargin + "px";
+    this.popx = lf - leftMargin + "px";
+  },
   methods: {}
 };
 </script>
@@ -36,14 +50,18 @@ export default {
   background-color: rgba(0, 0, 0, 0.3);
 }
 .pop-content {
-  position: relative;
+  position: absolute;
   background-color: #fff;
   min-width: 180px;
   max-width: 800px;
   padding: 8px;
+  box-sizing: border-box;
 }
 .pop-title {
-  margin-right: 15px;
+  margin-right: 10px;
+}
+button {
+  margin: 4px 12px;
 }
 </style>
 
