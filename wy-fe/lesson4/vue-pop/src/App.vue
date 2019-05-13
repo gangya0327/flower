@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <Pop1>这是确认弹框。。。</Pop1>
+    <Pop1>这是确认弹框。</Pop1>
   </div>
 </template>
 
