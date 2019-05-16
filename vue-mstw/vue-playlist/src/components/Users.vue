@@ -1,11 +1,17 @@
 <template>
   <div class="users">
     <ul>
-      <li v-for="(user,index) in users" v-bind:key="index" v-on:click="user.show = !user.show">
+      <li
+        v-for="(user,index) in users"
+        v-bind:key="index"
+        v-on:click="user.show = !user.show"
+      >
         <h2>{{user.name}}</h2>
         <h2 v-show="user.show">{{user.position}}</h2>
       </li>
     </ul>
+    <button v-on:click="deleteUser">删除</button>
+    <span class="testCss">testCss</span>
   </div>
 </template>
 
@@ -16,15 +22,20 @@
 
 export default {
   name: "Users",
-//   props: ['users'],
+  //   props: ['users'],
   props: {
-      users: {
-          type: Array,
-          required: true
-      }
+    users: {
+      type: Array,
+      required: true
+    }
   },
   data() {
     return {};
+  },
+  methods: {
+    deleteUser() {
+      this.users.pop();
+    }
   }
 };
 </script>
@@ -51,5 +62,8 @@ export default {
   padding: 30px;
   border: 1px solid #222;
   margin: 20px;
+}
+.testCss {
+  color: red;
 }
 </style>
