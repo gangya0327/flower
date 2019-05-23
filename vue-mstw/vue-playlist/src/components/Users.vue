@@ -7,7 +7,7 @@
         v-on:click="user.show = !user.show"
       >
         <h2>{{user.name}}</h2>
-        <h2 v-show="user.show">{{user.position}}</h2>
+        <h2 v-show="user.show">{{user.email}}</h2>
       </li>
     </ul>
     <button v-on:click="deleteUser">删除</button>
