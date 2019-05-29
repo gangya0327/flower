@@ -14,11 +14,11 @@ public class Constant {
         System.out.println('a' + 1);
         System.out.println(1 + "a");
 
-//        System.out.println(100/0); //异常
+        //System.out.println(100/0); //异常
         System.out.println(100.0 / 0); //Infinity
 
-        System.out.println(10 % -3); //符号（正负）由前一个数决定
-        System.out.println(-10 % -3); //符号（正负）由前一个数决定
+        System.out.println("符号（正负）由前一个数决定 " + 10 % -3); //符号（正负）由前一个数决定
+        System.out.println("符号（正负）由前一个数决定 " + -10 % -3); //符号（正负）由前一个数决定
 
         //a++不参与运算，++a参与运算
         int a = 3;
@@ -37,8 +37,25 @@ public class Constant {
 
 
         short i = 4;
-//        i = i + 2; 报错，i是short型，2是int型，
+        //i = i + 2; 报错，i是short型，2是int型，
         i += 2; //i = (short)i + 2
+
+        //与运算符 && 前者为假就不考虑后者
+        System.out.println(true | false);
+        System.out.println(true | true);
+
+        int j = 3;
+        int k = 4;
+        if ((j > k & (j++) > k && (--k) < j) | (k++) <= (j--)) {
+//            3 > 4 f---3,4
+//                3 > 4 f---4,4
+//                    //3 < 4 t---3,3 不会执行
+//                f&f&&t f
+//                    4 <= 4 f---5,3
+            System.out.println("判断结果为true, j=" + j + ",k=" + k);
+        } else {
+            System.out.println("判断结果为false, j=" + j + ",k=" + k);
+        }
 
     }
 }
