@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .my-style {
+            border: 1px solid #aaa;
+            padding: 10px;
+            width: 50px;
+            height: 50px;
+            background-color: #eee;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="my-div"></div>
+    <div class="my-div"></div>
+    <span class="my-span"></span>
+
+    <!-- <script src="./jquery3.3.1.js"></script> -->
+    <script src="./my-jquery.js"></script>
+
+    <script>
+        $(function () {
+            var $dom = $(".my-div,.my-span")
+            console.log($dom)
+            $dom.addClass("my-style").on("click",function(){
+                console.log(this.className)
+            })
+        })
+    </script>
+</body>
+
+</html>

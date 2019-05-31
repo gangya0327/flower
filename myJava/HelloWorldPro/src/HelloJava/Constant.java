@@ -57,5 +57,23 @@ public class Constant {
             System.out.println("判断结果为false, j=" + j + ",k=" + k);
         }
 
+        int m = 2;
+        switch (m) {
+            case 1: {
+                System.out.println("这是数字1");
+                break;
+            }
+            case 2: {
+                System.out.println("这是数字2");
+                break;
+            }
+            case 3: {
+                System.out.println("这是数字3");
+                break;
+            }
+            default: {
+                System.out.println("这是什么？");
+            }
+        }
     }
 }
