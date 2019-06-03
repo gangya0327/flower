@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <!-- <script src="./vue2.5.1.js"></script> -->
+    <script src="./my-vue.js"></script>
+    <script>
+        //根据自定义选项的合并策略“count”
+        Vue.config.optionMergeStrategies.count = function (parentVal, childVal, vm) {
+            return childVal < 10 ? 10 : childVal;
+        }
+        //Vue 构造函数
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                root: "max"
+            }
+        })
+        console.log(vm.$options)
+
+        function fn() {
+            var self = {}
+            return self
+        }
+        console.log(fn() === fn())
+    </script>
+</body>
+
+</html>
