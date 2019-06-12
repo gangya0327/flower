@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #result li {
+            list-style-type: none;
+        }
+
+        #result li span:last-child {
+            width: 50px;
+            height: 20px;
+            display: inline-block;
+            margin-left: 20px;
+        }
+
+        #result li span:first-child {
+            width: 50px;
+            padding-right: 20px;
+            display: inline-block;
+            text-align: right;
+        }
+
+        input {
+            width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    输入01字符串<input type="text" id="input" value="111111000011100000011">
+    <button id="output">输出结果</button>
+    <ul id="result"></ul>
+
+
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#output").click(function () {
+                let input = $("#input").val();
+                let arr = input.split("");
+                console.log(arr)
+                let res = [];
+
+                let count = 1;
+                for (let i = 0; i < arr.length; i++) {
+                    if (arr[i + 1] === arr[i]) {
+                        count++;
+                    } else {
+                        res.push(count);
+                        count = 1;
+                    }
+                }
+                console.log(res)
+
+                let resColor = [];
+                let flag;
+                if (arr[0] === "0") {
+                    flag = "blue";
+                } else {
+                    flag = "yellow";
+                }
+                let lastFlag = 0;
+                for (let j = 0; j < res.length; j++) {
+                    if (res[j] > 3 && j > 0 && (j - lastFlag) % 2 !== 0) {
+                        lastFlag = j;
+                        if (flag === "blue") {
+                            flag = "yellow";
+                        } else {
+                            flag = "blue";
+                        }
+                    }
+                    for (let k = 0; k < res[j]; k++) {
+                        resColor.push(flag);
+                    }
+                }
+                console.log(resColor);
+
+
+
+                let length = arr.length;
+                for (let l = 0; l < arr.length; l++) {
+                    $("#result").html("<li><span>" + l + ": </span><span>" + arr[
+                            l] +
+                        "</span><span style='background: " + resColor[l] +
+                        "'></span></li>")
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>
