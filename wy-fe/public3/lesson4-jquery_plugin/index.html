@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./jq-selector-1.0.css">
+    <title>Document</title>
+    <style>
+        .jq-selector {
+            position: relative;
+            display: inline-block;
+        }
+
+        .jq-selector .jq-input {
+            width: 168px;
+            height: 20px;
+            line-height: 20px;
+            padding: 4px 9px;
+            border: 1px solid #0066b3;
+            font: 12px/1.5 "微软雅黑";
+            color: #3f3f3f;
+        }
+
+        .jq-selector .jq-addon {
+            position: absolute;
+            right: 1px;
+            top: 1px;
+            text-align: center;
+            height: 28px;
+            line-height: 28px;
+            overflow: hidden;
+            color: #0066b3;
+            width: 28px;
+            background-color: #dbebf8;
+            text-decoration: none;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="jq-selector">
+        <input type="text" class="jq-input" placeholder="请输入内容">
+        <a href="javascript:;" class="jq-addon">册</a>
+    </div>
+    <script src="./jq-selector-1.0.js"></script>
+</body>
+
+</html>
