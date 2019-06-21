@@ -6,6 +6,9 @@ import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import Routes from './routes'
 
+// axios.defaults.baseURL = "www.a.com"
+// axios.defaults.headers.common['Authorization'] = "application/urlencode"
+
 Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(VueRouter)

@@ -19,8 +19,17 @@ export default {
     this.$http
       .get("http://jsonplaceholder.typicode.com/posts/" + this.id)
       .then(res => {
+        console.log(res.data);
+        console.log(res.body);
         this.blog = res.body;
-        console.log(this.blog);
+        // console.log(this.blog);
+      });
+    this.$http
+      .get(
+        "https://leancloud.cn:443/1.1/classes/TestObject?limit=10&&order=-updatedAt&&"
+      )
+      .then(res => {
+        console.log(res);
       });
   }
 };
