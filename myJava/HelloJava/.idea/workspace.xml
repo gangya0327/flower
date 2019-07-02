@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c9d9d33d-d5b3-4064-8425-1c9576a507a5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/login/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HelloJava/HelloJava/Array.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HelloJava/HelloJava/Array.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HelloJava/HelloJava/Constant.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HelloJava/HelloJava/Constant.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HelloJava/HelloJava/Constructor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HelloJava/HelloJava/Constructor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HelloJava/HelloJava/Functions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HelloJava/HelloJava/Functions.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HelloJava/HelloJava/Hello.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HelloJava/HelloJava/Hello.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HelloJava/HelloJava/Loop.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HelloJava/HelloJava/Loop.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HelloJava/HelloJava/Person.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HelloJava/HelloJava/Person.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HelloJava/Constructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HelloJava/Constructor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/login/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/login/Login.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -66,11 +56,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/login/Login.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="2" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
+            <state relative-caret-position="340">
+              <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
               <folding>
-                <element signature="e#101#102#0" expanded="true" />
-                <element signature="e#163#164#0" expanded="true" />
+                <element signature="e#222#223#0" expanded="true" />
+                <element signature="e#249#250#0" expanded="true" />
+                <element signature="e#289#290#0" expanded="true" />
+                <element signature="e#321#322#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -112,6 +104,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -128,14 +121,13 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1561978616816" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1562055742158" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -259,16 +251,18 @@
       <workItem from="1561606834627" duration="952000" />
       <workItem from="1561691517668" duration="1172000" />
       <workItem from="1561952272180" duration="3092000" />
+      <workItem from="1562053148484" duration="2304000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22329000" />
+    <option name="totallyTimeSpent" value="24633000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21801706" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22014925" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -338,11 +332,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/login/Login.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="2" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
+        <state relative-caret-position="340">
+          <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
           <folding>
-            <element signature="e#101#102#0" expanded="true" />
-            <element signature="e#163#164#0" expanded="true" />
+            <element signature="e#222#223#0" expanded="true" />
+            <element signature="e#249#250#0" expanded="true" />
+            <element signature="e#289#290#0" expanded="true" />
+            <element signature="e#321#322#0" expanded="true" />
           </folding>
         </state>
       </provider>
