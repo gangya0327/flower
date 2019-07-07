@@ -7,14 +7,20 @@
  */
 
 import React from 'react';
-import {} from 'react-router-dom'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 
-function RouterComponent() {
-  return (
-    <div>
-      路由
-    </div>
-  );
-}
-
-export default RouterComponent;
+export default class RouterComponent extends React.Component {
+    render() {
+        return (
+            <React.Fragment>
+                <Route>
+                    <React.Fragment>
+                        <Switch>
+                            <Route exact path='/' component={App} />
+                        </Switch>
+                    </React.Fragment>
+                </Route>
+            </React.Fragment>
+        )
+    }
+};
