@@ -8,18 +8,18 @@
 
 import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
-
+import IndexComponent from './pages/home/index'
 export default class RouterComponent extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Route>
+                <Router>
                     <React.Fragment>
                         <Switch>
-                            <Route exact path='/' component={App} />
+                            <Route exact path='/' component={IndexComponent} />
                         </Switch>
                     </React.Fragment>
-                </Route>
+                </Router>
             </React.Fragment>
         )
     }
