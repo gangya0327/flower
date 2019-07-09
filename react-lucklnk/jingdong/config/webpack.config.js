@@ -42,6 +42,9 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
+function resolveDir(dir){
+  return path.join(__dirname, '..', dir)
+}
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -353,6 +356,7 @@ module.exports = function(webpackEnv) {
                       },
                     },
                   ],
+                  'react-html-attrs' //解决className问题
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -397,16 +401,31 @@ module.exports = function(webpackEnv) {
             // By default we support CSS Modules with the extension .module.css
             {
               test: cssRegex,
-              exclude: cssModuleRegex,
+              // exclude: cssModuleRegex,
               use: getStyleLoaders({
                 importLoaders: 1,
                 sourceMap: isEnvProduction && shouldUseSourceMap,
+                modules: true, //开启css模块化
+                //[path]-[name]-[local]-[hash:base64:6]
+                localIdentName: '[local]-[hash:base64:6]'
               }),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
               // Remove this when webpack adds a warning or an error for this.
               // See https://github.com/webpack/webpack/issues/6571
               sideEffects: true,
+              exclude: [ //排除下面两个文件夹下的css文件
+                resolveDir('node_modules'),
+                resolveDir('src/assets/css/common')
+              ]
+            },
+            {
+              test: cssRegex,
+              use: ['style-loader','css-loader'],
+              include: [ //样式只应用到这两个文件夹下的css文件
+                resolveDir('node_modules'),
+                resolveDir('src/assets/css/common')
+              ]
             },
             // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
             // using the extension .module.css

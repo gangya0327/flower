@@ -6,21 +6,22 @@
  * exact 完全匹配路由
  */
 
-import React from 'react';
+import React from 'react'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import IndexComponent from './pages/home/index'
 export default class RouterComponent extends React.Component {
-    render() {
-        return (
-            <React.Fragment>
-                <Router>
-                    <React.Fragment>
-                        <Switch>
-                            <Route exact path='/' component={IndexComponent} />
-                        </Switch>
-                    </React.Fragment>
-                </Router>
-            </React.Fragment>
-        )
-    }
-};
+  render () {
+    return (
+      <React.Fragment>
+        <Router>
+          <React.Fragment>
+            <Switch>
+              <Route exact path='/' component={IndexComponent} />
+            </Switch>
+          </React.Fragment>
+        </Router>
+      </React.Fragment>
+    )
+  }
+}
+

@@ -1,7 +1,10 @@
+/*eslint-disable*/
 import React from 'react';
 import ReactDOM from 'react-dom';
 import RouterComponent from './router';
 import * as serviceWorker from './serviceWorker';
+import './assets/js/libs/zepto.101.min.js'
+import './assets/css/common/public.css'
 
 ReactDOM.render(<RouterComponent />, document.getElementById('root'));
 
