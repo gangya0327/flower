@@ -10,7 +10,7 @@ import React from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import asyncComponent from "./components/async/AsyncComponent";
 // import IndexComponent from './pages/home/index'
-const IndexComponent = asyncComponent(() => import("./pages/home/index"));
+const HomeComponent = asyncComponent(() => import("./pages/home/home"));
 export default class RouterComponent extends React.Component {
   render() {
     return (
@@ -18,7 +18,7 @@ export default class RouterComponent extends React.Component {
         <Router>
           <React.Fragment>
             <Switch>
-              <Route exact path="/" component={IndexComponent} />
+              <Route exact path="/" component={HomeComponent} />
             </Switch>
           </React.Fragment>
         </Router>
