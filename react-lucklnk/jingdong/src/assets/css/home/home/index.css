@@ -29,18 +29,37 @@
     margin-right: 10%;
 }
 
-.bottom-nav ul li.home {
+.bottom-nav ul li {
     width: 1.4rem;
     height: 1.4rem;
-    background-image: url('../../../images/common/home1.png');
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center;
     margin: 0 auto;
 }
 
+.bottom-nav ul li.home {
+    background-image: url('../../../images/common/home1.png');
+}
+
 .bottom-nav ul li.home.active {
     background-image: url('../../../images/common/home2.png');
+}
+
+.bottom-nav ul li.cart {
+    background-image: url('../../../images/common/cart1.png');
+}
+
+.bottom-nav ul li.cart.active {
+    background-image: url('../../../images/common/cart2.png');
+}
+
+.bottom-nav ul li.my {
+    background-image: url('../../../images/common/my1.png');
+}
+
+.bottom-nav ul li.my.active {
+    background-image: url('../../../images/common/my2.png');
 }
 
 .bottom-nav ul li.text {

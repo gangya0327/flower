@@ -7,10 +7,14 @@
  */
 
 import React from "react";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import asyncComponent from "./components/async/AsyncComponent";
+import config from './assets/js/conf/config'
 // import IndexComponent from './pages/home/index'
-const HomeComponent = asyncComponent(() => import("./pages/home/home"));
+
+const HomeComponent = asyncComponent(() => import("./pages/home/home/index"));
+console.log(config);
+
 export default class RouterComponent extends React.Component {
   render() {
     return (
@@ -18,7 +22,8 @@ export default class RouterComponent extends React.Component {
         <Router>
           <React.Fragment>
             <Switch>
-              <Route exact path="/" component={HomeComponent} />
+              <Route path={config.path + "home"} component={HomeComponent} />
+              <Redirect to={config.path + "home/index"}></Redirect>
             </Switch>
           </React.Fragment>
         </Router>
