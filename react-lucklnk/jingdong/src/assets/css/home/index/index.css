@@ -143,6 +143,8 @@
     height: 7rem;
     display: flex;
     display: -webkit-flex;
+    overflow: hidden;
+    border-bottom: 1px solid #efefef;
 }
 
 .goods-level-wrap .goods-level1-item0 {
@@ -154,7 +156,7 @@
 }
 
 .goods-level-wrap .goods-level1-item1 {
-    width: calc(50% - 1px);
+    width: 49.5%;
     height: 100%;
 }
 
@@ -179,8 +181,8 @@
     top: 1.5rem;
 }
 
-.goods-level-wrap .goods-level1-wrap .goods-price {
-    width: 2rem;
+.goods-level-wrap .goods-level1-wrap .goods-price1 {
+    width: auto;
     font-size: 1rem;
     background-color: #f21d4f;
     color: #fff;
@@ -193,6 +195,19 @@
     border-radius: 10px;
 }
 
+.goods-level-wrap .goods-level1-wrap .goods-price2 {
+    width: auto;
+    font-size: 1rem;
+    background-color: #5fc600;
+    color: #fff;
+    font-size: 0.7rem;
+    text-align: center;
+    line-height: 1rem;
+    position: absolute;
+    left: 4.5rem;
+    top: 1.5rem;
+    border-radius: 10px;
+}
 
 .goods-level-wrap .goods-level1-wrap .goods-img {
     width: 7.5rem;
@@ -285,4 +300,20 @@
     width: 100%;
     height: 100%;
     margin-top: 0.2rem;
+}
+
+.goods-level-wrap .goods-list-wrap .goods-list .price{
+    width: 100%;
+    text-align: center;
+    color: #d32a4e;
+    font-size: 0.7rem;
+    margin-top: 0.4rem;
+}
+
+.goods-level-wrap .goods-list-wrap .goods-list .unprice{
+    width: 100%;
+    text-align: center;
+    color: #7b7f82;
+    font-size: 0.6rem;
+    text-decoration: line-through;
 }
