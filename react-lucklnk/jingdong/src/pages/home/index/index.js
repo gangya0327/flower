@@ -132,18 +132,18 @@ export default class IndexComponent extends React.Component {
                 </div>
 
                 <div className={Css['goods-level-wrap']}>
-                    <div className={Css['classify-title'] + " " + Css['color1']}>—— 品牌男装 ——</div>
+                    <div className={Css['classify-title'] + " " + Css['color2']}>—— 品牌男装 ——</div>
                     <div className={Css['goods-level1-wrap']}>
                         <div className={Css['goods-level1-item0']}>
-                            <div className={Css['goods-title']}>高跟鞋女2018新款春季单鞋仙女甜美链子尖头防水台细跟女鞋一字带</div>
+                            <div className={Css['goods-title2']}>高跟鞋女2018新款春季单鞋仙女甜美链子尖头防水台细跟女鞋一字带</div>
                             <div className={Css['goods-text']}>精品打折</div>
-                            <div className={Css['goods-price2']}>128元</div>
+                            {/* <div className={Css['goods-price2']}>1280元</div> */}
                             <div className={Css['goods-img']}>
                                 <img src="http://vueshop.glbuys.com/uploadfiles/1524556409.jpg" alt="" />
                             </div>
                         </div>
                         <div className={Css['goods-level1-item1']}>
-                            <div className={Css['goods-row']}>
+                            {/* <div className={Css['goods-row']}>
                                 <div className={Css['goods-row-title']}>欧美尖头蝴蝶结拖鞋女夏外穿2018新款绸缎面细跟凉拖半拖鞋穆勒鞋</div>
                                 <div className={Css['goods-row-text']}>品质精挑</div>
                                 <div className={Css['goods-row-img']}>
@@ -156,7 +156,7 @@ export default class IndexComponent extends React.Component {
                                 <div className={Css['goods-row-img']}>
                                     <img src="http://vueshop.glbuys.com/uploadfiles/1524556315.jpg" alt="" />
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className={Css['goods-list-wrap']}>
