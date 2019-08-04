@@ -13,7 +13,6 @@ import config from './assets/js/conf/config'
 // import IndexComponent from './pages/home/index'
 
 const HomeComponent = asyncComponent(() => import("./pages/home/home/index"));
-console.log(config);
 
 export default class RouterComponent extends React.Component {
   render() {

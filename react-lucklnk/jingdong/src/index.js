@@ -1,6 +1,7 @@
 /*eslint-disable*/
 import 'babel-polyfill'
 import 'url-search-params-polyfill'
+import 'whatwg-fetch'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import RouterComponent from './router';

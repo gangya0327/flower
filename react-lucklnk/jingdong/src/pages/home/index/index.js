@@ -1,22 +1,33 @@
 import React from 'react'
 import Swiper from '../../../assets/js/libs/swiper.min.js'
+import {request} from '../../../assets/js/libs/request'
+import config from '../../../assets/js/conf/config'
 import '../../../assets/css/common/swiper.min.css'
 import Css from '../../../assets/css/home/index/index.css'
 
 export default class IndexComponent extends React.Component {
+    constructor(){
+        super()
+        this.state = {
+            aSwiper: []
+        }
+    }
     componentDidMount() {
-        new Swiper("." + Css['swiper-wrap'], {
-            autoplay: 3000,
-            pagination: ".swiper-pagination",
-            autoplayDisableOnInteraction: false
-        })
         this.getSwiper()
     }
     getSwiper() {
-        fetch("http://vueshop.glbuys.com/api/home/index/slide?token=1ec949a15fb709370f").then((res) => {
-            return res.json()
-        }).then((data)=>{
-            
+        console.log(config)
+        request(config.baseUrl +  "/api/home/index/slide?token=" + config.token).then((res)=>{
+            if(res.code === 200){
+                this.setState({aSwiper: res.data},() => {
+                    new Swiper("." + Css['swiper-wrap'], {
+                        autoplay: 3000,
+                        pagination: ".swiper-pagination",
+                        autoplayDisableOnInteraction: false
+                    })
+                })
+            }
+            console.log(res)
         })
     }
     render() {
@@ -34,7 +45,18 @@ export default class IndexComponent extends React.Component {
                 </div>
                 <div class={Css['swiper-wrap']}>
                     <div className="swiper-wrapper">
-                        <div className="swiper-slide">
+                        {
+                            this.state.aSwiper.map((item, index) => {
+                                return(
+                                    <div key={index} className="swiper-slide">
+                                        <a href={item.webs} target="_blank" rel="noopener noreferrer">
+                                            <img src={item.image} alt={item.title} />
+                                        </a>
+                                    </div>
+                                )
+                            })
+                        }
+                        {/* <div className="swiper-slide">
                             <a href="http://www.baidu.com" target="_blank" rel="noopener noreferrer">
                                 <img src="http://vueshop.glbuys.com/uploadfiles/1484285334.jpg" alt="" />
                             </a>
@@ -48,7 +70,7 @@ export default class IndexComponent extends React.Component {
                             <a href="http://www.baidu.com" target="_blank" rel="noopener noreferrer">
                                 <img src="http://vueshop.glbuys.com/uploadfiles/1484285334.jpg" alt="" />
                             </a>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="swiper-pagination"></div>
                 </div>
