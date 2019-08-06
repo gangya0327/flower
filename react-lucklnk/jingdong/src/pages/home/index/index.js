@@ -99,32 +99,52 @@ export default class IndexComponent extends React.Component {
                             return (
                                 <div className={Css['goods-level-wrap']} key={index}>
                                     <div className={Css['classify-title'] + " " + Css['color' + (index + 1)]}>—— {item.title} ——</div>
-                                    <div className={Css['goods-level1-wrap']}>
-                                        <div className={Css['goods-level1-item0']}>
-                                            <div className={Css['goods-title']}>高跟鞋女2018新款春季单鞋仙女甜美链子尖头防水台细跟女鞋一字带</div>
-                                            <div className={Css['goods-text']}>精品打折</div>
-                                            <div className={Css['goods-price1']}>128元</div>
-                                            <div className={Css['goods-img']}>
-                                                <img src="http://vueshop.glbuys.com/uploadfiles/1524556409.jpg" alt="" />
-                                            </div>
-                                        </div>
-                                        <div className={Css['goods-level1-item1']}>
-                                            <div className={Css['goods-row']}>
-                                                <div className={Css['goods-row-title']}>欧美尖头蝴蝶结拖鞋女夏外穿2018新款绸缎面细跟凉拖半拖鞋穆勒鞋</div>
-                                                <div className={Css['goods-row-text']}>品质精挑</div>
-                                                <div className={Css['goods-row-img']}>
-                                                    <img src="http://vueshop.glbuys.com/uploadfiles/1524556315.jpg" alt="" />
+                                    {
+                                        index % 2 === 1 ?
+                                            <div className={Css['goods-level1-wrap']}>
+                                                <div className={Css['goods-level1-item0']}>
+                                                    <div className={Css['goods-title2']}>高跟鞋女2018新款春季单鞋仙女甜美链子尖头防水台细跟女鞋一字带</div>
+                                                    <div className={Css['goods-text2']}>火爆开售</div>
+                                                    <div className={Css['goods-img2']}>
+                                                        <img src="http://vueshop.glbuys.com/uploadfiles/1524556409.jpg" alt="" />
+                                                    </div>
+                                                </div>
+                                                <div className={Css['goods-level1-item0']}>
+                                                    <div className={Css['goods-title2']}>高跟鞋女2018新款春季单鞋仙女甜美链子尖头防水台细跟女鞋一字带</div>
+                                                    <div className={Css['goods-text2']}>火爆开售</div>
+                                                    <div className={Css['goods-img2']}>
+                                                        <img src="http://vueshop.glbuys.com/uploadfiles/1524556409.jpg" alt="" />
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className={Css['goods-row']}>
-                                                <div className={Css['goods-row-title']}>欧美尖头蝴蝶结拖鞋女夏外穿2018新款绸缎面细跟凉拖半拖鞋穆勒鞋</div>
-                                                <div className={Css['goods-row-text']}>品质精挑4折起</div>
-                                                <div className={Css['goods-row-img']}>
-                                                    <img src="http://vueshop.glbuys.com/uploadfiles/1524556315.jpg" alt="" />
+                                            :
+                                            <div className={Css['goods-level1-wrap']}>
+                                                <div className={Css['goods-level1-item0']}>
+                                                    <div className={Css['goods-title']}>高跟鞋女2018新款春季单鞋仙女甜美链子尖头防水台细跟女鞋一字带</div>
+                                                    <div className={Css['goods-text']}>精品打折</div>
+                                                    <div className={Css['goods-price1']}>128元</div>
+                                                    <div className={Css['goods-img']}>
+                                                        <img src="http://vueshop.glbuys.com/uploadfiles/1524556409.jpg" alt="" />
+                                                    </div>
+                                                </div>
+                                                <div className={Css['goods-level1-item1']}>
+                                                    <div className={Css['goods-row']}>
+                                                        <div className={Css['goods-row-title']}>欧美尖头蝴蝶结拖鞋女夏外穿2018新款绸缎面细跟凉拖半拖鞋穆勒鞋</div>
+                                                        <div className={Css['goods-row-text']}>品质精挑</div>
+                                                        <div className={Css['goods-row-img']}>
+                                                            <img src="http://vueshop.glbuys.com/uploadfiles/1524556315.jpg" alt="" />
+                                                        </div>
+                                                    </div>
+                                                    <div className={Css['goods-row']}>
+                                                        <div className={Css['goods-row-title']}>欧美尖头蝴蝶结拖鞋女夏外穿2018新款绸缎面细跟凉拖半拖鞋穆勒鞋</div>
+                                                        <div className={Css['goods-row-text']}>品质精挑4折起</div>
+                                                        <div className={Css['goods-row-img']}>
+                                                            <img src="http://vueshop.glbuys.com/uploadfiles/1524556315.jpg" alt="" />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                    }
                                     <div className={Css['goods-list-wrap']}>
                                         <div className={Css['goods-list']}>
                                             <div className={Css['title']}>小白鞋女2018春夏季新款韩版百搭平底学生原宿ulzzang帆布鞋板鞋</div>
