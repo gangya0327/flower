@@ -43,6 +43,7 @@ export default class IndexComponent extends React.Component {
     getSwiper() {
         console.log(config)
         request(config.baseUrl + "/api/home/index/slide?token=" + config.token).then((res) => {
+            console.log(66,res)
             if (res.code === 200) {
                 this.setState({ aSwiper: res.data }, () => {
                     new Swiper("." + Css['swiper-wrap'], {
@@ -82,11 +83,14 @@ export default class IndexComponent extends React.Component {
             }
         })
     }
+    pushPage(pUrl) {
+        this.props.history.push(config.path + pUrl)
+    }
     render() {
         return (
             <div class={Css['page']}>
                 <div class={this.state.bScroll ? Css['search-header'] + " " + Css['red-bg'] : Css['search-header']}>
-                    <div class={Css['classify-icon']}></div>
+                    <div class={Css['classify-icon']} onClick={this.pushPage.bind(this, "goods/classify")}></div>
                     <div class={Css['search-wrap']}>
                         <div class={Css['search-icon']}></div>
                         <div class={Css['search-text']}>请输入宝贝名称</div>
