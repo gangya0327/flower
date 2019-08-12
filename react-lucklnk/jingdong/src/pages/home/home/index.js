@@ -18,6 +18,8 @@ export default class HomeComponent extends React.Component {
         }
     }
     componentWillMount() {
+    }
+    componentDidMount(){
         this.handleNavStyle()
     }
     componentWillReceiveProps(newProps) {

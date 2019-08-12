@@ -13,6 +13,7 @@ import config from './assets/js/conf/config'
 // import IndexComponent from './pages/home/index'
 
 const HomeComponent = asyncComponent(() => import("./pages/home/home/index"));
+const GoodsClassify = asyncComponent(() => import("./pages/home/goods/classify"));
 
 export default class RouterComponent extends React.Component {
   render() {
@@ -22,6 +23,7 @@ export default class RouterComponent extends React.Component {
           <React.Fragment>
             <Switch>
               <Route path={config.path + "home"} component={HomeComponent} />
+              <Route path={config.path + "goods/classify"} component={GoodsClassify} />
               <Redirect to={config.path + "home/index"}></Redirect>
             </Switch>
           </React.Fragment>
