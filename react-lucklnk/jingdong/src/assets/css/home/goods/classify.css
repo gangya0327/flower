@@ -42,6 +42,8 @@
     /* overflow-y: auto; */
     overflow: hidden;
     margin-right: 3%;
+    position: relative;
+    z-index: 1;
 }
 
 .goods-main .classify-wrap .classify-item {

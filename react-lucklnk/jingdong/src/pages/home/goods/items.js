@@ -1,7 +1,4 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
-import asyncComponent from "../../../components/async/AsyncComponent";
-import config from '../../../assets/js/conf/config'
 import Css from '../../../assets/css/home/goods/items.css'
 
 export default class GoodsItems extends React.Component {
