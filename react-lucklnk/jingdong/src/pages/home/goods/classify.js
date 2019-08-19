@@ -69,7 +69,14 @@ export default class GoodsClassify extends React.Component {
     }
     handleScroll(pIndex) {
         let iTopHeight = Math.round(parseInt(this.refs["item-" + pIndex].offsetHeight) * pIndex)
-        this.myScroll.scrollTo(0, -iTopHeight, 300, IScroll.utils.ease.elastic)
+        let oScrollClassify = document.getElementById("scroll-classify")
+        let iHalfHeight = Math.round(oScrollClassify.offsetHeight/3)
+        let iBottomHeight = oScrollClassify.offsetHeight - iTopHeight
+        console.log(oScrollClassify.offsetHeight)
+        console.log(iBottomHeight)
+        if(iTopHeight > iHalfHeight) {
+            this.myScroll.scrollTo(0, -iTopHeight, 300, IScroll.utils.ease.elastic)
+        }
     }
     render() {
         return (
