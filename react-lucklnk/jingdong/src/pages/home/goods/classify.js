@@ -64,8 +64,12 @@ export default class GoodsClassify extends React.Component {
             }
         }
         this.aTempClassify[pIndex].bActive = true
-        this.myScroll.scrollTo(0, -100, 300, IScroll.utils.ease.elastic)
+        this.handleScroll(pIndex)
         this.jumpPage(pUrl)
+    }
+    handleScroll(pIndex) {
+        let iTopHeight = Math.round(parseInt(this.refs["item-" + pIndex].offsetHeight) * pIndex)
+        this.myScroll.scrollTo(0, -iTopHeight, 300, IScroll.utils.ease.elastic)
     }
     render() {
         return (
@@ -81,7 +85,7 @@ export default class GoodsClassify extends React.Component {
                                 this.state.aClassify !== null ?
                                     this.state.aClassify.map((item, index) => {
                                         return (
-                                            <div key={index} className={item.bActive ? Css['classify-item'] + " " + Css['active'] : Css['classify-item']}
+                                            <div ref={"item-" + index} key={index} className={item.bActive ? Css['classify-item'] + " " + Css['active'] : Css['classify-item']}
                                                 onClick={this.changeStyle.bind(this, "goods/classify/items?cid=" + item.cid, index)}>{item.title}</div>
                                         )
                                     })
