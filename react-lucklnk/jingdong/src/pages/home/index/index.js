@@ -5,6 +5,7 @@ import { request } from '../../../assets/js/libs/request'
 import config from '../../../assets/js/conf/config'
 import '../../../assets/css/common/swiper.min.css'
 import Css from '../../../assets/css/home/index/index.css'
+import SearchComponent from '../../../components/search/search'
 
 export default class IndexComponent extends React.Component {
     constructor() {
@@ -28,7 +29,6 @@ export default class IndexComponent extends React.Component {
     eventScroll() {
         if (this.bScroll) {
             let iScrollTop = document.documentElement.scrollTop || document.body.scrollTop
-            console.log(iScrollTop)
             if (iScrollTop >= 80) {
                 this.setState({ bScroll: true })
             } else {
@@ -41,9 +41,7 @@ export default class IndexComponent extends React.Component {
         window.removeEventListener("scroll", this.eventScroll.bind(this))
     }
     getSwiper() {
-        console.log(config)
         request(config.baseUrl + "/api/home/index/slide?token=" + config.token).then((res) => {
-            console.log(66, res)
             if (res.code === 200) {
                 this.setState({ aSwiper: res.data }, () => {
                     new Swiper("." + Css['swiper-wrap'], {
@@ -232,6 +230,7 @@ export default class IndexComponent extends React.Component {
                             : ""
                     }
                 </div>
+                <SearchComponent></SearchComponent>
             </div>
         )
     }

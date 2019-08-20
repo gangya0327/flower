@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import asyncComponent from "../../../components/async/AsyncComponent"
 import IScroll from '../../../assets/js/libs/iscroll'
 import config from '../../../assets/js/conf/config'
+import { localParam } from '../../../assets/js/utils/utils'
 import Css from '../../../assets/css/home/goods/classify.css'
 import { request } from '../../../assets/js/libs/request'
 
@@ -16,14 +17,13 @@ export default class GoodsClassify extends React.Component {
         }
         this.myScroll = null
         this.aTempClassify = []
+        this.cid = localParam(props.location.search).search.cid ? localParam(props.location.search).search.cid : "492"
     }
     componentDidMount() {
         this.getClassifyData()
     }
     componentWillMount() {
 
-    }
-    componentWillReceiveProps(newProps) {
     }
     jumpPage(toUrl) {
         this.props.history.replace(config.path + toUrl);
@@ -48,11 +48,11 @@ export default class GoodsClassify extends React.Component {
                 for (let i = 0; i < this.aTempClassify.length; i++) {
                     this.aTempClassify[i].bActive = false
                 }
-                console.log(JSON.stringify(this.aTempClassify));
                 this.setState({
                     aClassify: this.aTempClassify
                 }, () => {
                     this.eventScroll()
+                    this.defaultClassifyStyle()
                 })
             }
         })
@@ -70,12 +70,21 @@ export default class GoodsClassify extends React.Component {
     handleScroll(pIndex) {
         let iTopHeight = Math.round(parseInt(this.refs["item-" + pIndex].offsetHeight) * pIndex)
         let oScrollClassify = document.getElementById("scroll-classify")
-        let iHalfHeight = Math.round(oScrollClassify.offsetHeight/3)
-        let iBottomHeight = oScrollClassify.offsetHeight - iTopHeight
-        console.log(oScrollClassify.offsetHeight)
-        console.log(iBottomHeight)
-        if(iTopHeight > iHalfHeight) {
+        let iHalfHeight = Math.round(oScrollClassify.offsetHeight / 3)
+        let iBottomHeight = oScrollClassify.scrollHeight - iTopHeight
+        if (iTopHeight > iHalfHeight && iBottomHeight > oScrollClassify.offsetHeight) {
             this.myScroll.scrollTo(0, -iTopHeight, 300, IScroll.utils.ease.elastic)
+        }
+    }
+    defaultClassifyStyle() {
+        if (this.aTempClassify.length > 0) {
+            for (let i = 0; i < this.aTempClassify.length; i++) {
+                if (this.aTempClassify[i].cid === this.cid) {
+                    this.aTempClassify[i].bActive = true
+                    break
+                }
+            }
+            this.setState({ aClassify: this.aTempClassify })
         }
     }
     render() {
