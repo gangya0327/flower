@@ -29,7 +29,7 @@ export default class GoodsClassify extends React.Component {
         this.props.history.replace(config.path + toUrl);
     }
     goBack() {
-        this.props.history.back();
+        this.props.history.goBack();
     }
     eventScroll() {
         document.getElementById("scroll-classify").addEventListener("touchmove", function (e) {
