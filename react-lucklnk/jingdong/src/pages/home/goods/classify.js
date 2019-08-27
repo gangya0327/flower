@@ -6,6 +6,7 @@ import config from '../../../assets/js/conf/config'
 import { localParam } from '../../../assets/js/utils/utils'
 import Css from '../../../assets/css/home/goods/classify.css'
 import { request } from '../../../assets/js/libs/request'
+import SearchComponent from '../../../components/search/search'
 
 const GoodsItems = asyncComponent(() => import("./items"));
 
@@ -13,17 +14,15 @@ export default class GoodsClassify extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            aClassify: []
+            aClassify: [],
+            pageStyle: { display: "none" }
         }
         this.myScroll = null
         this.aTempClassify = []
-        this.cid = localParam(props.location.search).search.cid ? localParam(props.location.search).search.cid : "492"
+        this.cid = props.location.search ? localParam(props.location.search).search.cid : "492"
     }
     componentDidMount() {
         this.getClassifyData()
-    }
-    componentWillMount() {
-
     }
     jumpPage(toUrl) {
         this.props.history.replace(config.path + toUrl);
@@ -87,12 +86,18 @@ export default class GoodsClassify extends React.Component {
             this.setState({ aClassify: this.aTempClassify })
         }
     }
+    changeSearch() {
+        this.setState({ pageStyle: { display: "block" } })
+    }
+    getStyle(val) {
+        this.setState({ pageStyle: val })
+    }
     render() {
         return (
             <div>
                 <div className={Css['search-header']}>
                     <div className={Css['back']} onClick={this.goBack.bind(this)}></div>
-                    <div className={Css['search']}>请输入宝贝名称</div>
+                    <div className={Css['search']} onClick={this.changeSearch.bind(this)}>请输入宝贝名称</div>
                 </div>
                 <div className={Css['goods-main']}>
                     <div id="scroll-classify" className={Css['classify-wrap']}>
@@ -115,6 +120,7 @@ export default class GoodsClassify extends React.Component {
                         </Switch>
                     </div>
                 </div>
+                <SearchComponent pageStyle={this.state.pageStyle} childStyle={this.getStyle.bind(this)}></SearchComponent>
             </div>
         )
     }

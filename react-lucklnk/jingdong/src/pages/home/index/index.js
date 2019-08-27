@@ -15,7 +15,8 @@ export default class IndexComponent extends React.Component {
             aNav: [],
             aGoods: [],
             aRecoGoods: [],
-            bScroll: false
+            bScroll: false,
+            pageStyle: { display: "none" }
         }
         this.bScroll = true
     }
@@ -84,12 +85,18 @@ export default class IndexComponent extends React.Component {
     pushPage(pUrl) {
         this.props.history.push(config.path + pUrl)
     }
+    changeSearch() {
+        this.setState({ pageStyle: { display: "block" } })
+    }
+    getStyle(val) {
+        this.setState({ pageStyle: val })
+    }
     render() {
         return (
             <div class={Css['page']}>
                 <div class={this.state.bScroll ? Css['search-header'] + " " + Css['red-bg'] : Css['search-header']}>
                     <div class={Css['classify-icon']} onClick={this.pushPage.bind(this, "goods/classify/items")}></div>
-                    <div class={Css['search-wrap']}>
+                    <div class={Css['search-wrap']} onClick={this.changeSearch.bind(this)}>
                         <div class={Css['search-icon']}></div>
                         <div class={Css['search-text']}>请输入宝贝名称</div>
                     </div>
@@ -230,7 +237,7 @@ export default class IndexComponent extends React.Component {
                             : ""
                     }
                 </div>
-                <SearchComponent></SearchComponent>
+                <SearchComponent pageStyle={this.state.pageStyle} childStyle={this.getStyle.bind(this)}></SearchComponent>
             </div>
         )
     }

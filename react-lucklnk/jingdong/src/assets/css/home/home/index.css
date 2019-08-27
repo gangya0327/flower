@@ -5,7 +5,7 @@
     position: fixed;
     z-index: 10;
     left: 0;
-    bottom: 0;
+    bottom: -2px;
     box-shadow: 0 0 10px rgba(239, 239, 239, 1);
     -webkit-box-shadow: 0 0 10px rgba(239, 239, 239, 1);
     display: flex;
