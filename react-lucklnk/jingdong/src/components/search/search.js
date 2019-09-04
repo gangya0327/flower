@@ -55,13 +55,14 @@ class SearchComponent extends React.Component {
         localStorage['hk'] = JSON.stringify(this.aKeywords)
         this.props.dispatch(action.hk.addHistorykeywords({ keywords: this.aKeywords }))
         this.setState({ bHistory: true })
+
     }
     render() {
         return (
             <div style={this.props.pageStyle} className={Css['page']}>
                 <div className={Css['search-header']}>
                     <div className={Css['close']} onClick={this.props.childStyle.bind(this, { display: "none" })}></div>
-                    <div className={Css['search-swap']}>
+                    <div className={Css['search-wrap']}>
                         <div className={Css['search-input-wrap']}>
                             <input type="text" className={Css['search']} placeholder='请输入宝贝名称'
                                 onChange={(e) => { this.setState({ keywords: e.target.value }) }} />

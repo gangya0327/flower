@@ -1,6 +1,6 @@
 .search-header {
     width: 100%;
-    height: 2.5rem;
+    height: 1rem;
     background: #fff;
     display: flex;
     display: -webkit-flex;
@@ -10,9 +10,9 @@
 }
 
 .search-header .back {
-    width: 2rem;
-    height: 2rem;
-    background-image: url('../../../images/home/goods/back.png');
+    width: 0.8rem;
+    height: 0.8rem;
+    background-image: url("../../../images/home/goods/back.png");
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -20,13 +20,13 @@
 
 .search-header .search {
     width: 80%;
-    height: 1.75rem;
-    border: 1px solid #b2b2b2;
-    border-radius: 0.2rem;
-    font-size: 0.7rem;
+    height: 0.69rem;
+    border: solid 1px #b2b2b2;
+    border-radius: 0.1rem;
+    font-size: 0.28rem;
     color: #626262;
-    line-height: 1.75rem;
-    padding-left: 0.5rem;
+    line-height: 0.69rem;
+    padding-left: 0.2rem;
 }
 
 .goods-main {
@@ -37,9 +37,8 @@
 }
 
 .goods-main .classify-wrap {
-    width: 4.3rem;
+    width: 1.72rem;
     height: 100%;
-    /* overflow-y: auto; */
     overflow: hidden;
     margin-right: 3%;
     position: relative;
@@ -48,12 +47,12 @@
 
 .goods-main .classify-wrap .classify-item {
     width: 100%;
-    height: 2rem;
+    height: 0.8rem;
     border-bottom: 1px solid #efefef;
     background-color: #fff;
-    font-size: 0.7rem;
+    font-size: 0.28rem;
     text-align: center;
-    line-height: 2rem;
+    line-height: 0.8rem;
     overflow: hidden;
 }
 
