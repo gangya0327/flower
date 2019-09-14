@@ -59,7 +59,11 @@ class SearchComponent extends React.Component {
         this.goPage("goods/search?keywords=" + this.state.keywords)
     }
     goPage(url) {
-        this.props.history.push(config.path + url)
+        if (this.props.isLocal === "1") {
+            this.props.childKeywords.bind(this, "aa")
+        } else {
+            this.props.history.push(config.path + url)
+        }
     }
     render() {
         return (
