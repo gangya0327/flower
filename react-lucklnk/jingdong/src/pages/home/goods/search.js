@@ -22,7 +22,41 @@ export default class GoodsSearch extends React.Component {
                 { title: "价格从低到高", type: "up", checked: false },
                 { title: "价格从高到低", type: "down", checked: false },
             ],
-            sKeywords: ""
+            sKeywords: "",
+            aClassify: {
+                checked: true, items: [
+                    // { cid: 1, title: "潮流女装", checked: false },
+                    // { cid: 2, title: "品牌男装", checked: false },
+                    // { cid: 3, title: "数码科技", checked: false },
+                ]
+            },
+            aPrice: {
+                checked: true, items: [
+                    { price1: 1, price2: 50, checked: false },
+                    { price1: 51, price2: 99, checked: false },
+                    { price1: 100, price2: 300, checked: false },
+                    { price1: 300, price2: 500, checked: false },
+                ]
+            },
+            fprice1: 0,
+            fprice2: 50,
+            aAttr: [
+                // {
+                //     title: "品牌",
+                //     checked: true,
+                //     param: [{ pid: 978, title: "波司登", checked: false, },
+                //     { pid: 976, title: "ADIDAS", checked: false, }]
+                // },
+                // {
+                //     title: "衣长",
+                //     checked: true,
+                //     param: [{ pid: 978, title: "中长款", checked: false, },
+                //     { pid: 979, title: "短款", checked: false, },
+                //     { pid: 980, title: "长款", checked: false, },
+                //     { pid: 981, title: "小短款", checked: false, }]
+                // }
+            ],
+            itemTotal: 0
         }
         this.myScroll = null
         this.oUpRefresh = null
@@ -34,6 +68,11 @@ export default class GoodsSearch extends React.Component {
         this.oType = "all"
         this.sParams = ""
         this.sKeywords = ""
+        this.cid = ""
+        this.fPrice1 = ""
+        this.fPrice2 = ""
+        this.sParam = ""
+        this.aParam = []
     }
     componentDidMount() {
         this.myScroll = new IScroll("#screen", {
@@ -44,6 +83,8 @@ export default class GoodsSearch extends React.Component {
         this.sKeywords = decodeURIComponent(localParam(this.props.history.location.search).search.keywords)
         this.setState({ sKeywords: this.sKeywords })
         this.getPageData()
+        this.getClassifyData()
+        this.getAttrData()
     }
     //显示筛选面板
     showScreen() {
@@ -100,12 +141,13 @@ export default class GoodsSearch extends React.Component {
         request(url).then(res => {
             console.log("aGoods", res.data)
             if (res.code === 200) {
-                this.setState({ aGoods: res.data })
+                this.setState({ aGoods: res.data, itemTotal: res.pageinfo.total }, () => {
+                    lazyImage()
+                })
                 this.maxPage = res.pageinfo.pagenum
-                lazyImage()
                 this.getScrollPage()
             } else {
-                this.setState({ aGoods: [] })
+                this.setState({ aGoods: [], itemTotal: 0 })
             }
         })
     }
@@ -121,14 +163,16 @@ export default class GoodsSearch extends React.Component {
                             aGoods.push(res.data[i])
                         }
                     }
-                    this.setState({ aGoods: aGoods })
-                    // lazyImage()
+                    this.setState({ aGoods: aGoods }, () => {
+                        lazyImage()
+                    })
                 }
             })
         })
     }
     setParams() {
-        this.sParams = "kwords=" + this.sKeywords + "&param=&price1=&price2=&otype=" + this.oType + "&cid="
+        this.sParams = "kwords=" + this.sKeywords + "&param=" + this.sParam + "&price1=" + this.fPrice1 + "&price2=" + this.fPrice2
+            + "&otype=" + this.oType + "&cid=" + this.cid
     }
     //选择价格排序里的
     checkedPriceOrder(index) {
@@ -140,6 +184,197 @@ export default class GoodsSearch extends React.Component {
         this.oType = aPriceOrder[index].type
         this.setState({ aPriceOrder: aPriceOrder })
         this.getPageData()
+    }
+    getChildKeywords(val) {
+        this.sKeywords = val
+        this.setState({ sKeywords: val, pageStyle: { display: 'none' } })
+        this.props.history.replace(config.path + 'goods/search?keywords=' + val)
+        this.setReset()
+        this.getPageData()
+        this.getAttrData()
+    }
+    //分类显示隐藏
+    handleClassify() {
+        let aClassify = this.state.aClassify
+        if (aClassify.checked) {
+            aClassify.checked = false
+        } else {
+            aClassify.checked = true
+        }
+        this.setState({ aClassify: aClassify })
+    }
+    //选择分类
+    checkedClassify(index) {
+        let aClassify = this.state.aClassify
+        if (aClassify.items.length > 0) {
+            for (let i = 0; i < aClassify.items.length; i++) {
+                if (i !== index) {
+                    aClassify.items[i].checked = false
+                }
+            }
+            if (aClassify.items[index].checked) {
+                aClassify.items[index].checked = false
+                this.cid = ""
+            } else {
+                aClassify.items[index].checked = true
+                this.cid = aClassify.items[index].cid
+            }
+        }
+        this.setState({ aClassify: aClassify })
+    }
+    //价格显示隐藏
+    handlePrice() {
+        let aPrice = this.state.aPrice
+        if (aPrice.checked) {
+            aPrice.checked = false
+        } else {
+            aPrice.checked = true
+        }
+        this.setState({ aPrice: aPrice })
+    }
+    //选择价格范围
+    checkedPrice(index, price1, price2) {
+        let aPrice = this.state.aPrice
+        if (aPrice.items.length > 0) {
+            for (let i = 0; i < aPrice.items.length; i++) {
+                if (i !== index) {
+                    aPrice.items[i].checked = false
+                }
+            }
+            if (aPrice.items[index].checked) {
+                aPrice.items[index].checked = false
+                price1 = 0
+                price2 = 0
+                this.fPrice1 = ""
+                this.fPrice2 = ""
+            } else {
+                aPrice.items[index].checked = true
+                this.fPrice1 = price1
+                this.fPrice2 = price2
+            }
+        }
+        this.setState({ aPrice: aPrice, fprice1: price1, fprice2: price2 })
+    }
+    //属性显示隐藏
+    handleAttr(index) {
+        let aAttr = this.state.aAttr
+        if (aAttr[index].checked) {
+            aAttr[index].checked = false
+        } else {
+            aAttr[index].checked = true
+        }
+        this.setState({ aAttr: aAttr })
+    }
+    //选择属性的值，多选
+    checkedParam(attrIndex, paramIndex) {
+        let aAttr = this.state.aAttr
+        if (aAttr[attrIndex].param[paramIndex].checked) {
+            aAttr[attrIndex].param[paramIndex].checked = false
+            for (let i = 0; i < this.aParam.length; i++) {
+                if (this.aParam[i] === aAttr[attrIndex].param[paramIndex].pid) {
+                    this.aParam.splice(i--, 1)
+                    break
+                }
+            }
+        } else {
+            aAttr[attrIndex].param[paramIndex].checked = true
+            this.aParam.push(aAttr[attrIndex].param[paramIndex].pid)
+        }
+        console.log(this.aParam)
+        this.sParam = this.aParam.length > 0 ? JSON.stringify(this.aParam) : ""
+        this.setState({ aAttr: aAttr })
+    }
+    //阻止冒泡
+    preventBubble(e) {
+        e.stopPropagation()
+    }
+    //获取分类数据
+    getClassifyData() {
+        let url = config.baseUrl + "/api/home/category/menu?token=" + config.token
+        request(url).then(res => {
+            console.log("aClassify ", res.data)
+            if (res.code === 200) {
+                let aClassify = { checked: true }
+                aClassify.items = res.data
+                for (let i = 0; i < res.data.length; i++) {
+                    aClassify.items[i].checked = false
+                }
+                this.setState({ aClassify: aClassify }, () => {
+                    this.myScroll.refresh()
+                })
+            }
+        })
+    }
+    //获取属性数据
+    getAttrData() {
+        let url = config.baseUrl + '/api/home/goods/param?kwords=' + this.sKeywords + "&token=" + config.token
+        request(url).then(res => {
+            console.log("aAttr ", res.data)
+            if (res.code === 200) {
+                let aAttr = res.data
+                for (let i = 0; i < aAttr.length; i++) {
+                    aAttr[i].checked = true
+                    if (aAttr[i].param.length > 0) {
+                        for (let j = 0; j < aAttr[i].param.length; j++) {
+                            aAttr[i].param[j].checked = false
+                        }
+                    }
+                }
+                this.setState({ aAttr: aAttr }, () => {
+                    this.myScroll.refresh()
+                })
+            }
+        })
+    }
+    //监听价格范围最低价的值
+    changePrice1(e) {
+        this.setState({ fprice1: e.target.value.replace(/[a-zA-Z]|[\u4e00-\u9fa5]|[#|*|,|+|;]/g, '') }, () => {
+            this.fPrice1 = this.state.fprice1
+        })
+    }
+    //监听价格范围最高价的值
+    changePrice2(e) {
+        this.setState({ fprice2: e.target.value.replace(/[a-zA-Z]|[\u4e00-\u9fa5]|[#|*|,|+|;]/g, '') }, () => {
+            this.fPrice2 = this.state.fprice2
+        })
+    }
+    goSearch() {
+        this.hideScreen()
+        this.getPageData()
+    }
+    //全部重置
+    setReset() {
+        this.sParam = ""
+        this.cid = ""
+        this.fPrice1 = ""
+        this.fPrice2 = ""
+        this.oType = "all"
+
+        //分类重置
+        let aClassify = this.state.aClassify
+        if (aClassify.items.length > 0) {
+            for (let i = 0; i < aClassify.items.length; i++) {
+                aClassify.items[i].checked = false
+            }
+        }
+        //价格范围重置
+        let aPrice = this.state.aPrice
+        for (let i = 0; i < aPrice.items.length; i++) {
+            aPrice.items[i].checked = false
+        }
+        //属性重置
+        let aAttr = this.state.aAttr
+        if (aAttr.length > 0) {
+            for (let i = 0; i < aAttr.length; i++) {
+                if (aAttr[i].param.length > 0) {
+                    for (let j = 0; j < aAttr[i].param.length; j++) {
+                        aAttr[i].param[j].checked = false
+                    }
+                }
+            }
+        }
+
+        this.setState({ fPrice1: 0, fPrice2: 0, aClassify: aClassify, aPrice: aPrice, aAttr: aAttr })
     }
     render() {
         return (
@@ -179,7 +414,7 @@ export default class GoodsSearch extends React.Component {
                                 return (
                                     <div className={Css['goods-list']} key={index}>
                                         <div className={Css['image']}>
-                                            <img src={item.image} alt={item.title} />
+                                            <img data-echo={item.image} src={require("../../../assets/images/common/lazyImg.jpg")} alt={item.title} />
                                         </div>
                                         <div className={Css['goods-content']}>
                                             <div className={Css['goods-title']}>{item.title}</div>
@@ -188,109 +423,96 @@ export default class GoodsSearch extends React.Component {
                                         </div>
                                     </div>
                                 )
-                            }) : ""
+                            }) : <div className="null-item">没有相关商品</div>
                     }
                 </div>
                 <div ref="mask" className={this.state.bMask ? Css['mask'] : Css['mask'] + " hide"} onClick={this.hideScreen.bind(this)}></div>
                 <div ref="screen" className={Css['screen'] + " " + this.state.screenMove} id="screen">
                     <div>
                         <div className={Css['attr-wrap']}>
-                            <div className={Css['attr-tittle-wrap']}>
+                            <div className={Css['attr-tittle-wrap']} onClick={this.handleClassify.bind(this)}>
                                 <div className={Css['attr-name']}>分类</div>
-                                <div className={Css['attr-icon'] + " " + Css['up']}></div>
+                                <div className={this.state.aClassify.checked ? Css['attr-icon'] + " " + Css['up'] : Css['attr-icon']}></div>
                             </div>
-                            <div className={Css['item-wrap']}>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item'] + " " + Css['active']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
-                                <div className={Css['item']}>潮流女装</div>
+                            <div className={this.state.aClassify.checked ? Css['item-wrap'] : Css['item-wrap'] + " height-hide"}>
+                                {
+                                    this.state.aClassify.items.length > 0 ?
+                                        this.state.aClassify.items.map((item, index) => {
+                                            return (
+                                                <div key={index} className={item.checked ? Css['item'] + " " + Css['active'] : Css['item']}
+                                                    onClick={this.checkedClassify.bind(this, index)}>{item.title}</div>
+                                            )
+                                        }) : ""
+                                }
                             </div>
                         </div>
                         <div style={{ width: "100%", height: "1px", backgroundColor: "#efefef" }}></div>
                         <div className={Css['attr-wrap']}>
-                            <div className={Css['attr-tittle-wrap']}>
+                            <div className={Css['attr-tittle-wrap']} onClick={this.handlePrice.bind(this)}>
                                 <div className={Css['attr-name']}>价格区间</div>
                                 <div className={Css['price-wrap']}>
-                                    <div className={Css['price-input']}>
-                                        <input type="tel" placeholder="最低价" />
+                                    <div className={Css['price-input']} onClick={this.preventBubble.bind(this)}>
+                                        <input type="tel" placeholder="最低价" value={this.state.fprice1 === 0 ? "" : this.state.fprice1}
+                                            onChange={this.changePrice1.bind(this)} />
                                     </div>
                                     <div className={Css['price-line']}></div>
-                                    <div className={Css['price-input']}>
-                                        <input type="tel" placeholder="最高价" />
+                                    <div className={Css['price-input']} onClick={this.preventBubble.bind(this)}>
+                                        <input type="tel" placeholder="最高价" value={this.state.fprice1 === 0 ? "" : this.state.fprice2}
+                                            onChange={this.changePrice2.bind(this)} />
                                     </div>
                                 </div>
-                                <div className={Css['attr-icon'] + " " + Css['up']}></div>
+                                <div className={this.state.aPrice.checked ? Css['attr-icon'] + " " + Css['up'] : Css['attr-icon']}></div>
                             </div>
-                            <div className={Css['item-wrap']}>
-                                <div className={Css['item']}>0-50</div>
-                                <div className={Css['item'] + " " + Css['active']}>51-100</div>
-                                <div className={Css['item']}>101-300</div>
-                                <div className={Css['item']}>301-1000</div>
-                                <div className={Css['item']}>1001-4000</div>
-                                <div className={Css['item']}>4001-9999</div>
-                            </div>
-                        </div>
-                        <div style={{ width: "100%", height: "1px", backgroundColor: "#efefef" }}></div>
-                        <div className={Css['attr-wrap']}>
-                            <div className={Css['attr-tittle-wrap']}>
-                                <div className={Css['attr-name']}>品牌</div>
-                                <div className={Css['attr-icon']}></div>
-                            </div>
-                            <div className={Css['item-wrap']}>
-                                <div className={Css['item']}>李宁</div>
-                                <div className={Css['item']}>阿迪达斯</div>
-                                <div className={Css['item']}>耐克</div>
+                            <div className={this.state.aPrice.checked ? Css['item-wrap'] : Css['item-wrap'] + " height-hide"}>
+                                {
+                                    this.state.aPrice.items.map((item, index) => {
+                                        return (
+                                            <div key={index} className={item.checked ? Css['item'] + " " + Css['active'] : Css['item']}
+                                                onClick={this.checkedPrice.bind(this, index, item.price1, item.price2)}>{item.price1}-{item.price2}</div>
+                                        )
+                                    })
+                                }
                             </div>
                         </div>
                         <div style={{ width: "100%", height: "1px", backgroundColor: "#efefef" }}></div>
-                        <div className={Css['attr-wrap']}>
-                            <div className={Css['attr-tittle-wrap']}>
-                                <div className={Css['attr-name']}>衣长</div>
-                                <div className={Css['attr-icon']}></div>
-                            </div>
-                            <div className={Css['item-wrap']}>
-                                <div className={Css['item']}>长款</div>
-                                <div className={Css['item']}>中长款</div>
-                                <div className={Css['item']}>短款</div>
-                            </div>
-                        </div>
-                        <div style={{ width: "100%", height: "1px", backgroundColor: "#efefef" }}></div>
+                        {
+                            this.state.aAttr.length > 0 ?
+                                this.state.aAttr.map((item, index) => {
+                                    return (
+                                        <React.Fragment key={index}>
+                                            <div className={Css['attr-wrap']}>
+                                                <div className={Css['attr-tittle-wrap']} onClick={this.handleAttr.bind(this, index)}>
+                                                    <div className={Css['attr-name']}>{item.title}</div>
+                                                    <div className={item.checked ? Css['attr-icon'] + " " + Css['up'] : Css['attr-icon']}></div>
+                                                </div>
+                                                <div className={item.checked ? Css['item-wrap'] : Css['item-wrap'] + " height-hide"}>
+                                                    {
+                                                        item.param.length > 0 ?
+                                                            item.param.map((item2, index2) => {
+                                                                return (
+                                                                    <div key={index2} className={item2.checked ? Css['item'] + " " + Css['active'] : Css['item']}
+                                                                        onClick={this.checkedParam.bind(this, index, index2)}>{item2.title}</div>
+                                                                )
+                                                            }) : ""
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div style={{ width: "100%", height: "1px", backgroundColor: "#efefef" }}></div>
+                                        </React.Fragment>
+                                    )
+                                }) : ""
+                        }
                         <div style={{ width: "100%", height: "1rem" }}></div>
                     </div>
                     <div className={Css['handle-wrap']}>
-                        <div className={Css['item']}>共<span>16</span>件</div>
-                        <div className={Css['item'] + " " + Css['reset']}>全部重置</div>
-                        <div className={Css['item'] + " " + Css['sure']}>确定</div>
+                        <div className={Css['item']}>共<span>{this.state.itemTotal}</span>件</div>
+                        <div className={Css['item'] + " " + Css['reset']} onClick={this.setReset.bind(this)}>全部重置</div>
+                        <div className={Css['item'] + " " + Css['sure']} onClick={this.goSearch.bind(this)}>确定</div>
                     </div>
                 </div>
 
-                <SearchComponent pageStyle={this.state.pageStyle} childStyle={this.getStyle.bind(this)} isLocal="1" childKeywords={this.getC}></SearchComponent>
-                <div className={Css['']}></div>
+                <SearchComponent pageStyle={this.state.pageStyle} childStyle={this.getStyle.bind(this)} isLocal="1"
+                    childKeywords={this.getChildKeywords.bind(this)} keywords={this.state.sKeywords}></SearchComponent>
             </div>
         )
     }

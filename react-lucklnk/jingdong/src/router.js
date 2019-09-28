@@ -15,6 +15,7 @@ import config from './assets/js/conf/config'
 const HomeComponent = asyncComponent(() => import("./pages/home/home/index"));
 const GoodsClassify = asyncComponent(() => import("./pages/home/goods/classify"));
 const GoodsSearch = asyncComponent(() => import("./pages/home/goods/search"));
+const GoodsDetails = asyncComponent(() => import("./pages/home/goods/details"));
 
 export default class RouterComponent extends React.Component {
   render() {
@@ -26,6 +27,7 @@ export default class RouterComponent extends React.Component {
               <Route path={config.path + "home"} component={HomeComponent} />
               <Route path={config.path + "goods/classify"} component={GoodsClassify} />
               <Route path={config.path + "goods/search"} component={GoodsSearch} />
+              <Route path={config.path + "goods/details"} component={GoodsDetails} />
               <Redirect to={config.path + "home/index"}></Redirect>
             </Switch>
           </React.Fragment>

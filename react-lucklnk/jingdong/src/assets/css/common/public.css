@@ -104,3 +104,8 @@ body {
 .hide {
     display: none
 }
+
+.height-hide {
+    height: 0;
+    overflow: hidden;
+}

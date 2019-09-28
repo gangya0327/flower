@@ -6,6 +6,7 @@ import { Modal } from 'antd-mobile'
 import Css from './search.css'
 import { connect } from 'react-redux'
 import action from '../../actions'
+import { Toast } from 'antd-mobile'
 
 class SearchComponent extends React.Component {
     constructor(props) {
@@ -47,20 +48,29 @@ class SearchComponent extends React.Component {
         })
     }
     addHistoryKeywords() {
-        for (let i = 0; i < this.aKeywords.length; i++) {
-            if (this.aKeywords[i] === this.state.keywords) {
-                this.aKeywords.splice(i--, 1)
-            }
+        let keywords = this.state.keywords || this.props.keywords
+        if (this.refs['keywords'].value === "") {
+            keywords = ""
         }
-        this.aKeywords.unshift(this.state.keywords)
-        localStorage['hk'] = JSON.stringify(this.aKeywords)
-        this.props.dispatch(action.hk.addHistorykeywords({ keywords: this.aKeywords }))
-        this.setState({ bHistory: true })
-        this.goPage("goods/search?keywords=" + this.state.keywords)
+        if (keywords !== "") {
+            for (let i = 0; i < this.aKeywords.length; i++) {
+                if (this.aKeywords[i] === keywords) {
+                    this.aKeywords.splice(i--, 1)
+                }
+            }
+            this.aKeywords.unshift(keywords)
+            localStorage['hk'] = JSON.stringify(this.aKeywords)
+            this.props.dispatch(action.hk.addHistorykeywords({ keywords: this.aKeywords }))
+            this.setState({ bHistory: true })
+            this.goPage("goods/search?keywords=" + keywords, keywords)
+        } else {
+            Toast.info("请输入宝贝名称", 2)
+        }
     }
-    goPage(url) {
+    goPage(url, keywords) {
         if (this.props.isLocal === "1") {
-            this.props.childKeywords.bind(this, "aa")
+            // this.props.childKeywords.bind(this, keywords)()
+            this.props.childKeywords(keywords)
         } else {
             this.props.history.push(config.path + url)
         }
@@ -73,7 +83,9 @@ class SearchComponent extends React.Component {
                     <div className={Css['search-wrap']}>
                         <div className={Css['search-input-wrap']}>
                             <input type="text" className={Css['search']} placeholder='请输入宝贝名称'
-                                onChange={(e) => { this.setState({ keywords: e.target.value }) }} />
+                                defaultValue={this.props.keywords}
+                                onChange={(e) => { this.setState({ keywords: e.target.value }) }}
+                                ref="keywords" />
                         </div>
                         <button className={Css['search-btn']} onClick={this.addHistoryKeywords.bind(this)}></button>
                     </div>
@@ -87,7 +99,7 @@ class SearchComponent extends React.Component {
                         {
                             this.props.state.hk.keywords !== null ?
                                 this.props.state.hk.keywords.map((item, index) => {
-                                    return (<div key={index} className={Css['keywords']} onClick={this.goPage.bind(this, 'goods/search?keywords=' + item)}>{item}</div>)
+                                    return (<div key={index} className={Css['keywords']} onClick={this.goPage.bind(this, 'goods/search?keywords=' + item, item)}>{item}</div>)
                                 }) : ""
                         }
                     </div>
@@ -100,7 +112,7 @@ class SearchComponent extends React.Component {
                         {
                             this.state.aHotKeywords !== null ?
                                 this.state.aHotKeywords.map((item, index) => {
-                                    return (<div key={index} className={Css['keywords']} onClick={this.goPage.bind(this, 'goods/search?keywords=' + item)}>{item.title}</div>)
+                                    return (<div key={index} className={Css['keywords']} onClick={this.goPage.bind(this, 'goods/search?keywords=' + item.title, item.title)}>{item.title}</div>)
                                 }) : ""
                         }
                     </div>
