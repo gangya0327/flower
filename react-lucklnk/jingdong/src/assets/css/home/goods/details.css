@@ -18,3 +18,35 @@
     background-position: center;
     background-size: 100%;
 }
+
+.details-header .tab-wrap {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-around;
+    -webkit-justify-content: space-around;
+}
+
+.details-header .tab-wrap .tab-name {
+    width: auto;
+    height: 95%;
+    overflow: hidden;
+    line-height: 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.details-header .tab-wrap .tab-name.active {
+    border-bottom: 1px solid #fda208;
+}
+
+.details-header .cart-icon {
+    width: 0.8rem;
+    height: 0.8rem;
+    background-image: url('../../../images/home/goods/cart.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    margin-right: 0.2rem;
+}

@@ -18,7 +18,13 @@ export default class GoodsDetails extends React.Component {
         return (
             <div className={Css['details-header']}>
                 <div className={Css['back']}></div>
-                <div className={Css['back']}></div>
+                <div className={Css['tab-wrap']}>
+                    <div className={Css['tab-name'] + " " + Css['active']}>商品</div>
+                    <div className={Css['tab-name']}>详情</div>
+                    <div className={Css['tab-name']}>评价</div>
+                </div>
+                <div className={Css['cart-icon']}></div>
+
                 <div className={Css['']}></div>
             </div>
         )
