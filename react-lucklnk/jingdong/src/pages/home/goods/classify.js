@@ -31,10 +31,10 @@ export default class GoodsClassify extends React.Component {
         this.props.history.goBack();
     }
     eventScroll() {
-        document.getElementById("scroll-classify").addEventListener("touchmove", function (e) {
+        this.refs["scroll-classify"].addEventListener("touchmove", function (e) {
             e.preventDefault()
         }, false)
-        this.myScroll = new IScroll("#scroll-classify", {
+        this.myScroll = new IScroll(this.refs["scroll-classify"], {
             scrollX: false,
             scrollY: true,
             preventDefault: false
@@ -68,7 +68,7 @@ export default class GoodsClassify extends React.Component {
     }
     handleScroll(pIndex) {
         let iTopHeight = Math.round(parseInt(this.refs["item-" + pIndex].offsetHeight) * pIndex)
-        let oScrollClassify = document.getElementById("scroll-classify")
+        let oScrollClassify = this.refs["scroll-classify"]
         let iHalfHeight = Math.round(oScrollClassify.offsetHeight / 3)
         let iBottomHeight = oScrollClassify.scrollHeight - iTopHeight
         if (iTopHeight > iHalfHeight && iBottomHeight > oScrollClassify.offsetHeight) {
@@ -100,7 +100,7 @@ export default class GoodsClassify extends React.Component {
                     <div className={Css['search']} onClick={this.changeSearch.bind(this)}>请输入宝贝名称</div>
                 </div>
                 <div className={Css['goods-main']}>
-                    <div id="scroll-classify" className={Css['classify-wrap']}>
+                    <div ref='scroll-classify' className={Css['classify-wrap']}>
                         <div>
                             {
                                 this.state.aClassify !== null ?

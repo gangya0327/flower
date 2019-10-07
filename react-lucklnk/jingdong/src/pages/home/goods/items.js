@@ -36,10 +36,11 @@ export default class GoodsItems extends React.Component {
         })
     }
     eventScroll() {
-        document.getElementById("goods-content-main").addEventListener("touchmove", function (e) {
+        let goodsContentMain = this.refs['goods-content-main']
+        goodsContentMain.addEventListener("touchmove", function (e) {
             e.preventDefault()
         }, false)
-        this.myScroll = new IScroll("#goods-content-main", {
+        this.myScroll = new IScroll(goodsContentMain, {
             scrollX: false,
             scrollY: true,
             preventDefault: false
@@ -47,7 +48,7 @@ export default class GoodsItems extends React.Component {
     }
     render() {
         return (
-            <div className={Css['goods-container-main']} id="goods-content-main">
+            <div className={Css['goods-container-main']} ref="goods-content-main">
                 <div>
                     {
                         this.state.aGoods.length > 0 ?

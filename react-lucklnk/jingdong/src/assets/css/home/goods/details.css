@@ -8,6 +8,10 @@
     -webkit-align-items: center;
     justify-content: space-between;
     -webkit-justify-content: space-between;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
 }
 
 .details-header .back {
@@ -30,11 +34,11 @@
 
 .details-header .tab-wrap .tab-name {
     width: auto;
-    height: 95%;
+    height: 96%;
     overflow: hidden;
     line-height: 1rem;
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.36rem;
 }
 
 .details-header .tab-wrap .tab-name.active {
@@ -49,4 +53,17 @@
     background-position: center;
     background-size: 100%;
     margin-right: 0.2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.details-header .cart-icon .spot {
+    position: absolute;
+    width: 0.2rem;
+    height: 0.2rem;
+    background-color: #cc0004;
+    border-radius: 100%;
+    z-index: 1;
+    right: 0;
+    top: 0.15rem;
 }

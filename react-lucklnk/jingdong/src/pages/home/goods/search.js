@@ -75,7 +75,7 @@ export default class GoodsSearch extends React.Component {
         this.aParam = []
     }
     componentDidMount() {
-        this.myScroll = new IScroll("#screen", {
+        this.myScroll = new IScroll(this.refs['screen'], {
             scrollX: false,
             scrollY: true,
             preventDefault: false
@@ -427,7 +427,7 @@ export default class GoodsSearch extends React.Component {
                     }
                 </div>
                 <div ref="mask" className={this.state.bMask ? Css['mask'] : Css['mask'] + " hide"} onClick={this.hideScreen.bind(this)}></div>
-                <div ref="screen" className={Css['screen'] + " " + this.state.screenMove} id="screen">
+                <div ref="screen" className={Css['screen'] + " " + this.state.screenMove}>
                     <div>
                         <div className={Css['attr-wrap']}>
                             <div className={Css['attr-tittle-wrap']} onClick={this.handleClassify.bind(this)}>
