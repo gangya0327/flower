@@ -61,7 +61,7 @@ export default class DetailsItem extends React.Component {
                         <div className={Css['reviews-list']}>
                             <div className={Css['uinfo']}>
                                 <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head/492811357.jpg" alt=""/>
+                                    <img src="//vueshop.glbuys.com/userfiles/head/492811357.jpg" alt="" />
                                 </div>
                                 <div className={Css['nickname']}>流浪人</div>
                             </div>
@@ -71,7 +71,7 @@ export default class DetailsItem extends React.Component {
                         <div className={Css['reviews-list']}>
                             <div className={Css['uinfo']}>
                                 <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head/492811357.jpg" alt=""/>
+                                    <img src="//vueshop.glbuys.com/userfiles/head/492811357.jpg" alt="" />
                                 </div>
                                 <div className={Css['nickname']}>流浪人</div>
                             </div>
@@ -81,7 +81,7 @@ export default class DetailsItem extends React.Component {
                         <div className={Css['reviews-list']}>
                             <div className={Css['uinfo']}>
                                 <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head/492811357.jpg" alt=""/>
+                                    <img src="//vueshop.glbuys.com/userfiles/head/492811357.jpg" alt="" />
                                 </div>
                                 <div className={Css['nickname']}>流浪人</div>
                             </div>
@@ -91,7 +91,7 @@ export default class DetailsItem extends React.Component {
                         <div className={Css['reviews-list']}>
                             <div className={Css['uinfo']}>
                                 <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head/492811357.jpg" alt=""/>
+                                    <img src="//vueshop.glbuys.com/userfiles/head/492811357.jpg" alt="" />
                                 </div>
                                 <div className={Css['nickname']}>流浪人</div>
                             </div>
@@ -101,6 +101,13 @@ export default class DetailsItem extends React.Component {
                     </div>
                     <div className={Css['reviews-more']}>查看更多评价</div>
                 </div>
+                <div className={Css['bottom-btn-wrap']}>
+                    <div className={Css['btn'] + " " + Css['fav']}>收藏</div>
+                    <div className={Css['btn'] + " " + Css['cart']}>加入购物车</div>
+                </div>
+
+
+                <div className={Css['']}></div>
             </div>
         )
     }
