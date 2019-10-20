@@ -90,7 +90,21 @@ export default class DetailsItem extends React.Component {
         this.props.history.replace(config.path + url)
     }
     //选择属性值
-    checkAttrVal(){}
+    checkAttrVal(attrIndex, valIndex){
+        let aAttr = this.state.aAttr
+        if(aAttr.length>0) {
+            for(let key in aAttr[attrIndex].values) {
+                aAttr[attrIndex].values[key].checked = false
+            }
+        }
+        aAttr[attrIndex].values[valIndex].checked = true
+        this.setState({aAttr: aAttr})
+    }
+    //增加数量
+    incAmount(){
+
+    }
+    decAmount(){}
     render() {
         return (
             <div>
@@ -215,11 +229,11 @@ export default class DetailsItem extends React.Component {
                     <div className={Css['amount-wrap']}>
                         <div className={Css['amount-name']}>购买数量</div>
                         <div className={Css['amount-input-wrap']}>
-                            <div className={Css['dec'] + " " + Css['btn'] + " " + Css['active']}>-</div>
+                            <div className={Css['dec'] + " " + Css['btn'] + " " + Css['active']} onClick={this.decAmount.bind(this)}>-</div>
                             <div className={Css['amount-input']}>
                                 <input type="tel" defaultValue="1" />
                             </div>
-                            <div className={Css['inc'] + " " + Css['btn']}>+</div>
+                            <div className={Css['inc'] + " " + Css['btn']} onClick={this.incAmount.bind(this)}>+</div>
                         </div>
                     </div>
                     <div className={Css['sure-btn']}>确定</div>
