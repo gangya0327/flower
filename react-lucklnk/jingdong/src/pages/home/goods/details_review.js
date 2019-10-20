@@ -1,5 +1,5 @@
 import React from 'react'
-import Css from '../../../assets/css/home/goods/details.css'
+import Css from '../../../assets/css/home/goods/details_reviews.css'
 import { lazyImage, localParam } from '../../../assets/js/utils/utils'
 import { request } from '../../../assets/js/libs/request'
 import config from '../../../assets/js/conf/config'
@@ -16,7 +16,7 @@ export default class DetailsReview extends React.Component {
     }
     render() {
         return (
-            <div className={Css['']}>
+            <div className={Css['page']}>
                 商品评价
             </div>
         )
