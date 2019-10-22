@@ -6,6 +6,7 @@ import { request } from '../../../assets/js/libs/request'
 import { lazyImage, localParam } from '../../../assets/js/utils/utils'
 import config from '../../../assets/js/conf/config'
 import { Toast } from 'antd-mobile'
+import TweenMax from '../../../assets/js/libs/TweenMax'
 
 export default class DetailsItem extends React.Component {
     constructor(props) {
@@ -46,7 +47,8 @@ export default class DetailsItem extends React.Component {
                     "value": "73",
                     checked: false
                 }]
-            }]
+            }],
+            iAmount: 2
         }
     }
     componentDidMount() {
@@ -90,21 +92,36 @@ export default class DetailsItem extends React.Component {
         this.props.history.replace(config.path + url)
     }
     //选择属性值
-    checkAttrVal(attrIndex, valIndex){
+    checkAttrVal(attrIndex, valIndex) {
         let aAttr = this.state.aAttr
-        if(aAttr.length>0) {
-            for(let key in aAttr[attrIndex].values) {
+        if (aAttr.length > 0) {
+            for (let key in aAttr[attrIndex].values) {
                 aAttr[attrIndex].values[key].checked = false
             }
         }
         aAttr[attrIndex].values[valIndex].checked = true
-        this.setState({aAttr: aAttr})
+        this.setState({ aAttr: aAttr })
     }
     //增加数量
-    incAmount(){
-
+    incAmount() {
+        let iAmount = this.state.iAmount
+        this.setState({
+            iAmount: ++iAmount
+        })
     }
-    decAmount(){}
+    //减少数量
+    decAmount() {
+        let iAmount = this.state.iAmount
+        if (iAmount > 1) {
+            this.setState({
+                iAmount: --iAmount
+            })
+        }
+    }
+    //加入购物车
+    addCart() {
+        TweenMax.to(this.refs['goods-img', 3, { bezier: [{ x: 500, y: 0 }, { x: 500, y: 100 }] }])
+    }
     render() {
         return (
             <div>
@@ -194,7 +211,7 @@ export default class DetailsItem extends React.Component {
                             <div className={Css['line']}></div>
                             <div className={Css['close']} onClick={this.hideCartPanel.bind(this)}></div>
                         </div>
-                        <div className={Css['goods-img']}>
+                        <div ref="goods-img" className={Css['goods-img']}>
                             <img src="//vueshop.glbuys.com/uploadfiles/1524556409.jpg" alt="" />
                         </div>
                         <div className={Css['goods-wrap']}>
@@ -229,14 +246,14 @@ export default class DetailsItem extends React.Component {
                     <div className={Css['amount-wrap']}>
                         <div className={Css['amount-name']}>购买数量</div>
                         <div className={Css['amount-input-wrap']}>
-                            <div className={Css['dec'] + " " + Css['btn'] + " " + Css['active']} onClick={this.decAmount.bind(this)}>-</div>
+                            <div className={this.state.iAmount === 1 ? Css['dec'] + " " + Css['btn'] + " " + Css['active'] : Css['dec'] + " " + Css['btn']} onClick={this.decAmount.bind(this)}>-</div>
                             <div className={Css['amount-input']}>
-                                <input type="tel" defaultValue="1" />
+                                <input type="tel" value={this.state.iAmount} onChange={(e) => { this.setState({ iAmount: e.target.value.replace(/[a-zA-Z]|[\u4e00-\u9fa5]|[#|*|,|+|;|\.]/g, '') }) }} />
                             </div>
                             <div className={Css['inc'] + " " + Css['btn']} onClick={this.incAmount.bind(this)}>+</div>
                         </div>
                     </div>
-                    <div className={Css['sure-btn']}>确定</div>
+                    <div className={Css['sure-btn']} onClick={this.addCart.bind(this)}>确定</div>
                 </div>
 
                 <div className={Css['']}></div>

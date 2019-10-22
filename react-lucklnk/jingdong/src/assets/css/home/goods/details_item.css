@@ -369,7 +369,7 @@
 }
 
 .cart-panel .amount-wrap .amount-input-wrap .btn.active {
-    border-right: 1px solid #000;
+    color: #ccc;
 }
 
 .cart-panel .amount-wrap .amount-input-wrap .dec {

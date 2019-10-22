@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>TweenLite</title>
+<style type="text/css"> 
+body{ margin:0; padding:0; font-family:Tahoma, Geneva, sans-serif;}
+.navbtn{width:100px;height:50px;background: #000000;color:#FFFFFF;margin-top:10px;}
+.nav{width:200px;height:400px;background: #000000;color:#FFFFFF;position: absolute;z-index: 1;left:-200px;top:0px;}
+</style>
+    <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="TweenMax.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+
+        var myTween;
+        $("#navbtn").click(function(){
+            myTween=new TweenMax($("#nav"), 1.6, {css:{x:270,position:"absolute",zindex:"1"},ease:Linear.easeNone,onComplete: function(){
+                TweenMax.to($("#nav"),0,{x:0});
+            }});
+        });
+        $("#paused").click(function(){
+            //TweenMax.to($("#nav"),  {paused:true});
+            myTween.paused(true);
+            //TweenMax.pauseAll();
+        });
+        $("#navbtn2").click(function(){
+
+            TweenMax.to("#nav", 0.6, {x:'100%', ease:Linear.easeNone,onComplete: function(){
+                $("#nav").css("transform","translateX(0)");
+            }});
+        });
+    });
+</script>
+</head>
+ 
+<body>
+<div id="navbtn" class="navbtn">点击我</div>
+<div id="navbtn2" class="navbtn">点击我2</div>
+<div id="paused">暂停</div>
+<div id="nav" class="nav">
+    首页<br>案例<br>产品
+</div>
+</body>
+</html>
