@@ -376,6 +376,11 @@ export default class GoodsSearch extends React.Component {
 
         this.setState({ fPrice1: 0, fPrice2: 0, aClassify: aClassify, aPrice: aPrice, aAttr: aAttr })
     }
+    componentWillUnmount() {
+        this.setState=(state, callback)=>{
+            return
+        }
+    }
     render() {
         return (
             <div className={Css['page']}>

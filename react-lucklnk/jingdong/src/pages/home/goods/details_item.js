@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import Css from '../../../assets/css/home/goods/details_item.css'
 import '../../../assets/css/common/swiper.min.css'
 import Swiper from '../../../assets/js/libs/swiper.min.js'
@@ -48,8 +49,9 @@ export default class DetailsItem extends React.Component {
                     checked: false
                 }]
             }],
-            iAmount: 2
+            iAmount: 2,
         }
+        this.bMove = false
     }
     componentDidMount() {
         this.getSwiper()
@@ -92,7 +94,7 @@ export default class DetailsItem extends React.Component {
         this.props.history.replace(config.path + url)
     }
     //选择属性值
-    checkAttrVal(attrIndex, valIndex) {
+    selectAttrVal(attrIndex, valIndex) {
         let aAttr = this.state.aAttr
         if (aAttr.length > 0) {
             for (let key in aAttr[attrIndex].values) {
@@ -120,7 +122,53 @@ export default class DetailsItem extends React.Component {
     }
     //加入购物车
     addCart() {
-        TweenMax.to(this.refs['goods-img', 3, { bezier: [{ x: 500, y: 0 }, { x: 500, y: 100 }] }])
+        this.checkAttrVal(() => {
+            if (!this.bMove) {
+                this.bMove = true
+                let oGoodsImg = this.refs['goods-img'], oGoodsInfo = this.refs['goods-info'], oCartPanel = this.refs['cart-panel']
+                let oCloneImg = oGoodsImg.cloneNode(true)
+                let oCartIcon = ReactDOM.findDOMNode(document.getElementById('cart-icon'))
+                oCloneImg.style.cssText = "width:0.4rem;height:0.4rem;position:absolute;z-index:1;left:0.2rem;top:0.2rem;"
+                let srcImgX = oGoodsImg.offsetLeft
+                let cloneY = window.innerHeight - oCartPanel.offsetHeight + oGoodsImg.offsetTop - oCartIcon.offsetTop
+                TweenMax.to(oCloneImg, 2, {
+                    bezier: [{ x: srcImgX, y: -100 }, { x: srcImgX + 30, y: -130 }, { x: oCartIcon.offsetLeft, y: -cloneY }], onComplete: () => {
+                        oCloneImg.remove();
+                        this.bMove = false
+                    }
+                });
+                TweenMax.to(oCloneImg, 0.2, { rotation: 360, repeat: -1 })
+            }
+        })
+    }
+    // 检测是否选中属性值
+    checkAttrVal(callback) {
+        let aAttr = this.state.aAttr, bSelect = false, aAttrName = ""
+        if (aAttr.length > 0) {
+            for (let key in aAttr) {
+                bSelect = false
+                for (let key2 in aAttr[key].values) {
+                    if (aAttr[key].values[key2].checked) {
+                        bSelect = true
+                        break
+                    }
+                }
+                if (!bSelect) {
+                    aAttrName = aAttr[key].title
+                    break;
+                }
+            }
+            if (!bSelect) {
+                Toast.info('请选择' + aAttrName, 2)
+            } else {
+                callback()
+            }
+        }
+    }
+    componentWillUnmount() {
+        this.setState=(state, callback)=>{
+            return
+        }
     }
     render() {
         return (
@@ -204,8 +252,8 @@ export default class DetailsItem extends React.Component {
                     <div className={Css['btn'] + " " + Css['cart']} onClick={this.showCartPanel.bind(this)}>加入购物车</div>
                 </div>
                 <div ref="mask" className={this.state.bMask ? Css['mask'] : Css['mask'] + " hide"}></div>
-                <div className={Css['cart-panel'] + " " + this.state.sCartPanel}>
-                    <div className={Css['goods-info']}>
+                <div ref='cart-panel' className={Css['cart-panel'] + " " + this.state.sCartPanel}>
+                    <div ref='goods-info' className={Css['goods-info']}>
                         <div className={Css['close-panel-wrap']}>
                             <div className={Css['spot']}></div>
                             <div className={Css['line']}></div>
@@ -233,7 +281,7 @@ export default class DetailsItem extends React.Component {
                                                         item.values.map((item2, index2) => {
                                                             return (
                                                                 <span className={item2.checked ? Css['val'] + " " + Css['active'] : Css['val']} key={index2}
-                                                                    onClick={this.checkAttrVal.bind(this, index, index2)}>{item2.value}</span>
+                                                                    onClick={this.selectAttrVal.bind(this, index, index2)}>{item2.value}</span>
                                                             )
                                                         }) : ""
                                                 }

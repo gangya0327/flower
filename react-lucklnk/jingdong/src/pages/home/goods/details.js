@@ -74,7 +74,7 @@ export default class GoodsDetails extends React.Component {
                         <div className={this.state.tabStyle.bContent ? Css['tab-name'] + " " + Css['active'] : Css['tab-name']} onClick={this.replacePage.bind(this, 'goods/details/content?gid=' + this.state.gid)}>详情</div>
                         <div className={this.state.tabStyle.bReiviews ? Css['tab-name'] + " " + Css['active'] : Css['tab-name']} onClick={this.replacePage.bind(this, 'goods/details/reviews?gid=' + this.state.gid)}>评价</div>
                     </div>
-                    <div className={Css['cart-icon']}>
+                    <div id="cart-icon" className={Css['cart-icon']}>
                         <div className={Css['spot']}></div>
                     </div>
                 </div>

@@ -40,6 +40,9 @@ export default class IndexComponent extends React.Component {
     componentWillUnmount() {
         this.bScroll = false
         window.removeEventListener("scroll", this.eventScroll.bind(this))
+        this.setState=(state, callback)=>{
+            return
+        }
     }
     getSwiper() {
         request(config.baseUrl + "/api/home/index/slide?token=" + config.token).then((res) => {

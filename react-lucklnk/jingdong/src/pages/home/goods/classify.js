@@ -92,6 +92,11 @@ export default class GoodsClassify extends React.Component {
     getStyle(val) {
         this.setState({ pageStyle: val })
     }
+    componentWillUnmount() {
+        this.setState=(state, callback)=>{
+            return
+        }
+    }
     render() {
         return (
             <div>

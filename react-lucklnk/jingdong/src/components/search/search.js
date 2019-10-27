@@ -75,6 +75,11 @@ class SearchComponent extends React.Component {
             this.props.history.push(config.path + url)
         }
     }
+    componentWillUnmount() {
+        this.setState=(state, callback)=>{
+            return
+        }
+    }
     render() {
         return (
             <div style={this.props.pageStyle} className={Css['page']}>
