@@ -23,4 +23,13 @@ function localParam(search, hash) {
     }
 }
 
-export { lazyImage, localParam }
+console.log(global.scrollTop.index);
+
+function setScrollTop(val=0) {
+    setTimeout(()=>{
+        document.body.scrollTop = val
+        document.documentElement.scrollTop = val
+    }, val)
+}
+
+export { lazyImage, localParam, setScrollTop }

@@ -1,7 +1,7 @@
 import React from 'react'
 import Css from '../../../assets/css/home/goods/details.css'
 import { Route, Switch, Redirect } from 'react-router-dom'
-import { lazyImage, localParam } from '../../../assets/js/utils/utils'
+import { localParam } from '../../../assets/js/utils/utils'
 import asyncComponent from "../../../components/async/AsyncComponent"
 import config from '../../../assets/js/conf/config'
 

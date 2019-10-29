@@ -55,6 +55,11 @@ export default class HomeComponent extends React.Component {
                 break;
         }
     }
+    componentWillUnmount() {
+        this.setState=(state, callback)=>{
+            return
+        }
+    }
     render() {
         return (
             <div>

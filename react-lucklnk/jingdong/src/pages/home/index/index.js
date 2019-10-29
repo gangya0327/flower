@@ -1,6 +1,6 @@
 import React from 'react'
 import Swiper from '../../../assets/js/libs/swiper.min.js'
-import { lazyImage } from '../../../assets/js/utils/utils'
+import { lazyImage, setScrollTop } from '../../../assets/js/utils/utils'
 import { request } from '../../../assets/js/libs/request'
 import config from '../../../assets/js/conf/config'
 import '../../../assets/css/common/swiper.min.css'
@@ -21,6 +21,7 @@ export default class IndexComponent extends React.Component {
         this.bScroll = true
     }
     componentDidMount() {
+        setScrollTop(global.scrollTop.index)
         this.getSwiper();
         this.getNav();
         this.getGoodsLevel();
@@ -30,6 +31,7 @@ export default class IndexComponent extends React.Component {
     eventScroll() {
         if (this.bScroll) {
             let iScrollTop = document.documentElement.scrollTop || document.body.scrollTop
+            global.scrollTop.index = iScrollTop
             if (iScrollTop >= 80) {
                 this.setState({ bScroll: true })
             } else {

@@ -14,6 +14,11 @@ export default class DetailsContent extends React.Component {
     }
     componentWillReceiveProps(newProps) {
     }
+    componentWillUnmount() {
+        this.setState=(state, callback)=>{
+            return
+        }
+    }
     render() {
         return (
             <div className={Css['page']}>

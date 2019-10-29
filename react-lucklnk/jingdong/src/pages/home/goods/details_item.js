@@ -4,7 +4,7 @@ import Css from '../../../assets/css/home/goods/details_item.css'
 import '../../../assets/css/common/swiper.min.css'
 import Swiper from '../../../assets/js/libs/swiper.min.js'
 import { request } from '../../../assets/js/libs/request'
-import { lazyImage, localParam } from '../../../assets/js/utils/utils'
+import { lazyImage, localParam, setScrollTop } from '../../../assets/js/utils/utils'
 import config from '../../../assets/js/conf/config'
 import { Toast } from 'antd-mobile'
 import TweenMax from '../../../assets/js/libs/TweenMax'
@@ -54,6 +54,7 @@ export default class DetailsItem extends React.Component {
         this.bMove = false
     }
     componentDidMount() {
+        setScrollTop(global.scrollTop.index)
         this.getSwiper()
     }
     getSwiper() {

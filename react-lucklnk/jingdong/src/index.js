@@ -8,6 +8,7 @@ import RouterComponent from './router';
 import * as serviceWorker from './serviceWorker';
 import './assets/js/libs/zepto.101.min.js'
 import './assets/css/common/public.css'
+import './assets/js/conf/global.js'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducers from './reducers'
