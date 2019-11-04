@@ -50,18 +50,37 @@ export default class DetailsItem extends React.Component {
                 }]
             }],
             iAmount: 2,
+            aSlide: [],
+            sGoodsTitle: "",
+            fPrice: 0,
+            fFreight: 0,
+            iSales: 0
         }
         this.bMove = false
     }
     componentDidMount() {
         setScrollTop(global.scrollTop.index)
-        this.getSwiper()
+        this.getGoodsInfo()
     }
-    getSwiper() {
-        new Swiper(this.refs['swiper-wrap'], {
-            autoplay: 3000,
-            pagination: ".swiper-pagination",
-            autoplayDisableOnInteraction: false
+    //获取商品轮播图和商品信息
+    getGoodsInfo() {
+        let sUrl = config.baseUrl + "/api/home/goods/info?gid=" + this.state.gid + "&type=details&token=" + config.token
+        request(sUrl).then((res) => {
+            if (res.code === 200) {
+                this.setState({
+                    aSlide: res.data.images,
+                    sGoodsTitle: res.data.title,
+                    fPrice: res.data.price,
+                    fFreight: res.data.freight,
+                    iSales: res.data.sales
+                }, () => {
+                    new Swiper(this.refs['swiper-wrap'], {
+                        autoplay: 3000,
+                        pagination: ".swiper-pagination",
+                        autoplayDisableOnInteraction: false
+                    })
+                })
+            }
         })
     }
     //显示购物控制面板
@@ -167,7 +186,7 @@ export default class DetailsItem extends React.Component {
         }
     }
     componentWillUnmount() {
-        this.setState=(state, callback)=>{
+        this.setState = (state, callback) => {
             return
         }
     }
@@ -176,30 +195,28 @@ export default class DetailsItem extends React.Component {
             <div>
                 <div className={Css['swiper-wrap']} ref="swiper-wrap">
                     <div className="swiper-wrapper">
-                        <div className="swiper-slide">
-                            <a href="//baidu.com" target="_blank" rel="noopener noreferrer">
-                                <img src="//vueshop.glbuys.com/uploadfiles/1524556409.jpg" alt="" />
-                            </a>
-                        </div>
-                        <div className="swiper-slide">
-                            <a href="//baidu.com" target="_blank" rel="noopener noreferrer">
-                                <img src="//vueshop.glbuys.com/uploadfiles/1524556409.jpg" alt="" />
-                            </a>
-                        </div>
-                        <div className="swiper-slide">
-                            <a href="//baidu.com" target="_blank" rel="noopener noreferrer">
-                                <img src="//vueshop.glbuys.com/uploadfiles/1524556409.jpg" alt="" />
-                            </a>
-                        </div>
+                        {
+                            this.state.aSlide.length > 0 ?
+                                this.state.aSlide.map((item, index) => {
+                                    return (
+                                        <div className="swiper-slide" key={index}>
+                                            <a href="//baidu.com" target="_blank" rel="noopener noreferrer">
+                                                <img src={item} alt="" />
+                                            </a>
+                                        </div>
+                                    )
+                                })
+                                : ""
+                        }
                     </div>
                     <div className="swiper-pagination"></div>
                 </div>
                 <div className={Css['goods-ele-main']}>
-                    <div className={Css['goods-title']}>高跟鞋女2018新款春季单鞋仙女甜美链子尖头防水台细跟女鞋一字带</div>
-                    <div className={Css['price']}>¥128</div>
+                    <div className={Css['goods-title']}>{this.state.sGoodsTitle}</div>
+                    <div className={Css['price']}>¥{this.state.fPrice}</div>
                     <ul className={Css['sales-wrap']}>
-                        <li>快递：20元</li>
-                        <li>月销量10件</li>
+                        <li>快递：{this.state.fFreight}元</li>
+                        <li>月销量{this.state.iSales}件</li>
                     </ul>
                 </div>
                 <div className={Css['reviews-main']}>
@@ -264,9 +281,9 @@ export default class DetailsItem extends React.Component {
                             <img src="//vueshop.glbuys.com/uploadfiles/1524556409.jpg" alt="" />
                         </div>
                         <div className={Css['goods-wrap']}>
-                            <div className={Css['goods-title']}>高跟鞋女2018新款春季单鞋仙女甜美链子尖头防水台细跟女鞋一字带</div>
-                            <div className={Css['price']}>￥128</div>
-                            <div className={Css['goods-code']}>商品编码：143208071</div>
+                            <div className={Css['goods-title']}>{this.state.sGoodsTitle}</div>
+                            <div className={Css['price']}>￥{this.state.fPrice}</div>
+                            <div className={Css['goods-code']}>商品编码：{this.state.gid}</div>
                         </div>
                     </div>
                     <div className={Css['attr-wrap']}>

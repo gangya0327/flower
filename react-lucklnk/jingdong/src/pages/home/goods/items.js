@@ -46,6 +46,14 @@ export default class GoodsItems extends React.Component {
             preventDefault: false
         })
     }
+    pushPage(url) {
+        this.props.history.push(config.path + url);
+    }
+    componentWillUnmount() {
+        this.setState=(state, callback)=>{
+            return
+        }
+    }
     render() {
         return (
             <div className={Css['goods-container-main']} ref="goods-content-main">
@@ -61,7 +69,7 @@ export default class GoodsItems extends React.Component {
                                                 item.goods !== null ?
                                                     item.goods.map((item2, index2) => {
                                                         return (
-                                                            <ul key={index2}>
+                                                            <ul key={index2} onClick={this.pushPage.bind(this, 'goods/details/item?gid=' + item2.gid)}>
                                                                 <li>
                                                                     <img src={require("../../../assets/images/common/lazyImg.jpg")} alt={item2.title} data-echo={item2.image} />
                                                                 </li>
