@@ -47,8 +47,12 @@ export default class GoodsItems extends React.Component {
         })
     }
     pushPage(url) {
-        console.log(163);
         this.props.history.push(config.path + url);
+    }
+    componentWillUnmount() {
+        this.setState=(state, callback)=>{
+            return
+        }
     }
     render() {
         return (

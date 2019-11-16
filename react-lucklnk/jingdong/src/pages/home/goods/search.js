@@ -381,6 +381,9 @@ export default class GoodsSearch extends React.Component {
             return
         }
     }
+    pushPage(url) {
+        this.props.history.push(config.path + url);
+    }
     render() {
         return (
             <div className={Css['page']}>
@@ -417,7 +420,7 @@ export default class GoodsSearch extends React.Component {
                         this.state.aGoods.length > 0 ?
                             this.state.aGoods.map((item, index) => {
                                 return (
-                                    <div className={Css['goods-list']} key={index}>
+                                    <div className={Css['goods-list']} key={index} onClick={this.pushPage.bind(this, 'goods/details/item?gid=' + item.gid)}>
                                         <div className={Css['image']}>
                                             <img data-echo={item.image} src={require("../../../assets/images/common/lazyImg.jpg")} alt={item.title} />
                                         </div>

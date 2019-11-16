@@ -27,6 +27,11 @@ export default class GoodsDetails extends React.Component {
     componentWillReceiveProps(newProps) {
         this.setStyle(newProps);
     }
+    componentWillUnmount() {
+        this.setState=(state, callback)=>{
+            return
+        }
+    }
     //设置选项卡切换的样式
     setStyle(props) {
         switch (props.location.pathname) {
