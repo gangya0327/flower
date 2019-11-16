@@ -54,13 +54,17 @@ export default class DetailsItem extends React.Component {
             sGoodsTitle: "",
             fPrice: 0,
             fFreight: 0,
-            iSales: 0
+            iSales: 0,
+            aReviews: [],
+            iReviewTotal: 0
         }
         this.bMove = false
     }
     componentDidMount() {
         setScrollTop(global.scrollTop.index)
         this.getGoodsInfo()
+        this.getAttr()
+        this.getReviews()
     }
     //获取商品轮播图和商品信息
     getGoodsInfo() {
@@ -80,6 +84,28 @@ export default class DetailsItem extends React.Component {
                         autoplayDisableOnInteraction: false
                     })
                 })
+            }
+        })
+    }
+    //获取商品规格属性
+    getAttr() {
+        let sUrl = config.baseUrl + "/api/home/goods/info?gid=" + this.state.gid + "&page=1&token=" + config.token
+        request(sUrl).then((res) => {
+            if (res.code === 200) {
+                this.setState({ aAttr: res.data })
+            }
+        })
+    }
+    //获取商品评价
+    getReviews() {
+        let sUrl = config.baseUrl + "/api/home/reviews/index?gid=" + this.state.gid + "&type=spec&token=" + config.token
+        request(sUrl).then((res) => {
+            if (res.code === 200) {
+                this.setState({ aReviews: res.data, iReviewTotal: res.pageinfo.total }, ()=>{
+                    lazyImage()
+                })
+            } else {
+                this.setState({ aReviews: [] })
             }
         })
     }
@@ -220,50 +246,27 @@ export default class DetailsItem extends React.Component {
                     </ul>
                 </div>
                 <div className={Css['reviews-main']}>
-                    <div className={Css['reviews-title']}>商品评价（22）</div>
+                    <div className={Css['reviews-title']}>商品评价（{this.state.iReviewTotal}）</div>
                     <div className={Css['reviews-wrap']}>
-                        <div className={Css['reviews-list']}>
-                            <div className={Css['uinfo']}>
-                                <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head/492811357.jpg" alt="" />
-                                </div>
-                                <div className={Css['nickname']}>流浪人</div>
-                            </div>
-                            <div className={Css['reviews-content']}>这些是评价内容吧啦吧啦吧啦</div>
-                            <div className={Css['reviews-date']}>2019-10-04 15:03:34</div>
-                        </div>
-                        <div className={Css['reviews-list']}>
-                            <div className={Css['uinfo']}>
-                                <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head/492811357.jpg" alt="" />
-                                </div>
-                                <div className={Css['nickname']}>流浪人</div>
-                            </div>
-                            <div className={Css['reviews-content']}>这些是评价内容吧啦吧啦吧啦</div>
-                            <div className={Css['reviews-date']}>2019-10-04 15:03:34</div>
-                        </div>
-                        <div className={Css['reviews-list']}>
-                            <div className={Css['uinfo']}>
-                                <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head/492811357.jpg" alt="" />
-                                </div>
-                                <div className={Css['nickname']}>流浪人</div>
-                            </div>
-                            <div className={Css['reviews-content']}>这些是评价内容吧啦吧啦吧啦</div>
-                            <div className={Css['reviews-date']}>2019-10-04 15:03:34</div>
-                        </div>
-                        <div className={Css['reviews-list']}>
-                            <div className={Css['uinfo']}>
-                                <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head/492811357.jpg" alt="" />
-                                </div>
-                                <div className={Css['nickname']}>流浪人</div>
-                            </div>
-                            <div className={Css['reviews-content']}>这些是评价内容吧啦吧啦吧啦</div>
-                            <div className={Css['reviews-date']}>2019-10-04 15:03:34</div>
-                        </div>
+                        {
+                            this.state.aReviews.length > 0 ?
+                                this.state.aReviews.map((item, index) => {
+                                    return (
+                                        <div className={Css['reviews-list']} key={index}>
+                                            <div className={Css['uinfo']}>
+                                                <div className={Css['head']}>
+                                                    <img src={require("../../../assets/images/common/lazyImg.jpg")} data-echo={item.head} alt={item.nickname} />
+                                                </div>
+                                                <div className={Css['nickname']}>{item.nickname}</div>
+                                            </div>
+                                            <div className={Css['reviews-content']}>{item.content}</div>
+                                            <div className={Css['reviews-date']}>{item.times}</div>
+                                        </div>
+                                    )
+                                }) : <div className="null-item">没有任何评价</div>
+                        }
                     </div>
-                    <div className={Css['reviews-more']} onClick={this.replacePage.bind(this, 'goods/details/reviews?gid=' + this.state.gid)}>查看更多评价</div>
+                    <div className={this.state.iReviewTotal>0?Css['reviews-more']:Css['reviews-more'] + " hide"} onClick={this.replacePage.bind(this, 'goods/details/reviews?gid=' + this.state.gid)}>查看更多评价</div>
                 </div>
                 <div className={Css['bottom-btn-wrap']}>
                     <div className={Css['btn'] + " " + Css['fav']} onClick={this.addFav.bind(this)}>收藏</div>
@@ -278,7 +281,7 @@ export default class DetailsItem extends React.Component {
                             <div className={Css['close']} onClick={this.hideCartPanel.bind(this)}></div>
                         </div>
                         <div ref="goods-img" className={Css['goods-img']}>
-                            <img src="//vueshop.glbuys.com/uploadfiles/1524556409.jpg" alt="" />
+                            <img src={this.state.aSlide.length !== 0 ? this.state.aSlide[0] : ""} alt="" />
                         </div>
                         <div className={Css['goods-wrap']}>
                             <div className={Css['goods-title']}>{this.state.sGoodsTitle}</div>
