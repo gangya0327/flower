@@ -1,6 +1,6 @@
 import React from 'react'
 import Css from '../../../assets/css/home/goods/details_content.css'
-import { lazyImage, localParam } from '../../../assets/js/utils/utils'
+import { localParam } from '../../../assets/js/utils/utils'
 import { request } from '../../../assets/js/libs/request'
 import config from '../../../assets/js/conf/config'
 

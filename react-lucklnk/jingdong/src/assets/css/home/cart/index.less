@@ -1,0 +1,230 @@
+.cart-main {
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 2.2rem;
+
+    .cart-list {
+        width: 100%;
+        height: 2.2rem;
+        background-color: #fff;
+        display: flex;
+        display: -webkit-flex;
+        align-items: center;
+        -webkit-align-items: center;
+        margin-top: 0.1rem;
+
+        .select-btn {
+            width: 0.4rem;
+            height: 0.4rem;
+            border: 1px solid #efefef;
+            border-radius: 100%;
+            margin-left: 0.2rem;
+            margin-right: 0.3rem;
+
+            &.active {
+                background-image: url("../../../images/home/cart/checkmark.png");
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position: center;
+                border: none;
+            }
+        }
+
+        .image-wrap {
+            width: 1.2rem;
+            margin-right: 0.3rem;
+
+            .image {
+                width: 100%;
+                height: 1.2rem;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            .del {
+                font-size: 0.24rem;
+                text-align: center;
+                width: 100%;
+                color: #bb55bb;
+                margin-top: 0.2rem;
+            }
+        }
+
+        .goods-wrap {
+            width: 64%;
+            font-size: 0.24rem;
+
+            .goods-title {
+                width: 100%;
+            }
+
+            .goods-attr {
+                width: 100%;
+                margin-top: 0.1rem;
+
+                span {
+                    padding-right: 0.3rem;
+                }
+            }
+
+            .buy-wrap {
+                width: 100%;
+                display: flex;
+                display: -webkit-flex;
+                justify-content: space-around;
+                -webkit-justify-content: space-between;
+                align-items: center;
+                -webkit-align-items: center;
+
+                .goods-price {
+                    font-size: 0.28rem;
+                    color: #cc0004;
+                    margin-top: 0.2rem;
+                }
+
+                .amount-wrap {
+                    width: auto;
+                    padding-left: 0.2rem;
+                    padding-top: 0.2rem;
+                    display: flex;
+                    display: -webkit-flex;
+                    align-items: center;
+                    -webkit-align-items: center;
+                    justify-content: space-between;
+                    -webkit-justify-content: space-between;
+                    height: 0.64rem;
+                    background-color: #fff;
+
+                    .amount-name {
+                        width: auto;
+                        font-size: 0.32rem;
+                    }
+
+                    .amount-input-wrap {
+                        width: 2.04rem;
+                        height: 0.5rem;
+                        border: 1px solid #000;
+                        margin-right: 0.2rem;
+                        border-radius: 0.08rem;
+                        display: flex;
+                        display: -webkit-flex;
+                        align-items: center;
+                        -webkit-align-items: center;
+
+                        .btn {
+                            width: 0.6rem;
+                            height: 0.4rem;
+                            font-size: 0.32rem;
+                            text-align: center;
+                            line-height: 0.4rem;
+                        }
+
+                        .btn.active {
+                            color: #ccc;
+                        }
+
+                        .dec {
+                            border-right: 1px solid #000;
+                        }
+
+                        .inc {
+                            border-left: 1px solid #000;
+                        }
+
+                        .amount-input {
+                            width: 0.76rem;
+                            height: 100%;
+
+                            input {
+                                width: 100%;
+                                height: 100%;
+                                text-align: center;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.orderend-wrap {
+    width: 100%;
+    height: 1rem;
+    background-color: #fff;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    bottom: 1.21rem;
+    border-top: 1px solid #efefef;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    -webkit-align-items: center;
+
+    .select-area {
+        width: auto;
+        height: 100%;
+        flex: 7;
+        -webkit-flex: 7;
+        display: flex;
+        display: -webkit-flex;
+        align-items: center;
+        -webkit-align-items: center;
+        justify-content: space-between;
+        -webkit-justify-content: space-between;
+
+        .select-wrap {
+            width: auto;
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            -webkit-align-items: center;
+
+            .select-btn {
+                width: 0.4rem;
+                height: 0.4rem;
+                border: 1px solid #efefef;
+                border-radius: 100%;
+                margin-left: 0.2rem;
+                margin-right: 0.1rem;
+
+                &.active {
+                    background-image: url("../../../images/home/cart/checkmark.png");
+                    background-size: 100%;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    border: none;
+                }
+            }
+
+            .select-text {
+                font-size: 0.24rem;
+            }
+        }
+
+        .total {
+            font-size: 0.24rem;
+            margin-right: 0.1rem;
+
+            span {
+                color: #cc000c;
+            }
+        }
+    }
+
+    .orderend-btn {
+        width: auto;
+        height: 100%;
+        flex: 3;
+        -webkit-flex: 3;
+        background-color: #cc000c;
+        font-size: 0.32rem;
+        color: #fff;
+        text-align: center;
+        line-height: 1rem;
+    }
+}

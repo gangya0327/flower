@@ -8,47 +8,17 @@ import { lazyImage, localParam, setScrollTop } from '../../../assets/js/utils/ut
 import config from '../../../assets/js/conf/config'
 import { Toast } from 'antd-mobile'
 import TweenMax from '../../../assets/js/libs/TweenMax'
+import { connect } from 'react-redux'
+import action from '../../actions'
 
-export default class DetailsItem extends React.Component {
+class DetailsItem extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             bMask: false,
             sCartPanel: Css['down'],
             gid: this.props.history.location.search !== "" ? localParam(this.props.history.location.search).search.gid : "",
-            aAttr: [{
-                "attrid": "1006",
-                "title": "颜色",
-                "values": [{
-                    "vid": "854",
-                    "value": "红色",
-                    checked: false
-                }, {
-                    "vid": "855",
-                    "value": "白色",
-                    checked: true
-                }, {
-                    "vid": "856",
-                    "value": "紫色",
-                    checked: false
-                }]
-            }, {
-                "attrid": "1007",
-                "title": "尺寸",
-                "values": [{
-                    "vid": "857",
-                    "value": "36",
-                    checked: false
-                }, {
-                    "vid": "858",
-                    "value": "72",
-                    checked: false
-                }, {
-                    "vid": "859",
-                    "value": "73",
-                    checked: false
-                }]
-            }],
+            aAttr: [],
             iAmount: 2,
             aSlide: [],
             sGoodsTitle: "",
@@ -89,7 +59,7 @@ export default class DetailsItem extends React.Component {
     }
     //获取商品规格属性
     getAttr() {
-        let sUrl = config.baseUrl + "/api/home/goods/info?gid=" + this.state.gid + "&page=1&token=" + config.token
+        let sUrl = config.baseUrl + "/api/home/goods/info?gid=" + this.state.gid + "&type=spec&token=" + config.token
         request(sUrl).then((res) => {
             if (res.code === 200) {
                 this.setState({ aAttr: res.data })
@@ -98,10 +68,10 @@ export default class DetailsItem extends React.Component {
     }
     //获取商品评价
     getReviews() {
-        let sUrl = config.baseUrl + "/api/home/reviews/index?gid=" + this.state.gid + "&type=spec&token=" + config.token
+        let sUrl = config.baseUrl + "/api/home/reviews/index?gid=" + this.state.gid + "&page=1&token=" + config.token
         request(sUrl).then((res) => {
             if (res.code === 200) {
-                this.setState({ aReviews: res.data, iReviewTotal: res.pageinfo.total }, ()=>{
+                this.setState({ aReviews: res.data, iReviewTotal: res.pageinfo.total }, () => {
                     lazyImage()
                 })
             } else {
@@ -173,6 +143,7 @@ export default class DetailsItem extends React.Component {
                 this.bMove = true
                 let oGoodsImg = this.refs['goods-img'], oGoodsInfo = this.refs['goods-info'], oCartPanel = this.refs['cart-panel']
                 let oCloneImg = oGoodsImg.cloneNode(true)
+                oGoodsInfo.appendChild(oCloneImg);
                 let oCartIcon = ReactDOM.findDOMNode(document.getElementById('cart-icon'))
                 oCloneImg.style.cssText = "width:0.4rem;height:0.4rem;position:absolute;z-index:1;left:0.2rem;top:0.2rem;"
                 let srcImgX = oGoodsImg.offsetLeft
@@ -181,6 +152,10 @@ export default class DetailsItem extends React.Component {
                     bezier: [{ x: srcImgX, y: -100 }, { x: srcImgX + 30, y: -130 }, { x: oCartIcon.offsetLeft, y: -cloneY }], onComplete: () => {
                         oCloneImg.remove();
                         this.bMove = false
+
+                        //将商品添加到redux
+                        // this.props.dispatch(action.hk.addHistorykeywords({ keywords: this.aKeywords }))
+                        this.props.dispatch(action.cart.addCart({gid: this.state.gid}))
                     }
                 });
                 TweenMax.to(oCloneImg, 0.2, { rotation: 360, repeat: -1 })
@@ -189,6 +164,7 @@ export default class DetailsItem extends React.Component {
     }
     // 检测是否选中属性值
     checkAttrVal(callback) {
+        console.log(88, this.state.aAttr);
         let aAttr = this.state.aAttr, bSelect = false, aAttrName = ""
         if (aAttr.length > 0) {
             for (let key in aAttr) {
@@ -206,7 +182,8 @@ export default class DetailsItem extends React.Component {
             }
             if (!bSelect) {
                 Toast.info('请选择' + aAttrName, 2)
-            } else {
+            }
+            if (bSelect) {
                 callback()
             }
         }
@@ -266,7 +243,7 @@ export default class DetailsItem extends React.Component {
                                 }) : <div className="null-item">没有任何评价</div>
                         }
                     </div>
-                    <div className={this.state.iReviewTotal>0?Css['reviews-more']:Css['reviews-more'] + " hide"} onClick={this.replacePage.bind(this, 'goods/details/reviews?gid=' + this.state.gid)}>查看更多评价</div>
+                    <div className={this.state.iReviewTotal > 0 ? Css['reviews-more'] : Css['reviews-more'] + " hide"} onClick={this.replacePage.bind(this, 'goods/details/reviews?gid=' + this.state.gid)}>查看更多评价</div>
                 </div>
                 <div className={Css['bottom-btn-wrap']}>
                     <div className={Css['btn'] + " " + Css['fav']} onClick={this.addFav.bind(this)}>收藏</div>
@@ -317,7 +294,7 @@ export default class DetailsItem extends React.Component {
                         <div className={Css['amount-input-wrap']}>
                             <div className={this.state.iAmount === 1 ? Css['dec'] + " " + Css['btn'] + " " + Css['active'] : Css['dec'] + " " + Css['btn']} onClick={this.decAmount.bind(this)}>-</div>
                             <div className={Css['amount-input']}>
-                                <input type="tel" value={this.state.iAmount} onChange={(e) => { this.setState({ iAmount: e.target.value.replace(/[a-zA-Z]|[\u4e00-\u9fa5]|[#|*|,|+|;|\.]/g, '') }) }} />
+                                <input type="tel" value={this.state.iAmount} onChange={(e) => { this.setState({ iAmount: e.target.value.replace(/[a-zA-Z]|[\u4e00-\u9fa5]|[#|*|,|+|;|.]/g, '') }) }} />
                             </div>
                             <div className={Css['inc'] + " " + Css['btn']} onClick={this.incAmount.bind(this)}>+</div>
                         </div>
@@ -330,3 +307,9 @@ export default class DetailsItem extends React.Component {
         )
     }
 }
+
+export default connect((state) => {
+    return {
+        state: state
+    }
+})(DetailsItem)

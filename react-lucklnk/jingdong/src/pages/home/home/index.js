@@ -19,17 +19,17 @@ export default class HomeComponent extends React.Component {
     }
     componentWillMount() {
     }
-    componentDidMount(){
-        this.handleNavStyle()
+    componentDidMount() {
+        this.handleNavStyle(this.props)
     }
     componentWillReceiveProps(newProps) {
-        this.handleNavStyle(newProps.location.pathname)
+        this.handleNavStyle(newProps)
     }
     jumpPage(toUrl) {
-        this.props.history.replace(config.path + toUrl);
+        this.props.history.push(config.path + toUrl);
     }
-    handleNavStyle(pathname) {
-        switch (pathname) {
+    handleNavStyle(props) {
+        switch (props.location.pathname) {
             case config.path + "home/index":
                 this.setState({
                     bHomeStyle: true,
@@ -56,7 +56,7 @@ export default class HomeComponent extends React.Component {
         }
     }
     componentWillUnmount() {
-        this.setState=(state, callback)=>{
+        this.setState = (state, callback) => {
             return
         }
     }
