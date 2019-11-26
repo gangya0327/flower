@@ -1,10 +1,10 @@
-function addHistorykeywords(data) {
+function addCart(data) {
     return {
-        type: "addHk",
+        type: "addCart",
         data: data
     }
 }
 
 export {
-    addHistorykeywords
+    addCart
 }

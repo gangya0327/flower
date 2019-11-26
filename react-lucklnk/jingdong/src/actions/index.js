@@ -1,6 +1,6 @@
 import * as historykeywords from './hkaction'
-import * as historykey from './cartaction'
+import * as addCart from './cartaction'
 export default {
     hk: historykeywords,
-    // cart: 
+    cart: addCart
 }

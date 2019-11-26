@@ -9,7 +9,7 @@ import config from '../../../assets/js/conf/config'
 import { Toast } from 'antd-mobile'
 import TweenMax from '../../../assets/js/libs/TweenMax'
 import { connect } from 'react-redux'
-import action from '../../actions'
+import action from '../../../actions'
 
 class DetailsItem extends React.Component {
     constructor(props) {
@@ -19,7 +19,7 @@ class DetailsItem extends React.Component {
             sCartPanel: Css['down'],
             gid: this.props.history.location.search !== "" ? localParam(this.props.history.location.search).search.gid : "",
             aAttr: [],
-            iAmount: 2,
+            iAmount: 1,
             aSlide: [],
             sGoodsTitle: "",
             fPrice: 0,
@@ -154,8 +154,38 @@ class DetailsItem extends React.Component {
                         this.bMove = false
 
                         //将商品添加到redux
+                        let aAttr = [], aParam = []
+                        if (this.state.aAttr.length > 0) {
+                            for (let key in this.state.aAttr) {
+                                if (this.state.aAttr[key].values.length > 0) {
+                                    aParam = []
+                                    for (let key2 in this.state.aAttr[key].values) {
+                                        if (this.state.aAttr[key].values[key2].checked) {
+                                            aParam.push({
+                                                paramid: this.state.aAttr[key].values[key2].vid,
+                                                title: this.state.aAttr[key].values[key2].value,
+                                            })
+                                        }
+                                    }
+                                }
+                                aAttr.push({
+                                    attrid: this.state.aAttr[key].attrid,
+                                    title: this.state.aAttr[key].title,
+                                    aParam: aParam
+                                })
+                            }
+                        }
                         // this.props.dispatch(action.hk.addHistorykeywords({ keywords: this.aKeywords }))
-                        this.props.dispatch(action.cart.addCart({gid: this.state.gid}))
+                        this.props.dispatch(action.cart.addCart({
+                            gid: this.state.gid,
+                            title: this.state.sGoodsTitle,
+                            amount: this.state.iAmount,
+                            price: this.state.fPrice,
+                            img: this.state.aSlide[0],
+                            checked: true,
+                            freight: this.state.fFreight,
+                            attrs: aAttr
+                        }))
                     }
                 });
                 TweenMax.to(oCloneImg, 0.2, { rotation: 360, repeat: -1 })
@@ -164,7 +194,6 @@ class DetailsItem extends React.Component {
     }
     // 检测是否选中属性值
     checkAttrVal(callback) {
-        console.log(88, this.state.aAttr);
         let aAttr = this.state.aAttr, bSelect = false, aAttrName = ""
         if (aAttr.length > 0) {
             for (let key in aAttr) {

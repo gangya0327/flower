@@ -1,295 +1,71 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import SubHeader from '../../../components/header/subheader'
 import Css from '../../../assets/css/home/cart/index.css'
 
-export default class CartComponent extends React.Component {
+class CartComponent extends React.Component {
+    componentDidMount() {
+        console.log(this.props.state);
+    }
+    componentWillUnmount() {
+        this.setState = (state, callback) => {
+            return
+        }
+    }
     render() {
         return (
             <div>
                 <SubHeader title="购物车"></SubHeader>
                 <div className={Css['cart-main']}>
-                    <div className={Css['cart-list']}>
-                        <div className={Css['select-btn'] + " " + Css['active']}></div>
-                        <div className={Css['image-wrap']}>
-                            <div className={Css['image']}>
-                                <img src="//vueshop.glbuys.com/uploadfiles/1524558126.png" alt="" />
-                            </div>
-                            <div className={Css['del']}>删除</div>
-                        </div>
-                        <div className={Css['goods-wrap']}>
-                            <div className={Css['goods-title']}>联想ThinkPad E- 570 4WCD商务办公轻薄便携笔记本电脑15.6英寸学</div>
-                            <div className={Css['goods-attr']}>
-                                <span>颜色：黑色</span>
-                                <span>屏幕尺寸：15.6</span>
-                            </div>
-                            <div className={Css['buy-wrap']}>
-                                <div className={Css['goods-price']}>￥2799</div>
-                                <div className={Css['amount-wrap']}>
-                                    <div className={Css['amount-input-wrap']}>
-                                        <div className={Css['dec'] + " " + Css['btn'] + " " + Css['active']}>-</div>
-                                        <div className={Css['amount-input']}>
-                                            <input type="tel" defaultValue="1" />
+                    {
+                        this.props.state.cart.aCartData.length > 0 ?
+                            this.props.state.cart.aCartData.map((item, index) => {
+                                return (
+                                    <div className={Css['cart-list']} key={index}>
+                                        <div className={Css['select-btn'] + " " + Css['active']}></div>
+                                        <div className={Css['image-wrap']}>
+                                            <div className={Css['image']}>
+                                                <img src={item.img} alt="" />
+                                            </div>
+                                            <div className={Css['del']}>删除</div>
                                         </div>
-                                        <div className={Css['inc'] + " " + Css['btn']}>+</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={Css['cart-list']}>
-                        <div className={Css['select-btn']}></div>
-                        <div className={Css['image-wrap']}>
-                            <div className={Css['image']}>
-                                <img src="//vueshop.glbuys.com/uploadfiles/1524558126.png" alt="" />
-                            </div>
-                            <div className={Css['del']}>删除</div>
-                        </div>
-                        <div className={Css['goods-wrap']}>
-                            <div className={Css['goods-title']}>联想ThinkPad E- 570 4WCD商务办公轻薄便携笔记本电脑15.6英寸学</div>
-                            <div className={Css['goods-attr']}>
-                                <span>颜色：黑色</span>
-                                <span>屏幕尺寸：15.6</span>
-                            </div>
-                            <div className={Css['buy-wrap']}>
-                                <div className={Css['goods-price']}>￥2799</div>
-                                <div className={Css['amount-wrap']}>
-                                    <div className={Css['amount-input-wrap']}>
-                                        <div className={Css['dec'] + " " + Css['btn'] + " " + Css['active']}>-</div>
-                                        <div className={Css['amount-input']}>
-                                            <input type="tel" defaultValue="1" />
+                                        <div className={Css['goods-wrap']}>
+                                            <div className={Css['goods-title']}>{item.title}</div>
+                                            <div className={Css['goods-attr']}>
+                                                {
+                                                    item.attrs.length > 0 ?
+                                                        item.attrs.map((item2, index2) => {
+                                                            return (
+                                                                <span key={index2}>{item2.title}：{
+                                                                    item2.aParam.length > 0 ?
+                                                                        item2.aParam.map((item3, index3) => {
+                                                                            return (
+                                                                                <React.Fragment key={index3}>{item3.title}</React.Fragment>
+                                                                            )
+                                                                        }) : ""
+                                                                }</span>
+                                                            )
+                                                        })
+                                                        : ""
+                                                }
+                                            </div>
+                                            <div className={Css['buy-wrap']}>
+                                                <div className={Css['goods-price']}>￥{item.price}</div>
+                                                <div className={Css['amount-wrap']}>
+                                                    <div className={Css['amount-input-wrap']}>
+                                                        <div className={Css['dec'] + " " + Css['btn'] + " " + Css['active']}>-</div>
+                                                        <div className={Css['amount-input']}>
+                                                            <input type="tel" defaultValue={item.amount} />
+                                                        </div>
+                                                        <div className={Css['inc'] + " " + Css['btn']}>+</div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className={Css['inc'] + " " + Css['btn']}>+</div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={Css['cart-list']}>
-                        <div className={Css['select-btn']}></div>
-                        <div className={Css['image-wrap']}>
-                            <div className={Css['image']}>
-                                <img src="//vueshop.glbuys.com/uploadfiles/1524558126.png" alt="" />
-                            </div>
-                            <div className={Css['del']}>删除</div>
-                        </div>
-                        <div className={Css['goods-wrap']}>
-                            <div className={Css['goods-title']}>联想ThinkPad E- 570 4WCD商务办公轻薄便携笔记本电脑15.6英寸学</div>
-                            <div className={Css['goods-attr']}>
-                                <span>颜色：黑色</span>
-                                <span>屏幕尺寸：15.6</span>
-                            </div>
-                            <div className={Css['buy-wrap']}>
-                                <div className={Css['goods-price']}>￥2799</div>
-                                <div className={Css['amount-wrap']}>
-                                    <div className={Css['amount-input-wrap']}>
-                                        <div className={Css['dec'] + " " + Css['btn'] + " " + Css['active']}>-</div>
-                                        <div className={Css['amount-input']}>
-                                            <input type="tel" defaultValue="1" />
-                                        </div>
-                                        <div className={Css['inc'] + " " + Css['btn']}>+</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={Css['cart-list']}>
-                        <div className={Css['select-btn']}></div>
-                        <div className={Css['image-wrap']}>
-                            <div className={Css['image']}>
-                                <img src="//vueshop.glbuys.com/uploadfiles/1524558126.png" alt="" />
-                            </div>
-                            <div className={Css['del']}>删除</div>
-                        </div>
-                        <div className={Css['goods-wrap']}>
-                            <div className={Css['goods-title']}>联想ThinkPad E- 570 4WCD商务办公轻薄便携笔记本电脑15.6英寸学</div>
-                            <div className={Css['goods-attr']}>
-                                <span>颜色：黑色</span>
-                                <span>屏幕尺寸：15.6</span>
-                            </div>
-                            <div className={Css['buy-wrap']}>
-                                <div className={Css['goods-price']}>￥2799</div>
-                                <div className={Css['amount-wrap']}>
-                                    <div className={Css['amount-input-wrap']}>
-                                        <div className={Css['dec'] + " " + Css['btn'] + " " + Css['active']}>-</div>
-                                        <div className={Css['amount-input']}>
-                                            <input type="tel" defaultValue="1" />
-                                        </div>
-                                        <div className={Css['inc'] + " " + Css['btn']}>+</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={Css['cart-list']}>
-                        <div className={Css['select-btn']}></div>
-                        <div className={Css['image-wrap']}>
-                            <div className={Css['image']}>
-                                <img src="//vueshop.glbuys.com/uploadfiles/1524558126.png" alt="" />
-                            </div>
-                            <div className={Css['del']}>删除</div>
-                        </div>
-                        <div className={Css['goods-wrap']}>
-                            <div className={Css['goods-title']}>联想ThinkPad E- 570 4WCD商务办公轻薄便携笔记本电脑15.6英寸学</div>
-                            <div className={Css['goods-attr']}>
-                                <span>颜色：黑色</span>
-                                <span>屏幕尺寸：15.6</span>
-                            </div>
-                            <div className={Css['buy-wrap']}>
-                                <div className={Css['goods-price']}>￥2799</div>
-                                <div className={Css['amount-wrap']}>
-                                    <div className={Css['amount-input-wrap']}>
-                                        <div className={Css['dec'] + " " + Css['btn'] + " " + Css['active']}>-</div>
-                                        <div className={Css['amount-input']}>
-                                            <input type="tel" defaultValue="1" />
-                                        </div>
-                                        <div className={Css['inc'] + " " + Css['btn']}>+</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={Css['cart-list']}>
-                        <div className={Css['select-btn']}></div>
-                        <div className={Css['image-wrap']}>
-                            <div className={Css['image']}>
-                                <img src="//vueshop.glbuys.com/uploadfiles/1524558126.png" alt="" />
-                            </div>
-                            <div className={Css['del']}>删除</div>
-                        </div>
-                        <div className={Css['goods-wrap']}>
-                            <div className={Css['goods-title']}>联想ThinkPad E- 570 4WCD商务办公轻薄便携笔记本电脑15.6英寸学</div>
-                            <div className={Css['goods-attr']}>
-                                <span>颜色：黑色</span>
-                                <span>屏幕尺寸：15.6</span>
-                            </div>
-                            <div className={Css['buy-wrap']}>
-                                <div className={Css['goods-price']}>￥2799</div>
-                                <div className={Css['amount-wrap']}>
-                                    <div className={Css['amount-input-wrap']}>
-                                        <div className={Css['dec'] + " " + Css['btn'] + " " + Css['active']}>-</div>
-                                        <div className={Css['amount-input']}>
-                                            <input type="tel" defaultValue="1" />
-                                        </div>
-                                        <div className={Css['inc'] + " " + Css['btn']}>+</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={Css['cart-list']}>
-                        <div className={Css['select-btn']}></div>
-                        <div className={Css['image-wrap']}>
-                            <div className={Css['image']}>
-                                <img src="//vueshop.glbuys.com/uploadfiles/1524558126.png" alt="" />
-                            </div>
-                            <div className={Css['del']}>删除</div>
-                        </div>
-                        <div className={Css['goods-wrap']}>
-                            <div className={Css['goods-title']}>联想ThinkPad E- 570 4WCD商务办公轻薄便携笔记本电脑15.6英寸学</div>
-                            <div className={Css['goods-attr']}>
-                                <span>颜色：黑色</span>
-                                <span>屏幕尺寸：15.6</span>
-                            </div>
-                            <div className={Css['buy-wrap']}>
-                                <div className={Css['goods-price']}>￥2799</div>
-                                <div className={Css['amount-wrap']}>
-                                    <div className={Css['amount-input-wrap']}>
-                                        <div className={Css['dec'] + " " + Css['btn'] + " " + Css['active']}>-</div>
-                                        <div className={Css['amount-input']}>
-                                            <input type="tel" defaultValue="1" />
-                                        </div>
-                                        <div className={Css['inc'] + " " + Css['btn']}>+</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={Css['cart-list']}>
-                        <div className={Css['select-btn']}></div>
-                        <div className={Css['image-wrap']}>
-                            <div className={Css['image']}>
-                                <img src="//vueshop.glbuys.com/uploadfiles/1524558126.png" alt="" />
-                            </div>
-                            <div className={Css['del']}>删除</div>
-                        </div>
-                        <div className={Css['goods-wrap']}>
-                            <div className={Css['goods-title']}>联想ThinkPad E- 570 4WCD商务办公轻薄便携笔记本电脑15.6英寸学</div>
-                            <div className={Css['goods-attr']}>
-                                <span>颜色：黑色</span>
-                                <span>屏幕尺寸：15.6</span>
-                            </div>
-                            <div className={Css['buy-wrap']}>
-                                <div className={Css['goods-price']}>￥2799</div>
-                                <div className={Css['amount-wrap']}>
-                                    <div className={Css['amount-input-wrap']}>
-                                        <div className={Css['dec'] + " " + Css['btn'] + " " + Css['active']}>-</div>
-                                        <div className={Css['amount-input']}>
-                                            <input type="tel" defaultValue="1" />
-                                        </div>
-                                        <div className={Css['inc'] + " " + Css['btn']}>+</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={Css['cart-list']}>
-                        <div className={Css['select-btn']}></div>
-                        <div className={Css['image-wrap']}>
-                            <div className={Css['image']}>
-                                <img src="//vueshop.glbuys.com/uploadfiles/1524558126.png" alt="" />
-                            </div>
-                            <div className={Css['del']}>删除</div>
-                        </div>
-                        <div className={Css['goods-wrap']}>
-                            <div className={Css['goods-title']}>联想ThinkPad E- 570 4WCD商务办公轻薄便携笔记本电脑15.6英寸学</div>
-                            <div className={Css['goods-attr']}>
-                                <span>颜色：黑色</span>
-                                <span>屏幕尺寸：15.6</span>
-                            </div>
-                            <div className={Css['buy-wrap']}>
-                                <div className={Css['goods-price']}>￥2799</div>
-                                <div className={Css['amount-wrap']}>
-                                    <div className={Css['amount-input-wrap']}>
-                                        <div className={Css['dec'] + " " + Css['btn'] + " " + Css['active']}>-</div>
-                                        <div className={Css['amount-input']}>
-                                            <input type="tel" defaultValue="1" />
-                                        </div>
-                                        <div className={Css['inc'] + " " + Css['btn']}>+</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={Css['cart-list']}>
-                        <div className={Css['select-btn']}></div>
-                        <div className={Css['image-wrap']}>
-                            <div className={Css['image']}>
-                                <img src="//vueshop.glbuys.com/uploadfiles/1524558126.png" alt="" />
-                            </div>
-                            <div className={Css['del']}>删除</div>
-                        </div>
-                        <div className={Css['goods-wrap']}>
-                            <div className={Css['goods-title']}>联想ThinkPad E- 570 4WCD商务办公轻薄便携笔记本电脑15.6英寸学</div>
-                            <div className={Css['goods-attr']}>
-                                <span>颜色：黑色</span>
-                                <span>屏幕尺寸：15.6</span>
-                            </div>
-                            <div className={Css['buy-wrap']}>
-                                <div className={Css['goods-price']}>￥2799</div>
-                                <div className={Css['amount-wrap']}>
-                                    <div className={Css['amount-input-wrap']}>
-                                        <div className={Css['dec'] + " " + Css['btn'] + " " + Css['active']}>-</div>
-                                        <div className={Css['amount-input']}>
-                                            <input type="tel" defaultValue="1" />
-                                        </div>
-                                        <div className={Css['inc'] + " " + Css['btn']}>+</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                                )
+                            }) : ""
+                    }
                 </div>
                 <div className={Css['orderend-wrap']}>
                     <div className={Css['select-area']}>
@@ -308,3 +84,9 @@ export default class CartComponent extends React.Component {
         )
     }
 }
+
+export default connect((state) => {
+    return {
+        state: state
+    }
+})(CartComponent)
