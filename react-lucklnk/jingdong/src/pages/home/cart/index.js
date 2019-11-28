@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+
 import SubHeader from '../../../components/header/subheader'
 import Css from '../../../assets/css/home/cart/index.css'
 
@@ -11,6 +12,9 @@ class CartComponent extends React.Component {
         this.setState = (state, callback) => {
             return
         }
+    }
+    delItem(index) {
+        this.props.state.dispatch(action.cart.delItem,)
     }
     render() {
         return (
@@ -27,7 +31,7 @@ class CartComponent extends React.Component {
                                             <div className={Css['image']}>
                                                 <img src={item.img} alt="" />
                                             </div>
-                                            <div className={Css['del']}>删除</div>
+                                            <div className={Css['del']} onClick={this.delItem.bind(this, index)}>删除</div>
                                         </div>
                                         <div className={Css['goods-wrap']}>
                                             <div className={Css['goods-title']}>{item.title}</div>
@@ -73,7 +77,7 @@ class CartComponent extends React.Component {
                             <div className={Css['select-btn'] + " " + Css['active']}></div>
                             <div className={Css['select-text']}>全选</div>
                         </div>
-                        <div className={Css['total']}>合计：<span>3950.00</span></div>
+                        <div className={Css['total']}>合计：<span>{this.props.state.cart.total}</span></div>
                     </div>
                     <div className={Css['orderend-btn']}>去结算</div>
                 </div>
