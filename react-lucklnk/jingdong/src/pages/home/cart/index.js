@@ -1,10 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
+import action from '../../../actions'
 import SubHeader from '../../../components/header/subheader'
 import Css from '../../../assets/css/home/cart/index.css'
 
 class CartComponent extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            bAllCheck: true
+        }
+    }
     componentDidMount() {
         console.log(this.props.state);
     }
@@ -14,7 +20,30 @@ class CartComponent extends React.Component {
         }
     }
     delItem(index) {
-        this.props.state.dispatch(action.cart.delItem,)
+        if (this.props.state.cart.aCartData.length > 0) {
+            this.props.dispatch(action.cart.delItem({ index: index }))
+        }
+    }
+    checkItem(index, checked) {
+        if (this.props.state.cart.aCartData.length > 0) {
+            this.props.dispatch(action.cart.checkItem({ index: index, checked: checked }))
+        }
+        this.isAllChecked()
+    }
+    //是否全选
+    isAllChecked() {
+        if (this.props.state.cart.aCartData.length > 0) {
+            let bChecked = true
+            for (let key in this.props.state.cart.aCartData) {
+                if (this.props.state.cart.aCartData[key].checked === false) {
+                    bChecked = false
+                    break
+                }
+            }
+            if (!bChecked) {
+                this.setState({ bAllCheck: false })
+            }
+        }
     }
     render() {
         return (
@@ -26,7 +55,7 @@ class CartComponent extends React.Component {
                             this.props.state.cart.aCartData.map((item, index) => {
                                 return (
                                     <div className={Css['cart-list']} key={index}>
-                                        <div className={Css['select-btn'] + " " + Css['active']}></div>
+                                        <div className={item.checked ? Css['select-btn'] + " " + Css['active'] : Css['select-btn']} onClick={this.checkItem.bind(this, index, !item.checked)}></div>
                                         <div className={Css['image-wrap']}>
                                             <div className={Css['image']}>
                                                 <img src={item.img} alt="" />
@@ -74,7 +103,7 @@ class CartComponent extends React.Component {
                 <div className={Css['orderend-wrap']}>
                     <div className={Css['select-area']}>
                         <div className={Css['select-wrap']}>
-                            <div className={Css['select-btn'] + " " + Css['active']}></div>
+                            <div className={this.state.bAllCheck ? Css['select-btn'] + " " + Css['active'] : Css['select-btn']}></div>
                             <div className={Css['select-text']}>全选</div>
                         </div>
                         <div className={Css['total']}>合计：<span>{this.props.state.cart.total}</span></div>

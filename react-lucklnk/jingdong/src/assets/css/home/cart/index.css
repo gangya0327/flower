@@ -26,7 +26,7 @@
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: center;
-  border: none;
+  border: 1px solid #fff;
 }
 .cart-main .cart-list .image-wrap {
   width: 1.2rem;
@@ -174,7 +174,7 @@
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: center;
-  border: none;
+  border: 1px solid #fff;
 }
 .orderend-wrap .select-area .select-wrap .select-text {
   font-size: 0.24rem;
