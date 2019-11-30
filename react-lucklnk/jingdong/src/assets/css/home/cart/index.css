@@ -197,3 +197,6 @@
   text-align: center;
   line-height: 1rem;
 }
+.orderend-wrap .orderend-btn.disabled {
+  background-color: #8F8F8F;
+}

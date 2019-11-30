@@ -22,8 +22,44 @@ function checkItem(data) {
     }
 }
 
+//全选商品
+function setAllChecked(data) {
+    return {
+        type: "allItem",
+        data: data
+    }
+}
+
+//增加数量
+function incAmount(data) {
+    return {
+        type: "incAmount",
+        data: data
+    }
+}
+
+//减少数量
+function decAmount(data) {
+    return {
+        type: "decAmount",
+        data: data
+    }
+}
+
+//改变数量
+function changeAmount(data) {
+    return {
+        type: "changeAmount",
+        data: data
+    }
+}
+
 export {
     addCart,
     delItem,
-    checkItem
+    checkItem,
+    setAllChecked,
+    incAmount,
+    decAmount,
+    changeAmount
 }
