@@ -1,0 +1,14 @@
+*{
+	margin:0;
+	padding:0;
+}
+
+li{
+	list-style: none;
+}
+a{
+	text-decoration: none;
+}
+body{
+	font:normal 12px/1.6em Microsoft YaHei,tahoma,simsun;
+}

@@ -109,3 +109,7 @@ body {
     height: 0;
     overflow: hidden;
 }
+
+.login-main .am-switch input[type="checkbox"]:checked+.checkbox {
+    background-color: #eb1625 !important;
+}

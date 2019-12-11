@@ -42,7 +42,7 @@ export default class IndexComponent extends React.Component {
     componentWillUnmount() {
         this.bScroll = false
         window.removeEventListener("scroll", this.eventScroll.bind(this))
-        this.setState=(state, callback)=>{
+        this.setState = (state, callback) => {
             return
         }
     }
@@ -106,7 +106,7 @@ export default class IndexComponent extends React.Component {
                         <div class={Css['search-text']}>请输入宝贝名称</div>
                     </div>
                     <div class={Css['login-wrap']}>
-                        <div class={Css['login-text']}>登录</div>
+                        <div class={Css['login-text']} onClick={this.pushPage.bind(this, "login/index")}>登录</div>
                     </div>
                 </div>
                 <div class={Css['swiper-wrap']} ref='swiper-wrap'>

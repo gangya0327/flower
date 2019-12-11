@@ -1,0 +1,32 @@
+{
+    "corpSummaryData": {
+        "statementUnit": "汇总维度: 具体部门名称或成本中心",
+        "settlementMoney": "总金额",
+        "paidAmount": "已收款金额",
+        "unpaidAmount": "未收款金额",
+        "flightAmount": "国内机票",
+        "hotelAmount": "酒店",
+        "trainAmount": "火车",
+        "carAmount": "用车",
+        "insuranceAmount": "保险",
+        "adjustmnetAmount": "调账"
+    },
+    "summaryDataPages": {
+        "page": 1,
+        "size": 20,
+        "total": 100,
+        "totalPage": 5,
+        "rows": [{
+            "statementUnit": "汇总维度: 具体部门名称或成本中心",
+            "settlementMoney": "总金额",
+            "paidAmount": "已收款金额",
+            "unpaidAmount": "未收款金额",
+            "flightAmount": "国内机票",
+            "hotelAmount": "酒店",
+            "trainAmount": "火车",
+            "carAmount": "用车",
+            "insuranceAmount": "保险",
+            "adjustmnetAmount": "调账"
+        }]
+    }
+}
