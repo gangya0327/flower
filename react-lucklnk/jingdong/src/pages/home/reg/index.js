@@ -133,6 +133,7 @@ export default class RegIndex extends React.Component {
                         </div>
                         <div className={Css['switch-wrap']}>
                             <Switch
+                                color="#eb1625"
                                 checked={this.state.checked}
                                 onClick={this.changePwd.bind(this, !this.state.checked)}
                             />

@@ -7,6 +7,7 @@
 .search-header .search-wrap .search-text{width:80%;font-size:0.32rem;color: #ffffff;}
 .search-header .login-wrap{width:auto;height:auto;margin-right:4%;}
 .search-header .login-wrap .login-text{font-size:0.32rem;color:#FFFFFF;}
+.search-header .login-wrap .my{width: 0.6rem;height: 0.6rem;background-image: url('../../../images/home/index/my.png');background-position: center;background-repeat: no-repeat;background-size: 100%;}
 
 .swiper-wrap{width:100%;height:3.65rem;position: relative;z-index:1;}
 .swiper-wrap img{width:100%;height:100%;}

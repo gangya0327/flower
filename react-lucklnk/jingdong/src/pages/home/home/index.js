@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import asyncComponent from "../../../components/async/AsyncComponent";
 import config from '../../../assets/js/conf/config'
 import Css from '../../../assets/css/home/home/index.css'
+import { AuthRoute } from '../../../routes/private'
 
 const IndexComponent = asyncComponent(() => import("../index/index"));
 const CartComponent = asyncComponent(() => import("../cart/index"));
@@ -68,7 +69,7 @@ class HomeComponent extends React.Component {
                     <Switch>
                         <Route path={config.path + "home/index"} component={IndexComponent}></Route>
                         <Route path={config.path + "home/cart"} component={CartComponent}></Route>
-                        <Route path={config.path + "home/user"} component={UserComponent}></Route>
+                        <AuthRoute path={config.path + "home/user"} component={UserComponent}></AuthRoute>
                     </Switch>
                 </React.Fragment>
                 <div className={Css['bottom-nav']}>
