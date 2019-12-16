@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="userBtn">请求单个用户</button>
+    <button id="userAllBtn">请求多个用户</button>
+    <br>
+    <h1>单个用户</h1>
+    <div id="user"></div>
+    <h1>多个用户</h1>
+    <div id="userAll"></div>
+
+    <script>
+        document.getElementById("userBtn").addEventListener("click", loadUser)
+
+        function loadUser() {
+            var xhr = new XMLHttpRequest()
+            xhr.open("get", "user.json", true) //open(type, url, aynsc)
+            xhr.onload = function () {
+                if (xhr.status == 200) {
+                    console.log(xhr.responseText);
+                    var user = JSON.parse(xhr.responseText)
+                }
+            }
+            xhr.send()
+        }
+
+        document.getElementById("userAllBtn").addEventListener("click", loadUserAll)
+
+        function loadUserAll() {
+            var xhr = new XMLHttpRequest()
+            xhr.open("get", "users.json", true) //open(type, url, aynsc)
+            xhr.onload = function () {
+                if (xhr.status == 200) {
+                    document.getElementById("userAll").innerHTML = xhr.responseText
+                }
+            }
+            xhr.send()
+        }
+    </script>
+</body>
+
+</html>

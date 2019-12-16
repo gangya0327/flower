@@ -8,59 +8,33 @@ import { lazyImage, localParam, setScrollTop } from '../../../assets/js/utils/ut
 import config from '../../../assets/js/conf/config'
 import { Toast } from 'antd-mobile'
 import TweenMax from '../../../assets/js/libs/TweenMax'
+import { connect } from 'react-redux'
+import action from '../../../actions'
 
-export default class DetailsItem extends React.Component {
+class DetailsItem extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             bMask: false,
             sCartPanel: Css['down'],
             gid: this.props.history.location.search !== "" ? localParam(this.props.history.location.search).search.gid : "",
-            aAttr: [{
-                "attrid": "1006",
-                "title": "颜色",
-                "values": [{
-                    "vid": "854",
-                    "value": "红色",
-                    checked: false
-                }, {
-                    "vid": "855",
-                    "value": "白色",
-                    checked: true
-                }, {
-                    "vid": "856",
-                    "value": "紫色",
-                    checked: false
-                }]
-            }, {
-                "attrid": "1007",
-                "title": "尺寸",
-                "values": [{
-                    "vid": "857",
-                    "value": "36",
-                    checked: false
-                }, {
-                    "vid": "858",
-                    "value": "72",
-                    checked: false
-                }, {
-                    "vid": "859",
-                    "value": "73",
-                    checked: false
-                }]
-            }],
-            iAmount: 2,
+            aAttr: [],
+            iAmount: 1,
             aSlide: [],
             sGoodsTitle: "",
             fPrice: 0,
             fFreight: 0,
-            iSales: 0
+            iSales: 0,
+            aReviews: [],
+            iReviewTotal: 0
         }
         this.bMove = false
     }
     componentDidMount() {
         setScrollTop(global.scrollTop.index)
         this.getGoodsInfo()
+        this.getAttr()
+        this.getReviews()
     }
     //获取商品轮播图和商品信息
     getGoodsInfo() {
@@ -80,6 +54,28 @@ export default class DetailsItem extends React.Component {
                         autoplayDisableOnInteraction: false
                     })
                 })
+            }
+        })
+    }
+    //获取商品规格属性
+    getAttr() {
+        let sUrl = config.baseUrl + "/api/home/goods/info?gid=" + this.state.gid + "&type=spec&token=" + config.token
+        request(sUrl).then((res) => {
+            if (res.code === 200) {
+                this.setState({ aAttr: res.data })
+            }
+        })
+    }
+    //获取商品评价
+    getReviews() {
+        let sUrl = config.baseUrl + "/api/home/reviews/index?gid=" + this.state.gid + "&page=1&token=" + config.token
+        request(sUrl).then((res) => {
+            if (res.code === 200) {
+                this.setState({ aReviews: res.data, iReviewTotal: res.pageinfo.total }, () => {
+                    lazyImage()
+                })
+            } else {
+                this.setState({ aReviews: [] })
             }
         })
     }
@@ -140,6 +136,17 @@ export default class DetailsItem extends React.Component {
             })
         }
     }
+    //改变数量
+    changeAmount(e) {
+        let iAmount = 1
+        if (e.target.value !== "") {
+            iAmount = e.target.value.replace(/[a-zA-Z]|[\u4e00-\u9fa5]|[#|*|,|+|;|.]/g, '')
+            if (iAmount === "") {
+                iAmount = 1
+            }
+        }
+        this.setState({ iAmount })
+    }
     //加入购物车
     addCart() {
         this.checkAttrVal(() => {
@@ -147,6 +154,7 @@ export default class DetailsItem extends React.Component {
                 this.bMove = true
                 let oGoodsImg = this.refs['goods-img'], oGoodsInfo = this.refs['goods-info'], oCartPanel = this.refs['cart-panel']
                 let oCloneImg = oGoodsImg.cloneNode(true)
+                oGoodsInfo.appendChild(oCloneImg);
                 let oCartIcon = ReactDOM.findDOMNode(document.getElementById('cart-icon'))
                 oCloneImg.style.cssText = "width:0.4rem;height:0.4rem;position:absolute;z-index:1;left:0.2rem;top:0.2rem;"
                 let srcImgX = oGoodsImg.offsetLeft
@@ -155,6 +163,40 @@ export default class DetailsItem extends React.Component {
                     bezier: [{ x: srcImgX, y: -100 }, { x: srcImgX + 30, y: -130 }, { x: oCartIcon.offsetLeft, y: -cloneY }], onComplete: () => {
                         oCloneImg.remove();
                         this.bMove = false
+
+                        //将商品添加到redux
+                        let aAttr = [], aParam = []
+                        if (this.state.aAttr.length > 0) {
+                            for (let key in this.state.aAttr) {
+                                if (this.state.aAttr[key].values.length > 0) {
+                                    aParam = []
+                                    for (let key2 in this.state.aAttr[key].values) {
+                                        if (this.state.aAttr[key].values[key2].checked) {
+                                            aParam.push({
+                                                paramid: this.state.aAttr[key].values[key2].vid,
+                                                title: this.state.aAttr[key].values[key2].value,
+                                            })
+                                        }
+                                    }
+                                }
+                                aAttr.push({
+                                    attrid: this.state.aAttr[key].attrid,
+                                    title: this.state.aAttr[key].title,
+                                    aParam: aParam
+                                })
+                            }
+                        }
+                        // this.props.dispatch(action.hk.addHistorykeywords({ keywords: this.aKeywords }))
+                        this.props.dispatch(action.cart.addCart({
+                            gid: this.state.gid,
+                            title: this.state.sGoodsTitle,
+                            amount: parseInt(this.state.iAmount),
+                            price: this.state.fPrice,
+                            img: this.state.aSlide[0],
+                            checked: true,
+                            freight: this.state.fFreight,
+                            attrs: aAttr
+                        }))
                     }
                 });
                 TweenMax.to(oCloneImg, 0.2, { rotation: 360, repeat: -1 })
@@ -180,7 +222,8 @@ export default class DetailsItem extends React.Component {
             }
             if (!bSelect) {
                 Toast.info('请选择' + aAttrName, 2)
-            } else {
+            }
+            if (bSelect) {
                 callback()
             }
         }
@@ -220,50 +263,27 @@ export default class DetailsItem extends React.Component {
                     </ul>
                 </div>
                 <div className={Css['reviews-main']}>
-                    <div className={Css['reviews-title']}>商品评价（22）</div>
+                    <div className={Css['reviews-title']}>商品评价（{this.state.iReviewTotal}）</div>
                     <div className={Css['reviews-wrap']}>
-                        <div className={Css['reviews-list']}>
-                            <div className={Css['uinfo']}>
-                                <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head/492811357.jpg" alt="" />
-                                </div>
-                                <div className={Css['nickname']}>流浪人</div>
-                            </div>
-                            <div className={Css['reviews-content']}>这些是评价内容吧啦吧啦吧啦</div>
-                            <div className={Css['reviews-date']}>2019-10-04 15:03:34</div>
-                        </div>
-                        <div className={Css['reviews-list']}>
-                            <div className={Css['uinfo']}>
-                                <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head/492811357.jpg" alt="" />
-                                </div>
-                                <div className={Css['nickname']}>流浪人</div>
-                            </div>
-                            <div className={Css['reviews-content']}>这些是评价内容吧啦吧啦吧啦</div>
-                            <div className={Css['reviews-date']}>2019-10-04 15:03:34</div>
-                        </div>
-                        <div className={Css['reviews-list']}>
-                            <div className={Css['uinfo']}>
-                                <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head/492811357.jpg" alt="" />
-                                </div>
-                                <div className={Css['nickname']}>流浪人</div>
-                            </div>
-                            <div className={Css['reviews-content']}>这些是评价内容吧啦吧啦吧啦</div>
-                            <div className={Css['reviews-date']}>2019-10-04 15:03:34</div>
-                        </div>
-                        <div className={Css['reviews-list']}>
-                            <div className={Css['uinfo']}>
-                                <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head/492811357.jpg" alt="" />
-                                </div>
-                                <div className={Css['nickname']}>流浪人</div>
-                            </div>
-                            <div className={Css['reviews-content']}>这些是评价内容吧啦吧啦吧啦</div>
-                            <div className={Css['reviews-date']}>2019-10-04 15:03:34</div>
-                        </div>
+                        {
+                            this.state.aReviews.length > 0 ?
+                                this.state.aReviews.map((item, index) => {
+                                    return (
+                                        <div className={Css['reviews-list']} key={index}>
+                                            <div className={Css['uinfo']}>
+                                                <div className={Css['head']}>
+                                                    <img src={require("../../../assets/images/common/lazyImg.jpg")} data-echo={item.head} alt={item.nickname} />
+                                                </div>
+                                                <div className={Css['nickname']}>{item.nickname}</div>
+                                            </div>
+                                            <div className={Css['reviews-content']}>{item.content}</div>
+                                            <div className={Css['reviews-date']}>{item.times}</div>
+                                        </div>
+                                    )
+                                }) : <div className="null-item">没有任何评价</div>
+                        }
                     </div>
-                    <div className={Css['reviews-more']} onClick={this.replacePage.bind(this, 'goods/details/reviews?gid=' + this.state.gid)}>查看更多评价</div>
+                    <div className={this.state.iReviewTotal > 0 ? Css['reviews-more'] : Css['reviews-more'] + " hide"} onClick={this.replacePage.bind(this, 'goods/details/reviews?gid=' + this.state.gid)}>查看更多评价</div>
                 </div>
                 <div className={Css['bottom-btn-wrap']}>
                     <div className={Css['btn'] + " " + Css['fav']} onClick={this.addFav.bind(this)}>收藏</div>
@@ -278,7 +298,7 @@ export default class DetailsItem extends React.Component {
                             <div className={Css['close']} onClick={this.hideCartPanel.bind(this)}></div>
                         </div>
                         <div ref="goods-img" className={Css['goods-img']}>
-                            <img src="//vueshop.glbuys.com/uploadfiles/1524556409.jpg" alt="" />
+                            <img src={this.state.aSlide.length !== 0 ? this.state.aSlide[0] : ""} alt="" />
                         </div>
                         <div className={Css['goods-wrap']}>
                             <div className={Css['goods-title']}>{this.state.sGoodsTitle}</div>
@@ -314,7 +334,7 @@ export default class DetailsItem extends React.Component {
                         <div className={Css['amount-input-wrap']}>
                             <div className={this.state.iAmount === 1 ? Css['dec'] + " " + Css['btn'] + " " + Css['active'] : Css['dec'] + " " + Css['btn']} onClick={this.decAmount.bind(this)}>-</div>
                             <div className={Css['amount-input']}>
-                                <input type="tel" value={this.state.iAmount} onChange={(e) => { this.setState({ iAmount: e.target.value.replace(/[a-zA-Z]|[\u4e00-\u9fa5]|[#|*|,|+|;|\.]/g, '') }) }} />
+                                <input type="tel" value={this.state.iAmount} onChange={(e) => { this.changeAmount(e) }} />
                             </div>
                             <div className={Css['inc'] + " " + Css['btn']} onClick={this.incAmount.bind(this)}>+</div>
                         </div>
@@ -327,3 +347,9 @@ export default class DetailsItem extends React.Component {
         )
     }
 }
+
+export default connect((state) => {
+    return {
+        state: state
+    }
+})(DetailsItem)

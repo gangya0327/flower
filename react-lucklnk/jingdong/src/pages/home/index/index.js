@@ -2,12 +2,13 @@ import React from 'react'
 import Swiper from '../../../assets/js/libs/swiper.min.js'
 import { lazyImage, setScrollTop } from '../../../assets/js/utils/utils'
 import { request } from '../../../assets/js/libs/request'
+import { connect } from 'react-redux'
 import config from '../../../assets/js/conf/config'
 import '../../../assets/css/common/swiper.min.css'
 import Css from '../../../assets/css/home/index/index.css'
 import SearchComponent from '../../../components/search/search'
 
-export default class IndexComponent extends React.Component {
+class IndexComponent extends React.Component {
     constructor() {
         super()
         this.state = {
@@ -42,7 +43,7 @@ export default class IndexComponent extends React.Component {
     componentWillUnmount() {
         this.bScroll = false
         window.removeEventListener("scroll", this.eventScroll.bind(this))
-        this.setState=(state, callback)=>{
+        this.setState = (state, callback) => {
             return
         }
     }
@@ -98,18 +99,23 @@ export default class IndexComponent extends React.Component {
     }
     render() {
         return (
-            <div class={Css['page']}>
-                <div class={this.state.bScroll ? Css['search-header'] + " " + Css['red-bg'] : Css['search-header']}>
-                    <div class={Css['classify-icon']} onClick={this.pushPage.bind(this, "goods/classify/items")}></div>
-                    <div class={Css['search-wrap']} onClick={this.changeSearch.bind(this)}>
-                        <div class={Css['search-icon']}></div>
-                        <div class={Css['search-text']}>请输入宝贝名称</div>
+            <div className={Css['page']}>
+                <div className={this.state.bScroll ? Css['search-header'] + " " + Css['red-bg'] : Css['search-header']}>
+                    <div className={Css['classify-icon']} onClick={this.pushPage.bind(this, "goods/classify/items")}></div>
+                    <div className={Css['search-wrap']} onClick={this.changeSearch.bind(this)}>
+                        <div className={Css['search-icon']}></div>
+                        <div className={Css['search-text']}>请输入宝贝名称</div>
                     </div>
-                    <div class={Css['login-wrap']}>
-                        <div class={Css['login-text']}>登录</div>
+                    <div className={Css['login-wrap']}>
+                        {
+                            this.props.state.user.isLogin ?
+                                <div className={Css['my']} onClick={this.pushPage.bind(this, "home/user")}></div>
+                                :
+                                <div className={Css['login-text']} onClick={this.pushPage.bind(this, "login/index")}>登录</div>
+                        }
                     </div>
                 </div>
-                <div class={Css['swiper-wrap']} ref='swiper-wrap'>
+                <div className={Css['swiper-wrap']} ref='swiper-wrap'>
                     <div className="swiper-wrapper">
                         {
                             this.state.aSwiper !== null ?
@@ -126,12 +132,12 @@ export default class IndexComponent extends React.Component {
                     </div>
                     <div className="swiper-pagination"></div>
                 </div>
-                <div class={Css['quick-nav']}>
+                <div className={Css['quick-nav']}>
                     {
                         this.state.aNav !== null ?
                             this.state.aNav.map((item, index) => {
                                 return (
-                                    <ul class={Css['item']} key={index}>
+                                    <ul className={Css['item']} key={index}>
                                         <li className={Css['item-img']}>
                                             <img src={item.image} alt={item.title} onClick={this.pushPage.bind(this, 'goods/classify/items?cid=' + item.cid)} />
                                         </li>
@@ -217,25 +223,25 @@ export default class IndexComponent extends React.Component {
                             )
                         }) : ""
                 }
-                <div class={Css['reco-title-wrap']}>
-                    <div class={Css['line']}></div>
-                    <div class={Css['reco-text-wrap']}>
-                        <div class={Css['reco-icon']}></div>
-                        <div class={Css['reco-text']}>为您推荐</div>
+                <div className={Css['reco-title-wrap']}>
+                    <div className={Css['line']}></div>
+                    <div className={Css['reco-text-wrap']}>
+                        <div className={Css['reco-icon']}></div>
+                        <div className={Css['reco-text']}>为您推荐</div>
                     </div>
-                    <div class={Css['line']}></div>
+                    <div className={Css['line']}></div>
                 </div>
-                <div class={Css['reco-item-wrap']}>
+                <div className={Css['reco-item-wrap']}>
                     {
                         this.state.aRecoGoods !== null ?
                             this.state.aRecoGoods.map((item, index) => {
                                 return (
-                                    <div class={Css['reco-item']} key={index}>
-                                        <div class={Css['image']}>
+                                    <div className={Css['reco-item']} key={index}>
+                                        <div className={Css['image']}>
                                             <img src={require("../../../assets/images/common/lazyImg.jpg")} alt={item.title} data-echo={item.image} />
                                         </div>
-                                        <div class={Css['title']}>{item.title}</div>
-                                        <div class={Css['price']}>￥{item.price}</div>
+                                        <div className={Css['title']}>{item.title}</div>
+                                        <div className={Css['price']}>￥{item.price}</div>
                                     </div>
                                 )
                             })
@@ -247,3 +253,8 @@ export default class IndexComponent extends React.Component {
         )
     }
 }
+export default connect((state) => {
+    return {
+        state: state
+    }
+})(IndexComponent)

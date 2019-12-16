@@ -1,14 +1,16 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
+import { connect } from 'react-redux'
 import asyncComponent from "../../../components/async/AsyncComponent";
 import config from '../../../assets/js/conf/config'
 import Css from '../../../assets/css/home/home/index.css'
+import { AuthRoute } from '../../../routes/private'
 
 const IndexComponent = asyncComponent(() => import("../index/index"));
 const CartComponent = asyncComponent(() => import("../cart/index"));
 const UserComponent = asyncComponent(() => import("../../user/index/index"));
 
-export default class HomeComponent extends React.Component {
+class HomeComponent extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -19,17 +21,17 @@ export default class HomeComponent extends React.Component {
     }
     componentWillMount() {
     }
-    componentDidMount(){
-        this.handleNavStyle()
+    componentDidMount() {
+        this.handleNavStyle(this.props)
     }
     componentWillReceiveProps(newProps) {
-        this.handleNavStyle(newProps.location.pathname)
+        this.handleNavStyle(newProps)
     }
     jumpPage(toUrl) {
-        this.props.history.replace(config.path + toUrl);
+        this.props.history.push(config.path + toUrl);
     }
-    handleNavStyle(pathname) {
-        switch (pathname) {
+    handleNavStyle(props) {
+        switch (props.location.pathname) {
             case config.path + "home/index":
                 this.setState({
                     bHomeStyle: true,
@@ -56,7 +58,7 @@ export default class HomeComponent extends React.Component {
         }
     }
     componentWillUnmount() {
-        this.setState=(state, callback)=>{
+        this.setState = (state, callback) => {
             return
         }
     }
@@ -67,24 +69,31 @@ export default class HomeComponent extends React.Component {
                     <Switch>
                         <Route path={config.path + "home/index"} component={IndexComponent}></Route>
                         <Route path={config.path + "home/cart"} component={CartComponent}></Route>
-                        <Route path={config.path + "home/user"} component={UserComponent}></Route>
+                        <AuthRoute path={config.path + "home/user"} component={UserComponent}></AuthRoute>
                     </Switch>
                 </React.Fragment>
-                <div class={Css['bottom-nav']}>
+                <div className={Css['bottom-nav']}>
                     <ul onClick={this.jumpPage.bind(this, 'home/index')}>
-                        <li class={this.state.bHomeStyle ? Css['home'] + ' ' + Css['active'] : Css['home']} />
-                        <li class={this.state.bHomeStyle ? Css['text'] + ' ' + Css['active'] : Css['text']}>首页</li>
+                        <li className={this.state.bHomeStyle ? Css['home'] + ' ' + Css['active'] : Css['home']} />
+                        <li className={this.state.bHomeStyle ? Css['text'] + ' ' + Css['active'] : Css['text']}>首页</li>
                     </ul>
                     <ul onClick={this.jumpPage.bind(this, 'home/cart')}>
-                        <li class={this.state.bCartStyle ? Css['cart'] + ' ' + Css['active'] : Css['cart']} />
-                        <li class={this.state.bCartStyle ? Css['text'] + ' ' + Css['active'] : Css['text']}>购物车</li>
+                        <li className={this.state.bCartStyle ? Css['cart'] + ' ' + Css['active'] : Css['cart']} />
+                        <li className={this.state.bCartStyle ? Css['text'] + ' ' + Css['active'] : Css['text']}>购物车</li>
+                        <li className={this.props.state.cart.aCartData.length === 0 ? Css['spot'] + " hide" : Css['spot']}></li>
                     </ul>
                     <ul onClick={this.jumpPage.bind(this, 'home/user')}>
-                        <li class={this.state.bUserStyle ? Css['my'] + ' ' + Css['active'] : Css['my']} />
-                        <li class={this.state.bUserStyle ? Css['text'] + ' ' + Css['active'] : Css['text']}>我的</li>
+                        <li className={this.state.bUserStyle ? Css['my'] + ' ' + Css['active'] : Css['my']} />
+                        <li className={this.state.bUserStyle ? Css['text'] + ' ' + Css['active'] : Css['text']}>我的</li>
                     </ul>
                 </div>
             </div>
         )
     }
 }
+
+export default connect((state) => {
+    return {
+        state: state
+    }
+})(HomeComponent)

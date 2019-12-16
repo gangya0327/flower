@@ -1,0 +1,109 @@
+
+ul{
+	list-style: none;
+}
+a{
+	text-decoration: none;
+}
+body{
+	width: 1342px;
+	height: 710px;
+	background-color: white;
+}
+.a{
+	width: 1342px;
+	height: 550px;
+	position: relative;
+}
+.a1{
+	width: 1342px;
+	height: 50px;
+	float:right;
+	position: absolute;
+	margin-top: 20px;
+	top: 0;
+}
+
+.a1zuo{
+	width: 250px;
+	height: 30px;
+	margin-top: 10px;
+	margin-left: 200px;
+}
+.a1zuo li{
+	font-size: 25px;
+	font-family: "萝莉体";
+	color: white;
+	font-style: italic;
+}
+.a1you{
+	width: 650px;
+	height: 30px;
+	float: right;
+	margin-top: -28px;
+	margin-right: 50px;
+}
+.a1you li{
+	width: 130px;
+	height: 30px;
+	float: left;
+	text-align: center;
+}
+.a1you li a{
+	color: white;
+	font-size: 16px;
+}
+.a1you li a:hover{
+	font-size: 18px;
+	color: #5F9EA0;
+	
+
+
+.imgbox2{
+	width:480px;
+	height:290px;
+	position:relative;/*与无关，只与父元素相关（父元素相对单位，它绝对定位）*/
+	overflow: hidden;
+	float: right;
+	margin-right: 50px;
+}
+.imgulbox2{
+	width:1980px;
+	height:290px;
+	float:left;
+	background-color: lavender;
+	margin-top: 30px;
+}
+.imgulbox2 li{
+	 float:left;
+	 width:480px;
+	 height:290px;
+}
+.imgulbox2 a img{
+	display:block;
+	width:480px;
+	height:290px;
+}
+.bannernum2{
+	position:absolute;/*绝对定位：将数字放进满的盒子里*/
+	right:10px;
+	bottom:4px;
+}
+.bannernum2 li{
+	width:14px;
+	height:14px;
+	margin-left:2px;
+	float:left;
+	line-height: 14px;
+	text-align: center;
+	background-color: #fff;
+}
+.bannernum2 li a{
+	font-size:10px;
+	font-family: "微软雅黑";
+	color:black;
+}
+.bannernum2 .now{
+	color:red;
+}
+
