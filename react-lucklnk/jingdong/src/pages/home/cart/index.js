@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import action from '../../../actions'
 import SubHeader from '../../../components/header/subheader'
 import Css from '../../../assets/css/home/cart/index.css'
+import config from '../../../assets/js/conf/config'
 
 class CartComponent extends React.Component {
     constructor() {
@@ -75,7 +76,7 @@ class CartComponent extends React.Component {
     }
     //改变数量
     changeAmount(e, index) {
-        if (this.props.state.cart.aCartData.length > 0) {
+        if (this.props.state.cart.total > 0) {
             let iAmount = 1
             if (e.target.value !== "") {
                 iAmount = e.target.value.replace(/[a-zA-Z]|[\u4e00-\u9fa5]|[#|*|,|+|;|.]/g, '')
@@ -84,6 +85,11 @@ class CartComponent extends React.Component {
                 }
             }
             this.props.dispatch(action.cart.changeAmount({ amount: iAmount, index: index }))
+        }
+    }
+    goBalance() {
+        if (this.props.state.cart.aCartData.length > 0) {
+            this.props.history.push(config.path + "balance/index")
         }
     }
     render() {
@@ -149,7 +155,8 @@ class CartComponent extends React.Component {
                         </div>
                         <div className={Css['total']}>合计：<span>{this.props.state.cart.total}</span></div>
                     </div>
-                    <div className={this.props.state.cart.total > 0 ? Css['orderend-btn'] : Css['orderend-btn'] + " " + Css['disabled']}>去结算</div>
+                    <div className={this.props.state.cart.total > 0 ? Css['orderend-btn'] : Css['orderend-btn'] + " " + Css['disabled']}
+                        onClick={this.goBalance.bind(this)}>去结算</div>
                 </div>
 
 
