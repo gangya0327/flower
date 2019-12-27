@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<div th:replace="@{common/head}::head"></div>
+
+<body class="bodyclor">
+<!-- top start -->
+<div th:include="@{common/header}::header"></div>
+<!-- top end -->
+
+<div class="main">
+    <div th:include="@{common/leftMenu}::leftMenu"></div>
+
+    <div class="main_right">
+        <div class="m-r-title">
+            <p><span class="catalog">企业管理</span><span class="Slash_Style">/</span><span class="thispage">成本中心</span></p>
+        </div>
+
+        <div class="portlet box">
+            <div class="portlet-body form">
+                <div class="form-body form-tab new_form_style">
+                    <div class="table-search clearfix">
+                        <form id="searchForm" onsubmit="return false;">
+                            <div class="s-left">
+                                <ul>
+                                    <li><input type="text" placeholder="成本中心名称" name="costCenterName" class=""></li>
+                                    <li class="lastbtn">
+                                        <button type="button" id="searchButton" class="btn btn-tablesearch radius-default">查询</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+                        <span class="tips" style="line-height: 34px;">
+                            <img src="../../images/tips.png" alt="" style="margin-bottom: 4px;">
+                            可将差旅费用按照规则归属至不同的成本中心，明确费用归属。可使用默认的成本中心，也可修改或添加。
+                        </span>
+                        <button class="btn btn-add radius-default pull-right" data-toggle="modal" data-backdrop="static" data-target="#AddDialog" onclick="resertform()">新增成本中心+
+                        </button>
+                    </div>
+                    <!-- BEGIN table-->
+                    <div class="table-responsive table_pad">
+                        <table class="table table-striped table-bordered  table-hover" id="pageTable"></table>
+                    </div>
+                    <!-- END table-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 新增成本中心 -->
+<div class="modal fade mydialog Mat" id="AddDialog" role="dialog" aria-labelledby="myAdd">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">新增成本中心</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="addform">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">名称*</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="costCenterName" name="costCenterName">
+                            <input type="hidden" name="costCenterId" value="" id="centerId">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">描述</label>
+                        <div class="checkbox col-sm-10">
+                            <textarea class="form-control" rows="3" id="costCenterDesc" name="costCenterDesc"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">编号</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="costCenterNum" name="costCenterNum">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2"></label>
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-next" id="btnsave" onclick="add()">保存</button>
+                            <button type="button" class="btn btn-del" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--删除-->
+<div class="modal fade mydialog Mat" id="delDialog" role="dialog" aria-labelledby="mydel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">删除成本中心</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="delform">
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <p>你确定要删除吗？</p>
+                            <input type="hidden" id="ctid"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2"></label>
+                        <div class="col-sm-10">
+                            <!--<input type="submit" class="btn btn-next" value="保存"  />-->
+                            <button type="button" class="btn btn-next" onclick="del()">确定</button>
+                            <button type="button" class="btn btn-del" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--绑定员工-->
+<div class="modal fade mydialog" id="bindDialog" role="dialog" aria-labelledby="mydel">
+    <div class="modal-dialog select-employee-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="title">绑定员工</div>
+                <div class="select-wrap clearfix">
+                    <div class="not-select select-panel pull-left">
+                        <div class="select-title">选择员工：</div>
+                        <div class="select-box">
+                            <div class="search-wrap">
+                                <img class="search-icon" src="../../images/main/search.png" alt="">
+                                <input type="text" id="searchKey">
+                                <button class="search-btn">查询</button>
+                            </div>
+                            <div class="check-wrap">
+                                <div class="ckb-btn" data-ckb="0">
+                                    <img src="../../images/approval/set_ckb_select_not.png" alt="">
+                                    <span>全选（共6人）</span>
+                                </div>
+                            </div>
+                            <ul class="list-wrap" id="notSelectList">
+                                <li>
+                                    <div class="ckb-btn" data-ckb="0">
+                                        <img src="../../images/approval/set_ckb_select_not.png" alt="">
+                                    </div>
+                                    <div class="info-wrap">
+                                        <div class="info2">应孟霖</div>
+                                        <div class="info2">18768105813</div>
+                                        <div class="info1 grey">技术部</div>
+                                    </div>
+                                    <div class="status-wrap">
+                                        <div class="not-bind">未绑定</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="ckb-btn" data-ckb="0">
+                                        <img src="../../images/approval/set_ckb_select_not.png" alt="">
+                                    </div>
+                                    <div class="info-wrap">
+                                        <div class="info2">周迤</div>
+                                        <div class="info2">13096556352</div>
+                                        <div class="info1 grey">产品设计部</div>
+                                    </div>
+                                    <div class="status-wrap">
+                                        <div class="has-bind">已绑定：<br/><span>产品设计部</span></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="has-select select-panel pull-right">
+                        <div class="select-title">选择员工：</div>
+                        <div class="select-box">
+                            <ul class="list-wrap" id="hasSelectList">
+                                <li>
+                                    <span>应孟霖</span>
+                                    <span>18768105813</span>
+                                    <span>技术部</span>
+                                    <img class="del-icon" src="../../images/approval/select_delete.png" alt="">
+                                </li>
+                                <li>
+                                    <span>周迤</span>
+                                    <span>13096556352</span>
+                                    <span>产品设计部</span>
+                                    <img class="del-icon" src="../../images/approval/select_delete.png" alt="">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="tips">
+                    <img src="../../images/tips.png" alt="" style="margin-bottom: 4px;">
+                    选择已绑定其他成本中心的员工后，可将其直接修改为当前成本中心。
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveBindBtn">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- footer start -->
+<div th:replace="@{common/footer}::footer"></div>
+<!-- footer end -->
+<script src="../../js/page/corp/costCenter.js?v=24b5a73722" type="text/javascript" th:src="@{/js/page/corp/costCenter.js?v=24b5a73722}"></script>
+</body>
+</html>

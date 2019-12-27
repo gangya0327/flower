@@ -1,10 +1,12 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import action from '../../../actions'
 import SubHeaderComponent from '../../../components/header/subheader'
 import { Switch, Toast } from 'antd-mobile'
 import config from '../../../assets/js/conf/config'
 import { request } from '../../../assets/js/libs/request'
 import Css from '../../../assets/css/home/reg/index.css'
-export default class RegIndex extends React.Component {
+class LoginIndex extends React.Component {
     constructor() {
         super()
         this.state = {
@@ -13,8 +15,6 @@ export default class RegIndex extends React.Component {
             sPassword: "",
             sType: "password"
         }
-        this.timer = null
-        this.bSendCode = true
     }
     componentWillUnmount() {
         clearInterval(this.timer)
@@ -35,18 +35,21 @@ export default class RegIndex extends React.Component {
             Toast.info("手机号格式有误", 2)
             return false
         }
-        if (this.state.sCode.match(/^\s*$/)) {
-            Toast.info("请输入短信验证码", 2)
-            return false
-        }
         if (this.state.sPassword.match(/^\s*$/)) {
             Toast.info("请输入密码", 2)
             return false
         }
-        let sUrl = config.baseUrl + "/api/home/user/reg?token=" + config.token
-        request(sUrl, "post", { vcode: this.state.sCode, cellphone: this.state.sCellphone, password: this.state.sPassword }).then(res => {
+        let sUrl = config.baseUrl + "/api/home/user/pwdlogin?token=" + config.token
+        request(sUrl, "post", { cellphone: this.state.sCellphone, password: this.state.sPassword }).then(res => {
             if (res.code === 200) {
+                localStorage['uid'] = res.data.uid
+                localStorage['nickname'] = res.data.nickname
+                localStorage['authToken'] = res.data.auth_token
+                localStorage['isLogin'] = true
+                this.props.dispatch(action.user.login({ uid: res.data.uid, nickname: res.data.nickname, authToken: res.data.auth_token, isLogin: true }))
                 this.props.history.goBack()
+            } else {
+                Toast.info(res.data, 2)
             }
         })
     }
@@ -58,6 +61,9 @@ export default class RegIndex extends React.Component {
             this.setState({ sType: "password" })
         }
         this.setState({ checked: checked })
+    }
+    pushPage(url) {
+        this.props.history.push(config.path + url)
     }
     render() {
         return (
@@ -72,16 +78,37 @@ export default class RegIndex extends React.Component {
                             <input type={this.state.sType} placeholder="请输入密码" onChange={(e) => { this.setState({ sPassword: e.target.value }) }} />
                         </div>
                         <div className={Css['switch-wrap']}>
+<<<<<<< HEAD
                             <Switch color="#eb1625"
+=======
+                            <Switch
+                                color="#eb1625"
+>>>>>>> 6fa0a742d8f716420116167eae6b7de8159c1975
                                 checked={this.state.checked}
                                 onClick={this.changePwd.bind(this, !this.state.checked)}
                             />
                         </div>
                     </div>
                     <div className={Css['sure-btn']} onClick={this.submitData.bind(this)}>登录</div>
+<<<<<<< HEAD
                     <div className={Css['f']}></div>
+=======
+                    <div className={Css['fastreg-wrap']}>
+                        <div><img src={require('../../../assets/images/home/index/forget.png')} alt="" /> 忘记密码</div>
+                        <div onClick={this.pushPage.bind(this, 'reg/index')}><img src={require('../../../assets/images/home/index/reg.png')} alt="" /> 快速注册</div>
+                    </div>
+>>>>>>> 6fa0a742d8f716420116167eae6b7de8159c1975
                 </div>
             </div>
         )
     }
+<<<<<<< HEAD
 }
+=======
+}
+export default connect((state) => {
+    return {
+        state: state
+    }
+})(LoginIndex)
+>>>>>>> 6fa0a742d8f716420116167eae6b7de8159c1975
