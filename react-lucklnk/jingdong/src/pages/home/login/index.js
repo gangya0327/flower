@@ -63,7 +63,7 @@ export default class RegIndex extends React.Component {
         return (
             <div className={Css['page']}>
                 <SubHeaderComponent title="会员登录"></SubHeaderComponent>
-                <div className={Css['main']+" login-main"}>
+                <div className={Css['main'] + " login-main"}>
                     <div className={Css['code-wrap']} style={{ marginTop: 0 }}>
                         <input type="tel" placeholder="请输入手机号" onChange={(e) => { this.setState({ sCellphone: e.target.value }) }} />
                     </div>
@@ -72,13 +72,14 @@ export default class RegIndex extends React.Component {
                             <input type={this.state.sType} placeholder="请输入密码" onChange={(e) => { this.setState({ sPassword: e.target.value }) }} />
                         </div>
                         <div className={Css['switch-wrap']}>
-                            <Switch
+                            <Switch color="#eb1625"
                                 checked={this.state.checked}
                                 onClick={this.changePwd.bind(this, !this.state.checked)}
                             />
                         </div>
                     </div>
                     <div className={Css['sure-btn']} onClick={this.submitData.bind(this)}>登录</div>
+                    <div className={Css['f']}></div>
                 </div>
             </div>
         )
