@@ -29,8 +29,9 @@
     })
 
     setTimeout(() => {
-        vm.message = '新数据'
-    }, 3000)
+        // vm.message = '新数据'
+        vm.$options.data.message = '翻山转海'
+    }, 2000)
     console.log(vm.$options.data);
 </script>
 
